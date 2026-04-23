@@ -29,6 +29,9 @@ type SelectedKind = "node" | "edge";
 
 const NODE_RADIUS = 20;
 const EDGE_PADDING = NODE_RADIUS + 4;
+const EDGE_CURVE_BASE = 16;
+const EDGE_CURVE_STEP = 9;
+const EDGE_CURVE_MAX = 68;
 
 interface RuntimeState {
   baseGraph: GraphSnapshot | undefined;
@@ -39,6 +42,12 @@ interface RuntimeState {
   selectedId: string | undefined;
   selectedKind: SelectedKind | undefined;
   playbackStatus: "playing" | "paused";
+}
+
+interface EdgePathGeometry {
+  path: string;
+  midX: number;
+  midY: number;
 }
 
 const vscodeApi = acquireVsCodeApi<{ selectedId?: string; selectedKind?: SelectedKind }>();
@@ -154,9 +163,9 @@ function formatPlaybackSpeed(value: number): string {
 function getEdgeGeometry(
   sourceNode: NodeRecord | undefined,
   targetNode: NodeRecord | undefined,
-): { x1: number; y1: number; x2: number; y2: number; midX: number; midY: number } {
+): { x1: number; y1: number; x2: number; y2: number } {
   if (!sourceNode || !targetNode) {
-    return { x1: 0, y1: 0, x2: 0, y2: 0, midX: 0, midY: 0 };
+    return { x1: 0, y1: 0, x2: 0, y2: 0 };
   }
 
   const dx = targetNode.x - sourceNode.x;
@@ -164,15 +173,11 @@ function getEdgeGeometry(
   const distance = Math.hypot(dx, dy);
 
   if (!Number.isFinite(distance) || distance <= EDGE_PADDING * 2) {
-    const midX = (sourceNode.x + targetNode.x) / 2;
-    const midY = (sourceNode.y + targetNode.y) / 2;
     return {
       x1: sourceNode.x,
       y1: sourceNode.y,
       x2: targetNode.x,
       y2: targetNode.y,
-      midX,
-      midY,
     };
   }
 
@@ -184,9 +189,106 @@ function getEdgeGeometry(
     y1: sourceNode.y + offsetY,
     x2: targetNode.x - offsetX,
     y2: targetNode.y - offsetY,
-    midX: (sourceNode.x + targetNode.x) / 2,
-    midY: (sourceNode.y + targetNode.y) / 2,
   };
+}
+
+function buildSourceRanks(edges: EdgeRecord[]): Map<string, number> {
+  const grouped = new Map<string, EdgeRecord[]>();
+  edges.forEach((edge) => {
+    const list = grouped.get(edge.source) ?? [];
+    list.push(edge);
+    grouped.set(edge.source, list);
+  });
+
+  const ranks = new Map<string, number>();
+  grouped.forEach((groupEdges) => {
+    const sorted = [...groupEdges].sort((left, right) => {
+      if (left.target === right.target) {
+        return left.id.localeCompare(right.id);
+      }
+      return left.target.localeCompare(right.target);
+    });
+    const center = (sorted.length - 1) / 2;
+    sorted.forEach((edge, index) => {
+      ranks.set(edge.id, index - center);
+    });
+  });
+
+  return ranks;
+}
+
+function getEdgeStatus(edge: EdgeRecord): "best-path" | "pruned" | "default" {
+  const status = edge.properties?.status;
+  if (status === "best-path") {
+    return "best-path";
+  }
+  if (status === "pruned") {
+    return "pruned";
+  }
+  return "default";
+}
+
+function buildEdgePathGeometry(
+  edge: EdgeRecord,
+  sourceNode: NodeRecord | undefined,
+  targetNode: NodeRecord | undefined,
+  sourceRanks: Map<string, number>,
+): EdgePathGeometry {
+  const trimmed = getEdgeGeometry(sourceNode, targetNode);
+  const dx = trimmed.x2 - trimmed.x1;
+  const dy = trimmed.y2 - trimmed.y1;
+  const distance = Math.hypot(dx, dy);
+
+  if (!Number.isFinite(distance) || distance < 1) {
+    return {
+      path: `M ${trimmed.x1} ${trimmed.y1} L ${trimmed.x2} ${trimmed.y2}`,
+      midX: (trimmed.x1 + trimmed.x2) / 2,
+      midY: (trimmed.y1 + trimmed.y2) / 2,
+    };
+  }
+
+  const rank = sourceRanks.get(edge.id) ?? 0;
+  const baseDirection = edge.source.localeCompare(edge.target) <= 0 ? 1 : -1;
+  const rankDirection = rank < 0 ? -1 : 1;
+  const direction = baseDirection * rankDirection;
+  const normalX = -dy / distance;
+  const normalY = dx / distance;
+  const bendMagnitude = Math.min(
+    EDGE_CURVE_MAX,
+    EDGE_CURVE_BASE + Math.abs(rank) * EDGE_CURVE_STEP + Math.min(20, distance * 0.08),
+  );
+
+  const centerX = (trimmed.x1 + trimmed.x2) / 2;
+  const centerY = (trimmed.y1 + trimmed.y2) / 2;
+  const controlX = centerX + normalX * bendMagnitude * direction;
+  const controlY = centerY + normalY * bendMagnitude * direction;
+
+  const midX =
+    0.25 * trimmed.x1 +
+    0.5 * controlX +
+    0.25 * trimmed.x2;
+  const midY =
+    0.25 * trimmed.y1 +
+    0.5 * controlY +
+    0.25 * trimmed.y2;
+
+  return {
+    path: `M ${trimmed.x1} ${trimmed.y1} Q ${controlX} ${controlY} ${trimmed.x2} ${trimmed.y2}`,
+    midX,
+    midY,
+  };
+}
+
+function isEdgeRelevantToSelection(edge: EdgeRecord): boolean {
+  if (!runtimeState.selectedId || !runtimeState.selectedKind) {
+    return true;
+  }
+
+  if (runtimeState.selectedKind === "edge") {
+    return edge.id === runtimeState.selectedId;
+  }
+
+  return edge.source === runtimeState.selectedId || edge.target === runtimeState.selectedId;
 }
 
 function selectNode(nodeId: string): void {
@@ -284,6 +386,15 @@ function renderGraph(): void {
   fitGraphViewBox();
 
   const nodeMap = new Map(graph.nodes.map((node) => [node.id, node]));
+  const sourceRanks = buildSourceRanks(graph.edges);
+  const edgeGeometryMap = new Map<string, EdgePathGeometry>();
+
+  graph.edges.forEach((edge) => {
+    edgeGeometryMap.set(
+      edge.id,
+      buildEdgePathGeometry(edge, nodeMap.get(edge.source), nodeMap.get(edge.target), sourceRanks),
+    );
+  });
 
   const edgeSelection = edgeLayer
     .selectAll<SVGGElement, EdgeRecord>("g.edge")
@@ -298,7 +409,7 @@ function renderGraph(): void {
       selectEdge(edge.id);
     });
 
-  edgeEnterSelection.append("line");
+  edgeEnterSelection.append("path");
   edgeEnterSelection.append("text").attr("class", "edge-label");
 
   const edgeMergedSelection = edgeEnterSelection.merge(
@@ -310,16 +421,19 @@ function renderGraph(): void {
     (edge: EdgeRecord) =>
       runtimeState.selectedKind === "edge" && runtimeState.selectedId === edge.id,
   );
+  edgeMergedSelection.classed("state-best-path", (edge: EdgeRecord) => getEdgeStatus(edge) === "best-path");
+  edgeMergedSelection.classed("state-pruned", (edge: EdgeRecord) => getEdgeStatus(edge) === "pruned");
+  edgeMergedSelection.classed(
+    "deemphasized",
+    (edge: EdgeRecord) => !isEdgeRelevantToSelection(edge),
+  );
 
   edgeMergedSelection
-    .select("line")
+    .select("path")
     .interrupt()
     .transition()
     .duration(EDGE_TRANSITION_MS)
-    .attr("x1", (edge: EdgeRecord) => getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).x1)
-    .attr("y1", (edge: EdgeRecord) => getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).y1)
-    .attr("x2", (edge: EdgeRecord) => getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).x2)
-    .attr("y2", (edge: EdgeRecord) => getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).y2);
+    .attr("d", (edge: EdgeRecord) => edgeGeometryMap.get(edge.id)?.path ?? "");
 
   edgeMergedSelection
     .select("text")
@@ -328,13 +442,11 @@ function renderGraph(): void {
     .duration(EDGE_TRANSITION_MS)
     .attr(
       "x",
-      (edge: EdgeRecord) =>
-        getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).midX,
+      (edge: EdgeRecord) => edgeGeometryMap.get(edge.id)?.midX ?? 0,
     )
     .attr(
       "y",
-      (edge: EdgeRecord) =>
-        getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).midY - 8,
+      (edge: EdgeRecord) => (edgeGeometryMap.get(edge.id)?.midY ?? 0) - 8,
     )
     .text((edge: EdgeRecord) => {
       if (edge.weight !== undefined) {

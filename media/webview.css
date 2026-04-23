@@ -169,17 +169,34 @@ button:disabled {
     linear-gradient(180deg, rgba(249, 252, 250, 0.86), rgba(240, 246, 243, 0.96));
 }
 
-.edge line {
+.edge path {
   stroke: var(--edge);
   stroke-width: 2;
   stroke-linecap: round;
+  fill: none;
   opacity: 0.72;
   vector-effect: non-scaling-stroke;
 }
 
-.edge:hover line {
+.edge:hover path {
   stroke: var(--edge-strong);
   opacity: 0.95;
+}
+
+.edge.state-best-path path {
+  stroke: #d97706;
+  stroke-width: 2.8;
+  opacity: 0.95;
+}
+
+.edge.state-pruned path {
+  stroke: #8aa099;
+  stroke-dasharray: 5 6;
+  opacity: 0.4;
+}
+
+.edge.deemphasized path {
+  opacity: 0.2;
 }
 
 .edge text {
@@ -192,7 +209,7 @@ button:disabled {
   stroke-linejoin: round;
 }
 
-.edge.selected line {
+.edge.selected path {
   stroke: var(--edge-strong);
   stroke-width: 3.5;
   opacity: 1;

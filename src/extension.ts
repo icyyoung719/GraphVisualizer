@@ -17,6 +17,7 @@ const SHOW_LEGACY_VISUALIZATION_COMMAND = "graphdyvis.showLegacyVisualization";
 const DEFAULT_SAMPLE_FILE = "astar-sample-events.json";
 const LEGACY_SAMPLE_FILE = "sample-events.json";
 const PLAYBACK_INTERVAL_MS = 900;
+const PLAYBACK_FRAME_MS = 33;
 const MIN_SPEED_MULTIPLIER = 0.25;
 const MAX_SPEED_MULTIPLIER = 4;
 
@@ -44,6 +45,8 @@ class GraphVisualizerPanel {
   private readonly sampleFileName: string;
   private readonly disposables: vscode.Disposable[] = [];
   private playbackTimer: ReturnType<typeof setInterval> | undefined;
+  private playbackAccumulatorMs = 0;
+  private lastPlaybackTickMs = 0;
 
   private graphData: GraphDataFile | undefined;
   private playbackState: PlaybackState = {
@@ -226,10 +229,11 @@ class GraphVisualizerPanel {
       return;
     }
 
-    const intervalMs = getPlaybackIntervalMs(this.playbackState.speedMultiplier);
+    this.playbackAccumulatorMs = 0;
+    this.lastPlaybackTickMs = Date.now();
     this.playbackTimer = setInterval(() => {
       void this.handlePlaybackTick();
-    }, intervalMs);
+    }, PLAYBACK_FRAME_MS);
   }
 
   private restartPlaybackTimer(): void {
@@ -246,6 +250,8 @@ class GraphVisualizerPanel {
 
     clearInterval(this.playbackTimer);
     this.playbackTimer = undefined;
+    this.playbackAccumulatorMs = 0;
+    this.lastPlaybackTickMs = 0;
   }
 
   private async handlePlaybackTick(): Promise<void> {
@@ -261,7 +267,25 @@ class GraphVisualizerPanel {
       return;
     }
 
-    this.playbackState.eventIndex += 1;
+    const now = Date.now();
+    const deltaMs = this.lastPlaybackTickMs > 0 ? now - this.lastPlaybackTickMs : PLAYBACK_FRAME_MS;
+    this.lastPlaybackTickMs = now;
+
+    const eventIntervalMs = getPlaybackIntervalMs(this.playbackState.speedMultiplier);
+    this.playbackAccumulatorMs += Math.min(250, Math.max(0, deltaMs));
+
+    if (this.playbackAccumulatorMs < eventIntervalMs) {
+      return;
+    }
+
+    const pendingEvents = this.playbackState.totalEvents - this.playbackState.eventIndex;
+    const eventsToAdvance = Math.min(
+      pendingEvents,
+      Math.floor(this.playbackAccumulatorMs / eventIntervalMs),
+    );
+
+    this.playbackAccumulatorMs -= eventsToAdvance * eventIntervalMs;
+    this.playbackState.eventIndex += eventsToAdvance;
 
     if (this.playbackState.eventIndex >= this.playbackState.totalEvents) {
       this.playbackState.status = "paused";
