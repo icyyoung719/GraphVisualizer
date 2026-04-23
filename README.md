@@ -91,12 +91,14 @@ cpp17，多使用现代特性，不要滥用智能指针
 ## ✅ 当前实现进度（MVP 启动）
 
 当前仓库已经落地第一批可运行代码：
-- VS Code 插件命令：`GraphDyVis: Show Visualization`
+- VS Code 插件命令：`GraphDyVis: Show A* Demo`
 - WebView + D3 静态图渲染
 - 基础交互：搜索聚焦、缩放/平移、节点/边属性面板
 - 动态事件回放：Play/Pause/Step/Reset
 - 事件原因日志展示（reason）
 - 协议与消息的运行时校验（非法消息安全忽略）
+- C++17 A* 示例库：可直接 include 并导出 GraphDataFile 兼容 JSON
+- 样例校验脚本：用于验证基线样例和 A* demo 数据
 
 关键文件：
 - 插件入口：`src/extension.ts`
@@ -104,7 +106,11 @@ cpp17，多使用现代特性，不要滥用智能指针
 - 事件协议与校验：`src/protocol/events.ts`
 - WebView 前端：`webview/main.ts`
 - 样式：`media/webview.css`
-- 示例事件流：`data/sample-events.json`
+- 示例事件流：`data/astar-sample-events.json`
+- 基线事件流：`data/sample-events.json`
+- C++ 示例：`examples/cpp/graphdyvis_astar.hpp`
+- 样例验证：`scripts/validate-samples.js`
+- C++ 示例说明：`examples/cpp/README.md`
 
 ---
 ## 🚀 本地运行（Extension + WebView）
@@ -126,12 +132,18 @@ npm run build
 npm run check
 ```
 
+`npm run check` 会同时执行 TypeScript 校验和样例数据校验。
+
+如果要重新生成 A* demo 数据，可以编译 `examples/cpp/astar_demo.cpp`，再用参数控制规模：`--layers=N`、`--width=N`、`--seed=N`、`--output=FILE`。
+
 4. 在 VS Code 中按 `F5` 启动 Extension Development Host
 
 5. 在新窗口命令面板执行：
 ```text
-GraphDyVis: Show Visualization
+GraphDyVis: Show A* Demo
 ```
+
+如需对比旧样例，可执行 `GraphDyVis: Show Legacy Sample`。
 
 开发时可分别监听：
 ```bash
@@ -142,7 +154,9 @@ npm run watch:webview
 ---
 ## 🧾 MVP 事件数据协议（schemaVersion = "1.0"）
 
-示例文件：`data/sample-events.json`
+示例文件：`data/astar-sample-events.json`
+
+基线示例仍保留在 `data/sample-events.json`，便于和 A* demo 对比。
 
 顶层结构：
 ```json

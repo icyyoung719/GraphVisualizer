@@ -13,12 +13,18 @@ import {
 import { GraphDataFile } from "./protocol/events";
 
 const SHOW_VISUALIZATION_COMMAND = "graphdyvis.showVisualization";
+const SHOW_LEGACY_VISUALIZATION_COMMAND = "graphdyvis.showLegacyVisualization";
+const DEFAULT_SAMPLE_FILE = "astar-sample-events.json";
+const LEGACY_SAMPLE_FILE = "sample-events.json";
 const PLAYBACK_INTERVAL_MS = 900;
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand(SHOW_VISUALIZATION_COMMAND, () => {
-      GraphVisualizerPanel.createOrShow(context);
+      GraphVisualizerPanel.createOrShow(context, DEFAULT_SAMPLE_FILE);
+    }),
+    vscode.commands.registerCommand(SHOW_LEGACY_VISUALIZATION_COMMAND, () => {
+      GraphVisualizerPanel.createOrShow(context, LEGACY_SAMPLE_FILE);
     }),
   );
 }
@@ -33,6 +39,7 @@ class GraphVisualizerPanel {
 
   private readonly panel: vscode.WebviewPanel;
   private readonly extensionContext: vscode.ExtensionContext;
+  private readonly sampleFileName: string;
   private readonly disposables: vscode.Disposable[] = [];
   private playbackTimer: ReturnType<typeof setInterval> | undefined;
 
@@ -43,17 +50,27 @@ class GraphVisualizerPanel {
     totalEvents: 0,
   };
 
-  static createOrShow(extensionContext: vscode.ExtensionContext): void {
+  static createOrShow(
+    extensionContext: vscode.ExtensionContext,
+    sampleFileName = DEFAULT_SAMPLE_FILE,
+  ): void {
     const column = vscode.window.activeTextEditor?.viewColumn;
 
-    if (GraphVisualizerPanel.currentPanel) {
+    if (
+      GraphVisualizerPanel.currentPanel &&
+      GraphVisualizerPanel.currentPanel.sampleFileName === sampleFileName
+    ) {
       GraphVisualizerPanel.currentPanel.panel.reveal(column);
       return;
     }
 
+    if (GraphVisualizerPanel.currentPanel) {
+      GraphVisualizerPanel.currentPanel.dispose();
+    }
+
     const panel = vscode.window.createWebviewPanel(
       GraphVisualizerPanel.viewType,
-      "GraphDyVis",
+      sampleFileName === DEFAULT_SAMPLE_FILE ? "GraphDyVis - A* Demo" : "GraphDyVis - Legacy Sample",
       column ?? vscode.ViewColumn.One,
       {
         enableScripts: true,
@@ -68,15 +85,18 @@ class GraphVisualizerPanel {
     GraphVisualizerPanel.currentPanel = new GraphVisualizerPanel(
       panel,
       extensionContext,
+      sampleFileName,
     );
   }
 
   private constructor(
     panel: vscode.WebviewPanel,
     extensionContext: vscode.ExtensionContext,
+    sampleFileName: string,
   ) {
     this.panel = panel;
     this.extensionContext = extensionContext;
+    this.sampleFileName = sampleFileName;
 
     this.panel.webview.html = this.getHtmlForWebview(this.panel.webview);
 
@@ -180,7 +200,7 @@ class GraphVisualizerPanel {
     const sampleFileUri = vscode.Uri.joinPath(
       this.extensionContext.extensionUri,
       "data",
-      "sample-events.json",
+      this.sampleFileName,
     );
     this.graphData = await loadSampleGraphFile(sampleFileUri);
     this.playbackState.totalEvents = this.graphData.events.length;
