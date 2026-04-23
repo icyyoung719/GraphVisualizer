@@ -48,6 +48,8 @@ interface RuntimeState {
   selectedId: string | undefined;
   selectedKind: SelectedKind | undefined;
   playbackStatus: "playing" | "paused";
+  playbackHighlightNodeIds: Set<string>;
+  playbackHighlightEdgeIds: Set<string>;
   expandedAggregateIds: Set<string>;
   transientExpandedAggregateIds: Set<string>;
   transientAggregateCollapseTimer: number | undefined;
@@ -73,6 +75,8 @@ const runtimeState: RuntimeState = {
   selectedId: undefined,
   selectedKind: undefined,
   playbackStatus: "paused",
+  playbackHighlightNodeIds: new Set<string>(),
+  playbackHighlightEdgeIds: new Set<string>(),
 };
 
 const graphPaneElement = getRequiredElement<HTMLElement>("graph-pane");
@@ -168,6 +172,73 @@ function findNodeById(id: string): NodeRecord | undefined {
 
 function findEdgeById(id: string): EdgeRecord | undefined {
   return runtimeState.workingGraph?.edges.find((edge) => edge.id === id);
+}
+
+function setPlaybackHighlights(nodeIds: Iterable<string>, edgeIds: Iterable<string>): void {
+  runtimeState.playbackHighlightNodeIds = new Set(nodeIds);
+  runtimeState.playbackHighlightEdgeIds = new Set(edgeIds);
+}
+
+function clearPlaybackHighlights(): void {
+  runtimeState.playbackHighlightNodeIds.clear();
+  runtimeState.playbackHighlightEdgeIds.clear();
+}
+
+function panViewportToPoint(targetX: number, targetY: number, durationMs = 260): void {
+  const { width, height } = svgElement.getBoundingClientRect();
+  if (width <= 0 || height <= 0) {
+    return;
+  }
+
+  const currentTransform = d3.zoomTransform(svgElement);
+  const scale = currentTransform.k;
+  const nextTransform = d3.zoomIdentity
+    .translate(width / 2 - targetX * scale, height / 2 - targetY * scale)
+    .scale(scale);
+
+  svgSelection
+    .transition()
+    .duration(durationMs)
+    .call(zoomBehavior.transform as unknown as (selection: unknown, t: unknown) => void, nextTransform);
+}
+
+function focusViewportOnNodeIds(nodeIds: Iterable<string>): void {
+  const graph = runtimeState.workingGraph;
+  if (!graph) {
+    return;
+  }
+
+  const visibleNodes: NodeRecord[] = [];
+  for (const nodeId of nodeIds) {
+    const node = graph.nodes.find((entry) => entry.id === nodeId);
+    if (node) {
+      visibleNodes.push(node);
+    }
+  }
+
+  if (visibleNodes.length === 0) {
+    return;
+  }
+
+  const centerX = visibleNodes.reduce((sum, node) => sum + node.x, 0) / visibleNodes.length;
+  const centerY = visibleNodes.reduce((sum, node) => sum + node.y, 0) / visibleNodes.length;
+  panViewportToPoint(centerX, centerY, 260);
+}
+
+function setSelection(
+  selectedId: string | undefined,
+  selectedKind: SelectedKind | undefined,
+  shouldRender = true,
+): void {
+  runtimeState.selectedId = selectedId;
+  runtimeState.selectedKind = selectedKind;
+  vscodeApi.setState({ selectedId, selectedKind });
+  markSelectionChanged();
+
+  if (shouldRender) {
+    renderGraph();
+    renderDetailsPanel();
+  }
 }
 
 function ensureExpandedForNode(nodeId: string, isTransient = false): boolean {
@@ -321,37 +392,19 @@ function getGraphRenderContext(): GraphRenderContext {
 }
 
 function selectNode(nodeId: string): void {
-  runtimeState.selectedId = nodeId;
-  runtimeState.selectedKind = "node";
-  vscodeApi.setState({ selectedId: nodeId, selectedKind: "node" });
-  renderGraph();
-  renderDetailsPanel();
-  markSelectionChanged();
+  setSelection(nodeId, "node");
 }
 
 function selectAggregate(aggregateId: string): void {
-  runtimeState.selectedId = aggregateId;
-  runtimeState.selectedKind = "aggregate";
-  vscodeApi.setState({ selectedId: aggregateId, selectedKind: "aggregate" });
-  renderGraph();
-  renderDetailsPanel();
-  markSelectionChanged();
+  setSelection(aggregateId, "aggregate");
 }
 
 function selectEdge(edgeId: string): void {
-  runtimeState.selectedId = edgeId;
-  runtimeState.selectedKind = "edge";
-  vscodeApi.setState({ selectedId: edgeId, selectedKind: "edge" });
-  renderGraph();
-  renderDetailsPanel();
-  markSelectionChanged();
+  setSelection(edgeId, "edge");
 }
 
 function clearSelection(): void {
-  runtimeState.selectedId = undefined;
-  runtimeState.selectedKind = undefined;
-  vscodeApi.setState({ selectedId: undefined, selectedKind: undefined });
-  markSelectionChanged();
+  setSelection(undefined, undefined, false);
 }
 
 function clearFocusedSelection(): void {
@@ -387,6 +440,90 @@ function reconcileSelection(): void {
     const aggregate = runtimeState.latestAggregation?.aggregatesById.get(runtimeState.selectedId);
     if (!aggregate || !aggregate.collapsed) {
       clearSelection();
+    }
+  }
+}
+
+function applyPlaybackSelection(event: GraphEvent, graphBeforeEvent: GraphSnapshot | undefined): void {
+  const focusNodeIds = new Set<string>();
+  const highlightEdgeIds = new Set<string>();
+
+  switch (event.eventType) {
+    case "node_create": {
+      const createdNode = findNodeById(event.node.id);
+      if (!createdNode) {
+        clearPlaybackHighlights();
+        clearSelection();
+        return;
+      }
+
+      focusNodeIds.add(createdNode.id);
+      ensureExpandedForNode(createdNode.id, true);
+      runtimeState.workingGraph?.edges.forEach((edge) => {
+        if (edge.source === createdNode.id || edge.target === createdNode.id) {
+          highlightEdgeIds.add(edge.id);
+        }
+      });
+      setPlaybackHighlights(focusNodeIds, highlightEdgeIds);
+
+      if (findNodeById(event.node.id)) {
+        setSelection(event.node.id, "node", false);
+      } else {
+        clearSelection();
+      }
+
+      focusViewportOnNodeIds(focusNodeIds);
+      return;
+    }
+    case "edge_create":
+    case "edge_update": {
+      const edgeId = getEventTargetId(event);
+      const edge = findEdgeById(edgeId);
+      if (!edge) {
+        clearPlaybackHighlights();
+        clearSelection();
+        return;
+      }
+
+      highlightEdgeIds.add(edge.id);
+      focusNodeIds.add(edge.source);
+      focusNodeIds.add(edge.target);
+      ensureExpandedForNode(edge.source, true);
+      ensureExpandedForNode(edge.target, true);
+      setPlaybackHighlights(focusNodeIds, highlightEdgeIds);
+
+      setSelection(edgeId, "edge", false);
+      focusViewportOnNodeIds(focusNodeIds);
+      return;
+    }
+    case "edge_delete": {
+      const deletedEdge = graphBeforeEvent?.edges.find((edge) => edge.id === event.id);
+      if (!deletedEdge) {
+        clearPlaybackHighlights();
+        clearSelection();
+        return;
+      }
+
+      focusNodeIds.add(deletedEdge.source);
+      focusNodeIds.add(deletedEdge.target);
+      ensureExpandedForNode(deletedEdge.source, true);
+      ensureExpandedForNode(deletedEdge.target, true);
+      setPlaybackHighlights(focusNodeIds, highlightEdgeIds);
+
+      const focusNodeId = findNodeById(deletedEdge.source)
+        ? deletedEdge.source
+        : findNodeById(deletedEdge.target)
+          ? deletedEdge.target
+          : undefined;
+
+      if (focusNodeId) {
+        setSelection(focusNodeId, "node", false);
+      } else {
+        clearSelection();
+      }
+
+      focusViewportOnNodeIds(focusNodeIds);
+      return;
     }
   }
 }
@@ -509,9 +646,10 @@ function renderGraph(): void {
   edgeMergedSelection.classed(
     "selected",
     (edge: VisibleEdgeDatum) =>
-      runtimeState.selectedKind === "edge" &&
-      !!runtimeState.selectedId &&
-      edge.memberEdgeIds.includes(runtimeState.selectedId),
+      (runtimeState.selectedKind === "edge" &&
+        !!runtimeState.selectedId &&
+        edge.memberEdgeIds.includes(runtimeState.selectedId)) ||
+      edge.memberEdgeIds.some((edgeId) => runtimeState.playbackHighlightEdgeIds.has(edgeId)),
   );
   edgeMergedSelection.classed("state-best-path", (edge: VisibleEdgeDatum) => getEdgeStatus(edge) === "best-path");
   edgeMergedSelection.classed("state-pruned", (edge: VisibleEdgeDatum) => getEdgeStatus(edge) === "pruned");
@@ -519,13 +657,18 @@ function renderGraph(): void {
   edgeMergedSelection.classed("straight", (edge: VisibleEdgeDatum) => edgeGeometryMap.get(edge.id)?.isStraight ?? false);
   edgeMergedSelection.classed(
     "deemphasized",
-    (edge: VisibleEdgeDatum) =>
-      !isEdgeRelevantToSelection(
+    (edge: VisibleEdgeDatum) => {
+      if (runtimeState.playbackHighlightEdgeIds.size > 0) {
+        return !edge.memberEdgeIds.some((edgeId) => runtimeState.playbackHighlightEdgeIds.has(edgeId));
+      }
+
+      return !isEdgeRelevantToSelection(
         edge,
         aggregation,
         runtimeState.selectedId,
         runtimeState.selectedKind,
-      ),
+      );
+    },
   );
   edgeMergedSelection
     .filter(
@@ -617,36 +760,54 @@ function renderGraph(): void {
     nodeSelection as d3.Selection<SVGGElement, VisibleNodeDatum, SVGGElement, unknown>,
   );
 
+  const selectedEdge =
+    runtimeState.selectedKind === "edge" && runtimeState.selectedId
+      ? findEdgeById(runtimeState.selectedId)
+      : undefined;
+
+  const isNodeSelected = (node: VisibleNodeDatum): boolean => {
+    if (
+      node.memberNodeIds.some((nodeId) => runtimeState.playbackHighlightNodeIds.has(nodeId))
+    ) {
+      return true;
+    }
+
+    if (!runtimeState.selectedId || !runtimeState.selectedKind) {
+      return false;
+    }
+
+    if (runtimeState.selectedKind === "aggregate") {
+      return node.id === runtimeState.selectedId;
+    }
+
+    if (runtimeState.selectedKind === "node") {
+      if (node.id === runtimeState.selectedId) {
+        return true;
+      }
+
+      return node.isAggregate && node.memberNodeIds.includes(runtimeState.selectedId);
+    }
+
+    if (!selectedEdge) {
+      return false;
+    }
+
+    return (
+      node.id === selectedEdge.source ||
+      node.id === selectedEdge.target ||
+      (node.isAggregate &&
+        (node.memberNodeIds.includes(selectedEdge.source) ||
+          node.memberNodeIds.includes(selectedEdge.target)))
+    );
+  };
+
   nodeMergedSelection.classed(
     "selected",
-    (node: VisibleNodeDatum) => {
-      if (!runtimeState.selectedId || !runtimeState.selectedKind) {
-        return false;
-      }
-
-      if (runtimeState.selectedKind === "aggregate") {
-        return node.id === runtimeState.selectedId;
-      }
-
-      if (runtimeState.selectedKind === "node") {
-        if (node.id === runtimeState.selectedId) {
-          return true;
-        }
-
-        return node.isAggregate && node.memberNodeIds.includes(runtimeState.selectedId);
-      }
-
-      return false;
-    },
+    isNodeSelected,
   );
   nodeMergedSelection.classed("aggregate", (node: VisibleNodeDatum) => node.isAggregate);
   nodeMergedSelection
-    .filter(
-      (node: VisibleNodeDatum) =>
-        runtimeState.selectedKind === "node" &&
-        !!runtimeState.selectedId &&
-        (node.id === runtimeState.selectedId || (node.isAggregate && node.memberNodeIds.includes(runtimeState.selectedId))),
-    )
+    .filter(isNodeSelected)
     .raise();
 
   nodeMergedSelection
@@ -719,16 +880,7 @@ function focusById(targetId: string): boolean {
     selectEdge(edge.id);
   }
 
-  const { width, height } = graphPaneElement.getBoundingClientRect();
-  const scale = 1.35;
-  const transform = d3.zoomIdentity
-    .translate(width / 2 - targetX * scale, height / 2 - targetY * scale)
-    .scale(scale);
-
-  svgSelection
-    .transition()
-    .duration(300)
-    .call(zoomBehavior.transform as unknown as (selection: unknown, t: unknown) => void, transform);
+  panViewportToPoint(targetX, targetY, 300);
 
   return true;
 }
@@ -741,6 +893,7 @@ function resetGraphToBaseline(): void {
   runtimeState.workingGraph = cloneGraphSnapshot(runtimeState.baseGraph);
   runtimeState.appliedEvents = [];
   runtimeState.eventCursor = 0;
+  clearPlaybackHighlights();
   runtimeState.transientExpandedAggregateIds.clear();
   clearTransientAggregateCollapseTimer();
   runtimeState.latestAggregation = undefined;
@@ -776,6 +929,7 @@ function syncGraphToEventIndex(targetEventIndex: number): void {
 
   while (runtimeState.eventCursor < clampedTarget) {
     const pendingEvent = runtimeState.events[runtimeState.eventCursor];
+    const graphBeforeEvent = runtimeState.workingGraph;
     if (pendingEvent) {
       autoExpandForEvent(pendingEvent);
     }
@@ -784,6 +938,7 @@ function syncGraphToEventIndex(targetEventIndex: number): void {
     if (!nextEvent) {
       break;
     }
+    applyPlaybackSelection(nextEvent, graphBeforeEvent);
   }
 
   reconcileSelection();
@@ -843,6 +998,7 @@ function handleInitData(payload: GraphDataFile): void {
   runtimeState.appliedEvents = [];
   runtimeState.eventCursor = 0;
   runtimeState.playbackStatus = "paused";
+  clearPlaybackHighlights();
   runtimeState.expandedAggregateIds.clear();
   runtimeState.transientExpandedAggregateIds.clear();
   clearTransientAggregateCollapseTimer();

@@ -99,6 +99,7 @@ Compatibility strategy:
 - When the node count is large, the frontend automatically detects low-focus node groups and renders them as aggregate nodes.
 - Aggregate edges are mapped to summary connections, such as `N edges`, to reduce dense crossings.
 - Clicking an aggregate node expands it, and playback events that hit an element inside an aggregate also expand it automatically.
+- During playback, broad update events (create/update/delete) automatically drive focus and highlight state. Node-target events emphasize the node and its incident edges; edge-target events emphasize endpoint nodes and, when present in the current frame, the event edge itself.
 - When search or focus hits a node hidden inside an aggregate, the aggregate is expanded first and then the camera is positioned.
 - When focus moves to another node or edge, aggregates that were temporarily expanded by focus collapse again after a short delay.
 - For simple edge chains without noticeable crossing pressure, rendering prefers straight lines; complex relationships still keep curves to reduce crossings.
