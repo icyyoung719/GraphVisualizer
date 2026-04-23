@@ -25,13 +25,35 @@ interface VsCodeApi<T> {
 
 declare function acquireVsCodeApi<T = unknown>(): VsCodeApi<T>;
 
-type SelectedKind = "node" | "edge";
+type SelectedKind = "node" | "edge" | "aggregate";
 
-const NODE_RADIUS = 20;
-const EDGE_PADDING = NODE_RADIUS + 4;
-const EDGE_CURVE_BASE = 16;
-const EDGE_CURVE_STEP = 9;
-const EDGE_CURVE_MAX = 68;
+interface VisibleNodeDatum extends NodeRecord {
+  isAggregate: boolean;
+  memberNodeIds: string[];
+}
+
+interface VisibleEdgeDatum extends EdgeRecord {
+  memberEdgeIds: string[];
+}
+
+interface AggregateGroup {
+  id: string;
+  groupKey: string;
+  label: string;
+  memberNodeIds: string[];
+  representativeLayer: string;
+  collapsed: boolean;
+  centroidX: number;
+  centroidY: number;
+}
+
+interface AggregationResult {
+  nodes: VisibleNodeDatum[];
+  edges: VisibleEdgeDatum[];
+  nodeIdToVisibleId: Map<string, string>;
+  nodeIdToCollapsedAggregateId: Map<string, string>;
+  aggregatesById: Map<string, AggregateGroup>;
+}
 
 interface RuntimeState {
   baseGraph: GraphSnapshot | undefined;
@@ -42,7 +64,19 @@ interface RuntimeState {
   selectedId: string | undefined;
   selectedKind: SelectedKind | undefined;
   playbackStatus: "playing" | "paused";
+  expandedAggregateIds: Set<string>;
+  latestAggregation: AggregationResult | undefined;
 }
+
+const NODE_RADIUS = 20;
+const AGGREGATE_NODE_RADIUS = 27;
+const EDGE_PADDING = NODE_RADIUS + 4;
+const EDGE_CURVE_BASE = 16;
+const EDGE_CURVE_STEP = 9;
+const EDGE_CURVE_MAX = 68;
+const AGGREGATION_MIN_TOTAL_NODES = 20;
+const AGGREGATION_MIN_GROUP_SIZE = 4;
+const AGGREGATION_RECENT_EVENT_WINDOW = 8;
 
 interface EdgePathGeometry {
   path: string;
@@ -54,6 +88,8 @@ const vscodeApi = acquireVsCodeApi<{ selectedId?: string; selectedKind?: Selecte
 
 const runtimeState: RuntimeState = {
   baseGraph: undefined,
+  expandedAggregateIds: new Set<string>(),
+  latestAggregation: undefined,
   workingGraph: undefined,
   events: [],
   appliedEvents: [],
@@ -110,13 +146,12 @@ function resizeGraphSurface(): void {
   svgSelection.attr("width", Math.max(320, width)).attr("height", Math.max(320, height));
 }
 
-function fitGraphViewBox(): void {
-  const graph = runtimeState.workingGraph;
-  if (!graph || graph.nodes.length === 0) {
+function fitGraphViewBox(nodes: NodeRecord[]): void {
+  if (nodes.length === 0) {
     return;
   }
 
-  const bounds = graph.nodes.reduce(
+  const bounds = nodes.reduce(
     (accumulator, node) => ({
       minX: Math.min(accumulator.minX, node.x),
       minY: Math.min(accumulator.minY, node.y),
@@ -150,6 +185,319 @@ function findNodeById(id: string): NodeRecord | undefined {
 
 function findEdgeById(id: string): EdgeRecord | undefined {
   return runtimeState.workingGraph?.edges.find((edge) => edge.id === id);
+}
+
+function getNodeLayerValue(node: NodeRecord): string {
+  const layer = node.properties?.layer;
+  if (typeof layer === "number" || typeof layer === "string") {
+    return String(layer);
+  }
+
+  return `x-${Math.round(node.x / 220)}`;
+}
+
+function getNodeGroupingKey(node: NodeRecord): string {
+  const layer = getNodeLayerValue(node);
+  const role =
+    typeof node.properties?.role === "string" ? node.properties.role : "default";
+  return `${layer}|${role}`;
+}
+
+function resolveEdgeById(edgeId: string, snapshot: GraphSnapshot): EdgeRecord | undefined {
+  const inWorking = snapshot.edges.find((edge) => edge.id === edgeId);
+  if (inWorking) {
+    return inWorking;
+  }
+
+  const inBase = runtimeState.baseGraph?.edges.find((edge) => edge.id === edgeId);
+  if (inBase) {
+    return inBase;
+  }
+
+  const createEvent = runtimeState.events.find(
+    (event) => event.eventType === "edge_create" && event.edge.id === edgeId,
+  );
+  if (createEvent && createEvent.eventType === "edge_create") {
+    return createEvent.edge;
+  }
+
+  return undefined;
+}
+
+function getEventRelatedNodeIds(event: GraphEvent, snapshot: GraphSnapshot): string[] {
+  switch (event.eventType) {
+    case "node_create":
+      return [event.node.id];
+    case "edge_create":
+      return [event.edge.source, event.edge.target];
+    case "edge_update":
+    case "edge_delete": {
+      const edge = resolveEdgeById(event.id, snapshot);
+      return edge ? [edge.source, edge.target] : [];
+    }
+  }
+}
+
+function getInterestingNodeIds(snapshot: GraphSnapshot): Set<string> {
+  const interestingIds = new Set<string>();
+
+  if (runtimeState.selectedId && runtimeState.selectedKind === "node") {
+    interestingIds.add(runtimeState.selectedId);
+  }
+
+  if (runtimeState.selectedId && runtimeState.selectedKind === "edge") {
+    const selectedEdge = resolveEdgeById(runtimeState.selectedId, snapshot);
+    if (selectedEdge) {
+      interestingIds.add(selectedEdge.source);
+      interestingIds.add(selectedEdge.target);
+    }
+  }
+
+  const recentEvents = runtimeState.appliedEvents.slice(-AGGREGATION_RECENT_EVENT_WINDOW);
+  recentEvents.forEach((event) => {
+    getEventRelatedNodeIds(event, snapshot).forEach((nodeId) => interestingIds.add(nodeId));
+  });
+
+  snapshot.nodes.forEach((node) => {
+    const role = node.properties?.role;
+    if (role === "source" || role === "target") {
+      interestingIds.add(node.id);
+    }
+  });
+
+  return interestingIds;
+}
+
+function createIdentityAggregation(snapshot: GraphSnapshot): AggregationResult {
+  const nodes: VisibleNodeDatum[] = snapshot.nodes.map((node) => ({
+    ...node,
+    isAggregate: false,
+    memberNodeIds: [node.id],
+  }));
+
+  const edges: VisibleEdgeDatum[] = snapshot.edges.map((edge) => ({
+    ...edge,
+    memberEdgeIds: [edge.id],
+  }));
+
+  const nodeIdToVisibleId = new Map<string, string>();
+  snapshot.nodes.forEach((node) => {
+    nodeIdToVisibleId.set(node.id, node.id);
+  });
+
+  return {
+    nodes,
+    edges,
+    nodeIdToVisibleId,
+    nodeIdToCollapsedAggregateId: new Map<string, string>(),
+    aggregatesById: new Map<string, AggregateGroup>(),
+  };
+}
+
+function deriveAggregation(snapshot: GraphSnapshot): AggregationResult {
+  if (snapshot.nodes.length < AGGREGATION_MIN_TOTAL_NODES) {
+    return createIdentityAggregation(snapshot);
+  }
+
+  const interestingNodeIds = getInterestingNodeIds(snapshot);
+  const groupedCandidates = new Map<string, NodeRecord[]>();
+
+  snapshot.nodes.forEach((node) => {
+    if (interestingNodeIds.has(node.id)) {
+      return;
+    }
+
+    const groupKey = getNodeGroupingKey(node);
+    const group = groupedCandidates.get(groupKey) ?? [];
+    group.push(node);
+    groupedCandidates.set(groupKey, group);
+  });
+
+  const aggregatesById = new Map<string, AggregateGroup>();
+  groupedCandidates.forEach((members, groupKey) => {
+    if (members.length < AGGREGATION_MIN_GROUP_SIZE) {
+      return;
+    }
+
+    const aggregateId = `agg:${groupKey}`;
+    const centroidX =
+      members.reduce((sum, node) => sum + node.x, 0) / Math.max(1, members.length);
+    const centroidY =
+      members.reduce((sum, node) => sum + node.y, 0) / Math.max(1, members.length);
+    const representativeLayer = getNodeLayerValue(members[0]);
+
+    aggregatesById.set(aggregateId, {
+      id: aggregateId,
+      groupKey,
+      label: `L${representativeLayer} (${members.length})`,
+      memberNodeIds: members.map((member) => member.id),
+      representativeLayer,
+      collapsed: !runtimeState.expandedAggregateIds.has(aggregateId),
+      centroidX,
+      centroidY,
+    });
+  });
+
+  if (aggregatesById.size === 0) {
+    return createIdentityAggregation(snapshot);
+  }
+
+  const nodeIdToVisibleId = new Map<string, string>();
+  const nodeIdToCollapsedAggregateId = new Map<string, string>();
+
+  aggregatesById.forEach((group) => {
+    if (!group.collapsed) {
+      group.memberNodeIds.forEach((memberNodeId) => {
+        nodeIdToVisibleId.set(memberNodeId, memberNodeId);
+      });
+      return;
+    }
+
+    group.memberNodeIds.forEach((memberNodeId) => {
+      nodeIdToVisibleId.set(memberNodeId, group.id);
+      nodeIdToCollapsedAggregateId.set(memberNodeId, group.id);
+    });
+  });
+
+  const hiddenNodeIds = new Set<string>(nodeIdToCollapsedAggregateId.keys());
+  const visibleNodes: VisibleNodeDatum[] = [];
+
+  snapshot.nodes.forEach((node) => {
+    if (hiddenNodeIds.has(node.id)) {
+      return;
+    }
+
+    visibleNodes.push({
+      ...node,
+      isAggregate: false,
+      memberNodeIds: [node.id],
+    });
+    if (!nodeIdToVisibleId.has(node.id)) {
+      nodeIdToVisibleId.set(node.id, node.id);
+    }
+  });
+
+  aggregatesById.forEach((group) => {
+    if (!group.collapsed) {
+      return;
+    }
+
+    visibleNodes.push({
+      id: group.id,
+      label: group.label,
+      x: group.centroidX,
+      y: group.centroidY,
+      properties: {
+        aggregate: true,
+        memberCount: group.memberNodeIds.length,
+        layer: group.representativeLayer,
+      },
+      isAggregate: true,
+      memberNodeIds: [...group.memberNodeIds],
+    });
+  });
+
+  const edgeBuckets = new Map<string, { source: string; target: string; rawEdges: EdgeRecord[] }>();
+
+  snapshot.edges.forEach((edge) => {
+    const mappedSource = nodeIdToVisibleId.get(edge.source) ?? edge.source;
+    const mappedTarget = nodeIdToVisibleId.get(edge.target) ?? edge.target;
+
+    if (mappedSource === mappedTarget) {
+      return;
+    }
+
+    const bucketId = `${mappedSource}->${mappedTarget}`;
+    const bucket = edgeBuckets.get(bucketId) ?? {
+      source: mappedSource,
+      target: mappedTarget,
+      rawEdges: [],
+    };
+    bucket.rawEdges.push(edge);
+    edgeBuckets.set(bucketId, bucket);
+  });
+
+  const visibleEdges: VisibleEdgeDatum[] = [];
+  edgeBuckets.forEach((bucket, bucketId) => {
+    const memberEdgeIds = bucket.rawEdges.map((edge) => edge.id);
+    const firstEdge = bucket.rawEdges[0];
+    const edgeCount = bucket.rawEdges.length;
+    const averageWeight =
+      bucket.rawEdges
+        .map((edge) => edge.weight)
+        .filter((weight): weight is number => typeof weight === "number")
+        .reduce((sum, weight) => sum + weight, 0) /
+      Math.max(1, bucket.rawEdges.filter((edge) => typeof edge.weight === "number").length);
+
+    visibleEdges.push({
+      id: edgeCount === 1 ? firstEdge.id : `agg-edge:${bucketId}`,
+      source: bucket.source,
+      target: bucket.target,
+      label: edgeCount > 1 ? `${edgeCount} edges` : firstEdge.label,
+      weight: Number.isFinite(averageWeight) ? averageWeight : firstEdge.weight,
+      properties:
+        edgeCount > 1
+          ? {
+              aggregate: true,
+              edgeCount,
+            }
+          : firstEdge.properties,
+      memberEdgeIds,
+    });
+  });
+
+  return {
+    nodes: visibleNodes,
+    edges: visibleEdges,
+    nodeIdToVisibleId,
+    nodeIdToCollapsedAggregateId,
+    aggregatesById,
+  };
+}
+
+function ensureExpandedForNode(nodeId: string): boolean {
+  const graph = runtimeState.workingGraph;
+  if (!graph) {
+    return false;
+  }
+
+  const aggregation = deriveAggregation(graph);
+  const aggregateId = aggregation.nodeIdToCollapsedAggregateId.get(nodeId);
+  if (!aggregateId) {
+    return false;
+  }
+
+  runtimeState.expandedAggregateIds.add(aggregateId);
+  return true;
+}
+
+function expandAggregate(aggregateId: string): void {
+  runtimeState.expandedAggregateIds.add(aggregateId);
+}
+
+function autoExpandForEvent(event: GraphEvent): boolean {
+  const graph = runtimeState.workingGraph;
+  if (!graph) {
+    return false;
+  }
+
+  const aggregation = deriveAggregation(graph);
+  const relatedNodeIds = getEventRelatedNodeIds(event, graph);
+  let expanded = false;
+
+  relatedNodeIds.forEach((nodeId) => {
+    const aggregateId = aggregation.nodeIdToCollapsedAggregateId.get(nodeId);
+    if (!aggregateId) {
+      return;
+    }
+
+    if (!runtimeState.expandedAggregateIds.has(aggregateId)) {
+      runtimeState.expandedAggregateIds.add(aggregateId);
+      expanded = true;
+    }
+  });
+
+  return expanded;
 }
 
 function clampPlaybackSpeed(value: number): number {
@@ -279,22 +627,36 @@ function buildEdgePathGeometry(
   };
 }
 
-function isEdgeRelevantToSelection(edge: EdgeRecord): boolean {
+function isEdgeRelevantToSelection(edge: VisibleEdgeDatum, aggregation: AggregationResult): boolean {
   if (!runtimeState.selectedId || !runtimeState.selectedKind) {
     return true;
   }
 
   if (runtimeState.selectedKind === "edge") {
-    return edge.id === runtimeState.selectedId;
+    return edge.memberEdgeIds.includes(runtimeState.selectedId);
   }
 
-  return edge.source === runtimeState.selectedId || edge.target === runtimeState.selectedId;
+  if (runtimeState.selectedKind === "aggregate") {
+    return edge.source === runtimeState.selectedId || edge.target === runtimeState.selectedId;
+  }
+
+  const selectedVisibleId =
+    aggregation.nodeIdToVisibleId.get(runtimeState.selectedId) ?? runtimeState.selectedId;
+  return edge.source === selectedVisibleId || edge.target === selectedVisibleId;
 }
 
 function selectNode(nodeId: string): void {
   runtimeState.selectedId = nodeId;
   runtimeState.selectedKind = "node";
   vscodeApi.setState({ selectedId: nodeId, selectedKind: "node" });
+  renderGraph();
+  renderDetailsPanel();
+}
+
+function selectAggregate(aggregateId: string): void {
+  runtimeState.selectedId = aggregateId;
+  runtimeState.selectedKind = "aggregate";
+  vscodeApi.setState({ selectedId: aggregateId, selectedKind: "aggregate" });
   renderGraph();
   renderDetailsPanel();
 }
@@ -331,11 +693,39 @@ function reconcileSelection(): void {
   ) {
     clearSelection();
   }
+
+  if (runtimeState.selectedKind === "aggregate") {
+    const aggregate = runtimeState.latestAggregation?.aggregatesById.get(runtimeState.selectedId);
+    if (!aggregate || !aggregate.collapsed) {
+      clearSelection();
+    }
+  }
 }
 
 function renderDetailsPanel(): void {
   if (!runtimeState.selectedId || !runtimeState.selectedKind) {
     detailsElement.textContent = "Select a node or edge.";
+    return;
+  }
+
+  if (runtimeState.selectedKind === "aggregate") {
+    const aggregate = runtimeState.latestAggregation?.aggregatesById.get(runtimeState.selectedId);
+    if (!aggregate) {
+      detailsElement.textContent = "Selected aggregate is no longer present in the active graph state.";
+      return;
+    }
+
+    detailsElement.textContent = JSON.stringify(
+      {
+        id: aggregate.id,
+        groupKey: aggregate.groupKey,
+        layer: aggregate.representativeLayer,
+        memberCount: aggregate.memberNodeIds.length,
+        memberPreview: aggregate.memberNodeIds.slice(0, 20),
+      },
+      null,
+      2,
+    );
     return;
   }
 
@@ -383,13 +773,16 @@ function renderGraph(): void {
     return;
   }
 
-  fitGraphViewBox();
+  const aggregation = deriveAggregation(graph);
+  runtimeState.latestAggregation = aggregation;
 
-  const nodeMap = new Map(graph.nodes.map((node) => [node.id, node]));
-  const sourceRanks = buildSourceRanks(graph.edges);
+  fitGraphViewBox(aggregation.nodes);
+
+  const nodeMap = new Map(aggregation.nodes.map((node) => [node.id, node]));
+  const sourceRanks = buildSourceRanks(aggregation.edges);
   const edgeGeometryMap = new Map<string, EdgePathGeometry>();
 
-  graph.edges.forEach((edge) => {
+  aggregation.edges.forEach((edge) => {
     edgeGeometryMap.set(
       edge.id,
       buildEdgePathGeometry(edge, nodeMap.get(edge.source), nodeMap.get(edge.target), sourceRanks),
@@ -397,35 +790,40 @@ function renderGraph(): void {
   });
 
   const edgeSelection = edgeLayer
-    .selectAll<SVGGElement, EdgeRecord>("g.edge")
-    .data(graph.edges, (edge: EdgeRecord) => edge.id);
+    .selectAll<SVGGElement, VisibleEdgeDatum>("g.edge")
+    .data(aggregation.edges, (edge: VisibleEdgeDatum) => edge.id);
 
   const edgeEnterSelection = edgeSelection
     .enter()
     .append("g")
     .attr("class", "edge")
     .style("opacity", 0)
-    .on("click", (_event: MouseEvent, edge: EdgeRecord) => {
-      selectEdge(edge.id);
+    .on("click", (_event: MouseEvent, edge: VisibleEdgeDatum) => {
+      if (edge.memberEdgeIds.length === 1) {
+        selectEdge(edge.memberEdgeIds[0]);
+      }
     });
 
   edgeEnterSelection.append("path");
   edgeEnterSelection.append("text").attr("class", "edge-label");
 
   const edgeMergedSelection = edgeEnterSelection.merge(
-    edgeSelection as d3.Selection<SVGGElement, EdgeRecord, SVGGElement, unknown>,
+    edgeSelection as d3.Selection<SVGGElement, VisibleEdgeDatum, SVGGElement, unknown>,
   );
 
   edgeMergedSelection.classed(
     "selected",
-    (edge: EdgeRecord) =>
-      runtimeState.selectedKind === "edge" && runtimeState.selectedId === edge.id,
+    (edge: VisibleEdgeDatum) =>
+      runtimeState.selectedKind === "edge" &&
+      !!runtimeState.selectedId &&
+      edge.memberEdgeIds.includes(runtimeState.selectedId),
   );
-  edgeMergedSelection.classed("state-best-path", (edge: EdgeRecord) => getEdgeStatus(edge) === "best-path");
-  edgeMergedSelection.classed("state-pruned", (edge: EdgeRecord) => getEdgeStatus(edge) === "pruned");
+  edgeMergedSelection.classed("state-best-path", (edge: VisibleEdgeDatum) => getEdgeStatus(edge) === "best-path");
+  edgeMergedSelection.classed("state-pruned", (edge: VisibleEdgeDatum) => getEdgeStatus(edge) === "pruned");
+  edgeMergedSelection.classed("aggregate", (edge: VisibleEdgeDatum) => edge.memberEdgeIds.length > 1);
   edgeMergedSelection.classed(
     "deemphasized",
-    (edge: EdgeRecord) => !isEdgeRelevantToSelection(edge),
+    (edge: VisibleEdgeDatum) => !isEdgeRelevantToSelection(edge, aggregation),
   );
 
   edgeMergedSelection
@@ -433,7 +831,7 @@ function renderGraph(): void {
     .interrupt()
     .transition()
     .duration(EDGE_TRANSITION_MS)
-    .attr("d", (edge: EdgeRecord) => edgeGeometryMap.get(edge.id)?.path ?? "");
+    .attr("d", (edge: VisibleEdgeDatum) => edgeGeometryMap.get(edge.id)?.path ?? "");
 
   edgeMergedSelection
     .select("text")
@@ -442,13 +840,17 @@ function renderGraph(): void {
     .duration(EDGE_TRANSITION_MS)
     .attr(
       "x",
-      (edge: EdgeRecord) => edgeGeometryMap.get(edge.id)?.midX ?? 0,
+      (edge: VisibleEdgeDatum) => edgeGeometryMap.get(edge.id)?.midX ?? 0,
     )
     .attr(
       "y",
-      (edge: EdgeRecord) => (edgeGeometryMap.get(edge.id)?.midY ?? 0) - 8,
+      (edge: VisibleEdgeDatum) => (edgeGeometryMap.get(edge.id)?.midY ?? 0) - 8,
     )
-    .text((edge: EdgeRecord) => {
+    .text((edge: VisibleEdgeDatum) => {
+      if (edge.memberEdgeIds.length > 1) {
+        return `${edge.memberEdgeIds.length} edges`;
+      }
+
       if (edge.weight !== undefined) {
         return `${edge.weight}`;
       }
@@ -473,16 +875,25 @@ function renderGraph(): void {
     .remove();
 
   const nodeSelection = nodeLayer
-    .selectAll<SVGGElement, NodeRecord>("g.node")
-    .data(graph.nodes, (node: NodeRecord) => node.id);
+    .selectAll<SVGGElement, VisibleNodeDatum>("g.node")
+    .data(aggregation.nodes, (node: VisibleNodeDatum) => node.id);
 
   const nodeEnterSelection = nodeSelection
     .enter()
     .append("g")
     .attr("class", "node")
-    .attr("transform", (node: NodeRecord) => `translate(${node.x}, ${node.y})`)
+    .attr("transform", (node: VisibleNodeDatum) => `translate(${node.x}, ${node.y})`)
     .style("opacity", 1)
-    .on("click", (_event: MouseEvent, node: NodeRecord) => {
+    .on("click", (_event: MouseEvent, node: VisibleNodeDatum) => {
+      if (node.isAggregate) {
+        selectAggregate(node.id);
+        expandAggregate(node.id);
+        renderGraph();
+        renderDetailsPanel();
+        setStatus(`Expanded aggregate ${node.id}.`);
+        return;
+      }
+
       selectNode(node.id);
     });
 
@@ -493,22 +904,51 @@ function renderGraph(): void {
     .attr("dy", "0.35em");
 
   const nodeMergedSelection = nodeEnterSelection.merge(
-    nodeSelection as d3.Selection<SVGGElement, NodeRecord, SVGGElement, unknown>,
+    nodeSelection as d3.Selection<SVGGElement, VisibleNodeDatum, SVGGElement, unknown>,
   );
 
   nodeMergedSelection.classed(
     "selected",
-    (node: NodeRecord) =>
-      runtimeState.selectedKind === "node" && runtimeState.selectedId === node.id,
+    (node: VisibleNodeDatum) => {
+      if (!runtimeState.selectedId || !runtimeState.selectedKind) {
+        return false;
+      }
+
+      if (runtimeState.selectedKind === "aggregate") {
+        return node.id === runtimeState.selectedId;
+      }
+
+      if (runtimeState.selectedKind === "node") {
+        if (node.id === runtimeState.selectedId) {
+          return true;
+        }
+
+        return node.isAggregate && node.memberNodeIds.includes(runtimeState.selectedId);
+      }
+
+      return false;
+    },
   );
+  nodeMergedSelection.classed("aggregate", (node: VisibleNodeDatum) => node.isAggregate);
 
   nodeMergedSelection
     .interrupt()
     .transition()
     .duration(NODE_TRANSITION_MS)
-    .attr("transform", (node: NodeRecord) => `translate(${node.x}, ${node.y})`);
+    .attr("transform", (node: VisibleNodeDatum) => `translate(${node.x}, ${node.y})`);
 
-  nodeMergedSelection.select("text").text((node: NodeRecord) => node.label);
+  nodeMergedSelection
+    .select("circle")
+    .interrupt()
+    .transition()
+    .duration(NODE_TRANSITION_MS)
+    .attr("r", (node: VisibleNodeDatum) =>
+      node.isAggregate
+        ? Math.min(AGGREGATE_NODE_RADIUS + node.memberNodeIds.length * 0.8, 40)
+        : NODE_RADIUS,
+    );
+
+  nodeMergedSelection.select("text").text((node: VisibleNodeDatum) => node.label);
 
   nodeMergedSelection.style("opacity", 1);
 
@@ -532,6 +972,9 @@ function focusById(targetId: string): boolean {
   let targetY: number;
 
   if (node) {
+    if (ensureExpandedForNode(node.id)) {
+      renderGraph();
+    }
     targetX = node.x;
     targetY = node.y;
     selectNode(node.id);
@@ -545,6 +988,12 @@ function focusById(targetId: string): boolean {
     const targetNode = graph.nodes.find((entry) => entry.id === edge.target);
     if (!sourceNode || !targetNode) {
       return false;
+    }
+
+    const expandedSource = ensureExpandedForNode(sourceNode.id);
+    const expandedTarget = ensureExpandedForNode(targetNode.id);
+    if (expandedSource || expandedTarget) {
+      renderGraph();
     }
 
     targetX = (sourceNode.x + targetNode.x) / 2;
@@ -574,6 +1023,7 @@ function resetGraphToBaseline(): void {
   runtimeState.workingGraph = cloneGraphSnapshot(runtimeState.baseGraph);
   runtimeState.appliedEvents = [];
   runtimeState.eventCursor = 0;
+  runtimeState.latestAggregation = undefined;
 }
 
 function applyNextEvent(): GraphEvent | undefined {
@@ -605,6 +1055,11 @@ function syncGraphToEventIndex(targetEventIndex: number): void {
   }
 
   while (runtimeState.eventCursor < clampedTarget) {
+    const pendingEvent = runtimeState.events[runtimeState.eventCursor];
+    if (pendingEvent) {
+      autoExpandForEvent(pendingEvent);
+    }
+
     const nextEvent = applyNextEvent();
     if (!nextEvent) {
       break;
@@ -668,6 +1123,8 @@ function handleInitData(payload: GraphDataFile): void {
   runtimeState.appliedEvents = [];
   runtimeState.eventCursor = 0;
   runtimeState.playbackStatus = "paused";
+  runtimeState.expandedAggregateIds.clear();
+  runtimeState.latestAggregation = undefined;
 
   const persistedState = vscodeApi.getState();
   if (persistedState?.selectedId && persistedState.selectedKind) {

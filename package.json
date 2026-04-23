@@ -20,6 +20,10 @@
         "title": "GraphDyVis: Show A* Demo"
       },
       {
+        "command": "graphdyvis.showAggregationDemo",
+        "title": "GraphDyVis: Show Aggregation Demo"
+      },
+      {
         "command": "graphdyvis.showLegacyVisualization",
         "title": "GraphDyVis: Show Legacy Sample"
       }

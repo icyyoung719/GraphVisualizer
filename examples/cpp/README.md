@@ -6,6 +6,8 @@ This folder contains a lightweight C++17 example that emits GraphDyVis-compatibl
 
 - `graphdyvis_astar.hpp`: header-only demo library
 - `astar_demo.cpp`: minimal CLI that writes JSON to stdout or a file
+- `graphdyvis_workflow.hpp`: layered service-flow demo for aggregation testing
+- `workflow_demo.cpp`: CLI for the workflow demo generator
 
 ## Build
 
@@ -35,3 +37,16 @@ Useful knobs:
 - `--width=N`: increases the number of nodes per layer
 - `--seed=N`: changes the deterministic edge weights
 - `--output=FILE`: writes the JSON to a file instead of stdout
+
+Generate the richer aggregation-oriented sample:
+
+```powershell
+.\workflow_demo.exe --domains=4 --services=6 --seed=23 --output=data\aggregation-sample-events.json
+```
+
+Workflow knobs:
+
+- `--domains=N`: number of domain layers in the flow
+- `--services=N`: number of services per domain layer
+- `--seed=N`: deterministic branch weight pattern
+- `--output=FILE`: writes JSON to file (otherwise stdout)

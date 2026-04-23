@@ -13,8 +13,10 @@ import {
 import { GraphDataFile } from "./protocol/events";
 
 const SHOW_VISUALIZATION_COMMAND = "graphdyvis.showVisualization";
+const SHOW_AGGREGATION_VISUALIZATION_COMMAND = "graphdyvis.showAggregationDemo";
 const SHOW_LEGACY_VISUALIZATION_COMMAND = "graphdyvis.showLegacyVisualization";
 const DEFAULT_SAMPLE_FILE = "astar-sample-events.json";
+const AGGREGATION_SAMPLE_FILE = "aggregation-sample-events.json";
 const LEGACY_SAMPLE_FILE = "sample-events.json";
 const PLAYBACK_INTERVAL_MS = 900;
 const PLAYBACK_FRAME_MS = 33;
@@ -25,6 +27,9 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand(SHOW_VISUALIZATION_COMMAND, () => {
       GraphVisualizerPanel.createOrShow(context, DEFAULT_SAMPLE_FILE);
+    }),
+    vscode.commands.registerCommand(SHOW_AGGREGATION_VISUALIZATION_COMMAND, () => {
+      GraphVisualizerPanel.createOrShow(context, AGGREGATION_SAMPLE_FILE);
     }),
     vscode.commands.registerCommand(SHOW_LEGACY_VISUALIZATION_COMMAND, () => {
       GraphVisualizerPanel.createOrShow(context, LEGACY_SAMPLE_FILE);
@@ -76,7 +81,11 @@ class GraphVisualizerPanel {
 
     const panel = vscode.window.createWebviewPanel(
       GraphVisualizerPanel.viewType,
-      sampleFileName === DEFAULT_SAMPLE_FILE ? "GraphDyVis - A* Demo" : "GraphDyVis - Legacy Sample",
+      sampleFileName === DEFAULT_SAMPLE_FILE
+        ? "GraphDyVis - A* Demo"
+        : sampleFileName === AGGREGATION_SAMPLE_FILE
+          ? "GraphDyVis - Aggregation Demo"
+          : "GraphDyVis - Legacy Sample",
       column ?? vscode.ViewColumn.One,
       {
         enableScripts: true,

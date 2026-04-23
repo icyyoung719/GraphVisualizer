@@ -1,0 +1,2253 @@
+{
+  "schemaVersion": "1.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "ingress",
+        "label": "Ingress",
+        "x": 120,
+        "y": 220,
+        "properties": {
+          "role": "source",
+          "layer": 0,
+          "domain": "gateway"
+        }
+      },
+      {
+        "id": "D0_S0",
+        "label": "svc_0_0",
+        "x": 320,
+        "y": 70,
+        "properties": {
+          "role": "service",
+          "layer": 1,
+          "domain": "domain_0"
+        }
+      },
+      {
+        "id": "D0_S1",
+        "label": "svc_0_1",
+        "x": 320,
+        "y": 140,
+        "properties": {
+          "role": "service",
+          "layer": 1,
+          "domain": "domain_0"
+        }
+      },
+      {
+        "id": "D0_S2",
+        "label": "svc_0_2",
+        "x": 320,
+        "y": 210,
+        "properties": {
+          "role": "service",
+          "layer": 1,
+          "domain": "domain_0"
+        }
+      },
+      {
+        "id": "D0_S3",
+        "label": "svc_0_3",
+        "x": 320,
+        "y": 280,
+        "properties": {
+          "role": "service",
+          "layer": 1,
+          "domain": "domain_0"
+        }
+      },
+      {
+        "id": "D0_S4",
+        "label": "svc_0_4",
+        "x": 320,
+        "y": 350,
+        "properties": {
+          "role": "service",
+          "layer": 1,
+          "domain": "domain_0"
+        }
+      },
+      {
+        "id": "D0_S5",
+        "label": "svc_0_5",
+        "x": 320,
+        "y": 420,
+        "properties": {
+          "role": "service",
+          "layer": 1,
+          "domain": "domain_0"
+        }
+      },
+      {
+        "id": "D1_S0",
+        "label": "svc_1_0",
+        "x": 520,
+        "y": 70,
+        "properties": {
+          "role": "service",
+          "layer": 2,
+          "domain": "domain_1"
+        }
+      },
+      {
+        "id": "D1_S1",
+        "label": "svc_1_1",
+        "x": 520,
+        "y": 140,
+        "properties": {
+          "role": "service",
+          "layer": 2,
+          "domain": "domain_1"
+        }
+      },
+      {
+        "id": "D1_S2",
+        "label": "svc_1_2",
+        "x": 520,
+        "y": 210,
+        "properties": {
+          "role": "service",
+          "layer": 2,
+          "domain": "domain_1"
+        }
+      },
+      {
+        "id": "D1_S3",
+        "label": "svc_1_3",
+        "x": 520,
+        "y": 280,
+        "properties": {
+          "role": "service",
+          "layer": 2,
+          "domain": "domain_1"
+        }
+      },
+      {
+        "id": "D1_S4",
+        "label": "svc_1_4",
+        "x": 520,
+        "y": 350,
+        "properties": {
+          "role": "service",
+          "layer": 2,
+          "domain": "domain_1"
+        }
+      },
+      {
+        "id": "D1_S5",
+        "label": "svc_1_5",
+        "x": 520,
+        "y": 420,
+        "properties": {
+          "role": "service",
+          "layer": 2,
+          "domain": "domain_1"
+        }
+      },
+      {
+        "id": "D2_S0",
+        "label": "svc_2_0",
+        "x": 720,
+        "y": 70,
+        "properties": {
+          "role": "service",
+          "layer": 3,
+          "domain": "domain_2"
+        }
+      },
+      {
+        "id": "D2_S1",
+        "label": "svc_2_1",
+        "x": 720,
+        "y": 140,
+        "properties": {
+          "role": "service",
+          "layer": 3,
+          "domain": "domain_2"
+        }
+      },
+      {
+        "id": "D2_S2",
+        "label": "svc_2_2",
+        "x": 720,
+        "y": 210,
+        "properties": {
+          "role": "service",
+          "layer": 3,
+          "domain": "domain_2"
+        }
+      },
+      {
+        "id": "D2_S3",
+        "label": "svc_2_3",
+        "x": 720,
+        "y": 280,
+        "properties": {
+          "role": "service",
+          "layer": 3,
+          "domain": "domain_2"
+        }
+      },
+      {
+        "id": "D2_S4",
+        "label": "svc_2_4",
+        "x": 720,
+        "y": 350,
+        "properties": {
+          "role": "service",
+          "layer": 3,
+          "domain": "domain_2"
+        }
+      },
+      {
+        "id": "D2_S5",
+        "label": "svc_2_5",
+        "x": 720,
+        "y": 420,
+        "properties": {
+          "role": "service",
+          "layer": 3,
+          "domain": "domain_2"
+        }
+      },
+      {
+        "id": "D3_S0",
+        "label": "svc_3_0",
+        "x": 920,
+        "y": 70,
+        "properties": {
+          "role": "service",
+          "layer": 4,
+          "domain": "domain_3"
+        }
+      },
+      {
+        "id": "D3_S1",
+        "label": "svc_3_1",
+        "x": 920,
+        "y": 140,
+        "properties": {
+          "role": "service",
+          "layer": 4,
+          "domain": "domain_3"
+        }
+      },
+      {
+        "id": "D3_S2",
+        "label": "svc_3_2",
+        "x": 920,
+        "y": 210,
+        "properties": {
+          "role": "service",
+          "layer": 4,
+          "domain": "domain_3"
+        }
+      },
+      {
+        "id": "D3_S3",
+        "label": "svc_3_3",
+        "x": 920,
+        "y": 280,
+        "properties": {
+          "role": "service",
+          "layer": 4,
+          "domain": "domain_3"
+        }
+      },
+      {
+        "id": "D3_S4",
+        "label": "svc_3_4",
+        "x": 920,
+        "y": 350,
+        "properties": {
+          "role": "service",
+          "layer": 4,
+          "domain": "domain_3"
+        }
+      },
+      {
+        "id": "D3_S5",
+        "label": "svc_3_5",
+        "x": 920,
+        "y": 420,
+        "properties": {
+          "role": "service",
+          "layer": 4,
+          "domain": "domain_3"
+        }
+      },
+      {
+        "id": "egress",
+        "label": "Egress",
+        "x": 1120,
+        "y": 220,
+        "properties": {
+          "role": "target",
+          "layer": 5,
+          "domain": "gateway"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "ingress->D0_S0",
+        "source": "ingress",
+        "target": "D0_S0",
+        "label": "2",
+        "weight": 2,
+        "properties": {
+          "channel": "ingress"
+        }
+      },
+      {
+        "id": "ingress->D0_S1",
+        "source": "ingress",
+        "target": "D0_S1",
+        "label": "3",
+        "weight": 3,
+        "properties": {
+          "channel": "ingress"
+        }
+      },
+      {
+        "id": "ingress->D0_S2",
+        "source": "ingress",
+        "target": "D0_S2",
+        "label": "3",
+        "weight": 3,
+        "properties": {
+          "channel": "ingress"
+        }
+      },
+      {
+        "id": "ingress->D0_S3",
+        "source": "ingress",
+        "target": "D0_S3",
+        "label": "1",
+        "weight": 1,
+        "properties": {
+          "channel": "ingress"
+        }
+      },
+      {
+        "id": "ingress->D0_S4",
+        "source": "ingress",
+        "target": "D0_S4",
+        "label": "3",
+        "weight": 3,
+        "properties": {
+          "channel": "ingress"
+        }
+      },
+      {
+        "id": "ingress->D0_S5",
+        "source": "ingress",
+        "target": "D0_S5",
+        "label": "3",
+        "weight": 3,
+        "properties": {
+          "channel": "ingress"
+        }
+      },
+      {
+        "id": "D0_S0->D1_S0",
+        "source": "D0_S0",
+        "target": "D1_S0",
+        "label": "1",
+        "weight": 1,
+        "properties": {
+          "channel": "critical"
+        }
+      },
+      {
+        "id": "D0_S0->D1_S1",
+        "source": "D0_S0",
+        "target": "D1_S1",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S0->D1_S2",
+        "source": "D0_S0",
+        "target": "D1_S2",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S0->D1_S3",
+        "source": "D0_S0",
+        "target": "D1_S3",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S0->D1_S4",
+        "source": "D0_S0",
+        "target": "D1_S4",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S0->D1_S5",
+        "source": "D0_S0",
+        "target": "D1_S5",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S1->D1_S0",
+        "source": "D0_S1",
+        "target": "D1_S0",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S1->D1_S1",
+        "source": "D0_S1",
+        "target": "D1_S1",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S1->D1_S2",
+        "source": "D0_S1",
+        "target": "D1_S2",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S1->D1_S3",
+        "source": "D0_S1",
+        "target": "D1_S3",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S1->D1_S4",
+        "source": "D0_S1",
+        "target": "D1_S4",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S1->D1_S5",
+        "source": "D0_S1",
+        "target": "D1_S5",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S2->D1_S0",
+        "source": "D0_S2",
+        "target": "D1_S0",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S2->D1_S1",
+        "source": "D0_S2",
+        "target": "D1_S1",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S2->D1_S2",
+        "source": "D0_S2",
+        "target": "D1_S2",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S2->D1_S3",
+        "source": "D0_S2",
+        "target": "D1_S3",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S2->D1_S4",
+        "source": "D0_S2",
+        "target": "D1_S4",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S2->D1_S5",
+        "source": "D0_S2",
+        "target": "D1_S5",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S3->D1_S0",
+        "source": "D0_S3",
+        "target": "D1_S0",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S3->D1_S1",
+        "source": "D0_S3",
+        "target": "D1_S1",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S3->D1_S2",
+        "source": "D0_S3",
+        "target": "D1_S2",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S3->D1_S3",
+        "source": "D0_S3",
+        "target": "D1_S3",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S3->D1_S4",
+        "source": "D0_S3",
+        "target": "D1_S4",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S3->D1_S5",
+        "source": "D0_S3",
+        "target": "D1_S5",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S4->D1_S0",
+        "source": "D0_S4",
+        "target": "D1_S0",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S4->D1_S1",
+        "source": "D0_S4",
+        "target": "D1_S1",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S4->D1_S2",
+        "source": "D0_S4",
+        "target": "D1_S2",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S4->D1_S3",
+        "source": "D0_S4",
+        "target": "D1_S3",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S4->D1_S4",
+        "source": "D0_S4",
+        "target": "D1_S4",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S4->D1_S5",
+        "source": "D0_S4",
+        "target": "D1_S5",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S5->D1_S0",
+        "source": "D0_S5",
+        "target": "D1_S0",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S5->D1_S1",
+        "source": "D0_S5",
+        "target": "D1_S1",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S5->D1_S2",
+        "source": "D0_S5",
+        "target": "D1_S2",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S5->D1_S3",
+        "source": "D0_S5",
+        "target": "D1_S3",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S5->D1_S4",
+        "source": "D0_S5",
+        "target": "D1_S4",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D0_S5->D1_S5",
+        "source": "D0_S5",
+        "target": "D1_S5",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S0->D2_S0",
+        "source": "D1_S0",
+        "target": "D2_S0",
+        "label": "2",
+        "weight": 2,
+        "properties": {
+          "channel": "critical"
+        }
+      },
+      {
+        "id": "D1_S0->D2_S1",
+        "source": "D1_S0",
+        "target": "D2_S1",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S0->D2_S2",
+        "source": "D1_S0",
+        "target": "D2_S2",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S0->D2_S3",
+        "source": "D1_S0",
+        "target": "D2_S3",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S0->D2_S4",
+        "source": "D1_S0",
+        "target": "D2_S4",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S0->D2_S5",
+        "source": "D1_S0",
+        "target": "D2_S5",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S1->D2_S0",
+        "source": "D1_S1",
+        "target": "D2_S0",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S1->D2_S1",
+        "source": "D1_S1",
+        "target": "D2_S1",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S1->D2_S2",
+        "source": "D1_S1",
+        "target": "D2_S2",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S1->D2_S3",
+        "source": "D1_S1",
+        "target": "D2_S3",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S1->D2_S4",
+        "source": "D1_S1",
+        "target": "D2_S4",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S1->D2_S5",
+        "source": "D1_S1",
+        "target": "D2_S5",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S2->D2_S0",
+        "source": "D1_S2",
+        "target": "D2_S0",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S2->D2_S1",
+        "source": "D1_S2",
+        "target": "D2_S1",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S2->D2_S2",
+        "source": "D1_S2",
+        "target": "D2_S2",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S2->D2_S3",
+        "source": "D1_S2",
+        "target": "D2_S3",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S2->D2_S4",
+        "source": "D1_S2",
+        "target": "D2_S4",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S2->D2_S5",
+        "source": "D1_S2",
+        "target": "D2_S5",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S3->D2_S0",
+        "source": "D1_S3",
+        "target": "D2_S0",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S3->D2_S1",
+        "source": "D1_S3",
+        "target": "D2_S1",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S3->D2_S2",
+        "source": "D1_S3",
+        "target": "D2_S2",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S3->D2_S3",
+        "source": "D1_S3",
+        "target": "D2_S3",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S3->D2_S4",
+        "source": "D1_S3",
+        "target": "D2_S4",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S3->D2_S5",
+        "source": "D1_S3",
+        "target": "D2_S5",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S4->D2_S0",
+        "source": "D1_S4",
+        "target": "D2_S0",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S4->D2_S1",
+        "source": "D1_S4",
+        "target": "D2_S1",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S4->D2_S2",
+        "source": "D1_S4",
+        "target": "D2_S2",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S4->D2_S3",
+        "source": "D1_S4",
+        "target": "D2_S3",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S4->D2_S4",
+        "source": "D1_S4",
+        "target": "D2_S4",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S4->D2_S5",
+        "source": "D1_S4",
+        "target": "D2_S5",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S5->D2_S0",
+        "source": "D1_S5",
+        "target": "D2_S0",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S5->D2_S1",
+        "source": "D1_S5",
+        "target": "D2_S1",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S5->D2_S2",
+        "source": "D1_S5",
+        "target": "D2_S2",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S5->D2_S3",
+        "source": "D1_S5",
+        "target": "D2_S3",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S5->D2_S4",
+        "source": "D1_S5",
+        "target": "D2_S4",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D1_S5->D2_S5",
+        "source": "D1_S5",
+        "target": "D2_S5",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S0->D3_S0",
+        "source": "D2_S0",
+        "target": "D3_S0",
+        "label": "2",
+        "weight": 2,
+        "properties": {
+          "channel": "critical"
+        }
+      },
+      {
+        "id": "D2_S0->D3_S1",
+        "source": "D2_S0",
+        "target": "D3_S1",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S0->D3_S2",
+        "source": "D2_S0",
+        "target": "D3_S2",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S0->D3_S3",
+        "source": "D2_S0",
+        "target": "D3_S3",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S0->D3_S4",
+        "source": "D2_S0",
+        "target": "D3_S4",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S0->D3_S5",
+        "source": "D2_S0",
+        "target": "D3_S5",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S1->D3_S0",
+        "source": "D2_S1",
+        "target": "D3_S0",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S1->D3_S1",
+        "source": "D2_S1",
+        "target": "D3_S1",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S1->D3_S2",
+        "source": "D2_S1",
+        "target": "D3_S2",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S1->D3_S3",
+        "source": "D2_S1",
+        "target": "D3_S3",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S1->D3_S4",
+        "source": "D2_S1",
+        "target": "D3_S4",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S1->D3_S5",
+        "source": "D2_S1",
+        "target": "D3_S5",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S2->D3_S0",
+        "source": "D2_S2",
+        "target": "D3_S0",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S2->D3_S1",
+        "source": "D2_S2",
+        "target": "D3_S1",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S2->D3_S2",
+        "source": "D2_S2",
+        "target": "D3_S2",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S2->D3_S3",
+        "source": "D2_S2",
+        "target": "D3_S3",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S2->D3_S4",
+        "source": "D2_S2",
+        "target": "D3_S4",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S2->D3_S5",
+        "source": "D2_S2",
+        "target": "D3_S5",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S3->D3_S0",
+        "source": "D2_S3",
+        "target": "D3_S0",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S3->D3_S1",
+        "source": "D2_S3",
+        "target": "D3_S1",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S3->D3_S2",
+        "source": "D2_S3",
+        "target": "D3_S2",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S3->D3_S3",
+        "source": "D2_S3",
+        "target": "D3_S3",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S3->D3_S4",
+        "source": "D2_S3",
+        "target": "D3_S4",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S3->D3_S5",
+        "source": "D2_S3",
+        "target": "D3_S5",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S4->D3_S0",
+        "source": "D2_S4",
+        "target": "D3_S0",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S4->D3_S1",
+        "source": "D2_S4",
+        "target": "D3_S1",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S4->D3_S2",
+        "source": "D2_S4",
+        "target": "D3_S2",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S4->D3_S3",
+        "source": "D2_S4",
+        "target": "D3_S3",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S4->D3_S4",
+        "source": "D2_S4",
+        "target": "D3_S4",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S4->D3_S5",
+        "source": "D2_S4",
+        "target": "D3_S5",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S5->D3_S0",
+        "source": "D2_S5",
+        "target": "D3_S0",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S5->D3_S1",
+        "source": "D2_S5",
+        "target": "D3_S1",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S5->D3_S2",
+        "source": "D2_S5",
+        "target": "D3_S2",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S5->D3_S3",
+        "source": "D2_S5",
+        "target": "D3_S3",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S5->D3_S4",
+        "source": "D2_S5",
+        "target": "D3_S4",
+        "label": "7",
+        "weight": 7,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D2_S5->D3_S5",
+        "source": "D2_S5",
+        "target": "D3_S5",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D3_S0->egress",
+        "source": "D3_S0",
+        "target": "egress",
+        "label": "3",
+        "weight": 3,
+        "properties": {
+          "channel": "critical"
+        }
+      },
+      {
+        "id": "D3_S1->egress",
+        "source": "D3_S1",
+        "target": "egress",
+        "label": "10",
+        "weight": 10,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D3_S2->egress",
+        "source": "D3_S2",
+        "target": "egress",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D3_S3->egress",
+        "source": "D3_S3",
+        "target": "egress",
+        "label": "6",
+        "weight": 6,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D3_S4->egress",
+        "source": "D3_S4",
+        "target": "egress",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "channel": "normal"
+        }
+      },
+      {
+        "id": "D3_S5->egress",
+        "source": "D3_S5",
+        "target": "egress",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "channel": "normal"
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventType": "edge_update",
+      "id": "ingress->D0_S0",
+      "timestampMs": 600,
+      "reason": "Scheduler marked this lane as critical for stable throughput.",
+      "newProperties": {
+        "status": "best-path",
+        "throughput": 120
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "D0_S0->D1_S0",
+      "timestampMs": 1020,
+      "reason": "Scheduler marked this lane as critical for stable throughput.",
+      "newProperties": {
+        "status": "best-path",
+        "throughput": 155
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "D1_S0->D2_S0",
+      "timestampMs": 1440,
+      "reason": "Scheduler marked this lane as critical for stable throughput.",
+      "newProperties": {
+        "status": "best-path",
+        "throughput": 190
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "D2_S0->D3_S0",
+      "timestampMs": 1860,
+      "reason": "Scheduler marked this lane as critical for stable throughput.",
+      "newProperties": {
+        "status": "best-path",
+        "throughput": 225
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "D3_S0->egress",
+      "timestampMs": 2280,
+      "reason": "Scheduler marked this lane as critical for stable throughput.",
+      "newProperties": {
+        "status": "best-path",
+        "throughput": 260
+      }
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "ingress->D0_S1",
+      "timestampMs": 2700,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "ingress->D0_S2",
+      "timestampMs": 2960,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "ingress->D0_S3",
+      "timestampMs": 3220,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "ingress->D0_S4",
+      "timestampMs": 3480,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "ingress->D0_S5",
+      "timestampMs": 3740,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S0->D1_S1",
+      "timestampMs": 4000,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S0->D1_S2",
+      "timestampMs": 4260,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S0->D1_S3",
+      "timestampMs": 4520,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S0->D1_S4",
+      "timestampMs": 4780,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S0->D1_S5",
+      "timestampMs": 5040,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S1->D1_S0",
+      "timestampMs": 5300,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S1->D1_S1",
+      "timestampMs": 5560,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S1->D1_S2",
+      "timestampMs": 5820,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S1->D1_S3",
+      "timestampMs": 6080,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S1->D1_S4",
+      "timestampMs": 6340,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S1->D1_S5",
+      "timestampMs": 6600,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S2->D1_S0",
+      "timestampMs": 6860,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S2->D1_S1",
+      "timestampMs": 7120,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S2->D1_S2",
+      "timestampMs": 7380,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S2->D1_S3",
+      "timestampMs": 7640,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S2->D1_S4",
+      "timestampMs": 7900,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S2->D1_S5",
+      "timestampMs": 8160,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S3->D1_S0",
+      "timestampMs": 8420,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S3->D1_S1",
+      "timestampMs": 8680,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S3->D1_S2",
+      "timestampMs": 8940,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S3->D1_S3",
+      "timestampMs": 9200,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S3->D1_S4",
+      "timestampMs": 9460,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S3->D1_S5",
+      "timestampMs": 9720,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S4->D1_S0",
+      "timestampMs": 9980,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S4->D1_S1",
+      "timestampMs": 10240,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S4->D1_S2",
+      "timestampMs": 10500,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S4->D1_S3",
+      "timestampMs": 10760,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S4->D1_S4",
+      "timestampMs": 11020,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S4->D1_S5",
+      "timestampMs": 11280,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S5->D1_S0",
+      "timestampMs": 11540,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S5->D1_S1",
+      "timestampMs": 11800,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S5->D1_S2",
+      "timestampMs": 12060,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S5->D1_S3",
+      "timestampMs": 12320,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S5->D1_S4",
+      "timestampMs": 12580,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D0_S5->D1_S5",
+      "timestampMs": 12840,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S0->D2_S1",
+      "timestampMs": 13100,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S0->D2_S2",
+      "timestampMs": 13360,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S0->D2_S3",
+      "timestampMs": 13620,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S0->D2_S4",
+      "timestampMs": 13880,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S0->D2_S5",
+      "timestampMs": 14140,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S1->D2_S0",
+      "timestampMs": 14400,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S1->D2_S1",
+      "timestampMs": 14660,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S1->D2_S2",
+      "timestampMs": 14920,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S1->D2_S3",
+      "timestampMs": 15180,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S1->D2_S4",
+      "timestampMs": 15440,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S1->D2_S5",
+      "timestampMs": 15700,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S2->D2_S0",
+      "timestampMs": 15960,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S2->D2_S1",
+      "timestampMs": 16220,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S2->D2_S2",
+      "timestampMs": 16480,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S2->D2_S3",
+      "timestampMs": 16740,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S2->D2_S4",
+      "timestampMs": 17000,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S2->D2_S5",
+      "timestampMs": 17260,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S3->D2_S0",
+      "timestampMs": 17520,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S3->D2_S1",
+      "timestampMs": 17780,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S3->D2_S2",
+      "timestampMs": 18040,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S3->D2_S3",
+      "timestampMs": 18300,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S3->D2_S4",
+      "timestampMs": 18560,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S3->D2_S5",
+      "timestampMs": 18820,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S4->D2_S0",
+      "timestampMs": 19080,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S4->D2_S1",
+      "timestampMs": 19340,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S4->D2_S2",
+      "timestampMs": 19600,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S4->D2_S3",
+      "timestampMs": 19860,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S4->D2_S4",
+      "timestampMs": 20120,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S4->D2_S5",
+      "timestampMs": 20380,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S5->D2_S0",
+      "timestampMs": 20640,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S5->D2_S1",
+      "timestampMs": 20900,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S5->D2_S2",
+      "timestampMs": 21160,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S5->D2_S3",
+      "timestampMs": 21420,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S5->D2_S4",
+      "timestampMs": 21680,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D1_S5->D2_S5",
+      "timestampMs": 21940,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S0->D3_S1",
+      "timestampMs": 22200,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S0->D3_S2",
+      "timestampMs": 22460,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S0->D3_S3",
+      "timestampMs": 22720,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S0->D3_S4",
+      "timestampMs": 22980,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S0->D3_S5",
+      "timestampMs": 23240,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S1->D3_S0",
+      "timestampMs": 23500,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S1->D3_S1",
+      "timestampMs": 23760,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S1->D3_S2",
+      "timestampMs": 24020,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S1->D3_S3",
+      "timestampMs": 24280,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S1->D3_S4",
+      "timestampMs": 24540,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S1->D3_S5",
+      "timestampMs": 24800,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S2->D3_S0",
+      "timestampMs": 25060,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S2->D3_S1",
+      "timestampMs": 25320,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S2->D3_S2",
+      "timestampMs": 25580,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S2->D3_S3",
+      "timestampMs": 25840,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S2->D3_S4",
+      "timestampMs": 26100,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S2->D3_S5",
+      "timestampMs": 26360,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S3->D3_S0",
+      "timestampMs": 26620,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S3->D3_S1",
+      "timestampMs": 26880,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S3->D3_S2",
+      "timestampMs": 27140,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S3->D3_S3",
+      "timestampMs": 27400,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S3->D3_S4",
+      "timestampMs": 27660,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S3->D3_S5",
+      "timestampMs": 27920,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S4->D3_S0",
+      "timestampMs": 28180,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S4->D3_S1",
+      "timestampMs": 28440,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S4->D3_S2",
+      "timestampMs": 28700,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S4->D3_S3",
+      "timestampMs": 28960,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S4->D3_S4",
+      "timestampMs": 29220,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S4->D3_S5",
+      "timestampMs": 29480,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S5->D3_S0",
+      "timestampMs": 29740,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S5->D3_S1",
+      "timestampMs": 30000,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S5->D3_S2",
+      "timestampMs": 30260,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S5->D3_S3",
+      "timestampMs": 30520,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S5->D3_S4",
+      "timestampMs": 30780,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D2_S5->D3_S5",
+      "timestampMs": 31040,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D3_S1->egress",
+      "timestampMs": 31300,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D3_S2->egress",
+      "timestampMs": 31560,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D3_S3->egress",
+      "timestampMs": 31820,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D3_S4->egress",
+      "timestampMs": 32080,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "D3_S5->egress",
+      "timestampMs": 32340,
+      "reason": "Route compacted: redundant branch hidden after optimization."
+    },
+    {
+      "eventType": "node_create",
+      "timestampMs": 32600,
+      "reason": "Incident workaround service injected for rollback resilience.",
+      "node": {
+        "id": "D2_Shotfix",
+        "label": "shotfix",
+        "x": 740,
+        "y": 520,
+        "properties": {
+          "role": "service",
+          "layer": 3,
+          "domain": "domain_2"
+        }
+      }
+    }
+  ]
+}

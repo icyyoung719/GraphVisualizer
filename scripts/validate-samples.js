@@ -5,6 +5,7 @@ const rootDir = path.resolve(__dirname, '..');
 const sampleFiles = [
   path.join(rootDir, 'data', 'sample-events.json'),
   path.join(rootDir, 'data', 'astar-sample-events.json'),
+  path.join(rootDir, 'data', 'aggregation-sample-events.json'),
 ];
 
 function assert(condition, message) {
@@ -192,11 +193,15 @@ function main() {
   const results = sampleFiles.map(validateSampleFile);
   const legacy = results[0];
   const astar = results[1];
+  const aggregation = results[2];
 
   assert(astar.nodeCount >= 10, 'A* demo should contain at least 10 nodes for visualization testing.');
   assert(astar.eventCount >= 5, 'A* demo should contain enough events to exercise playback.');
   assert(astar.finalEdgeCount <= astar.edgeCount, 'Replay should not create more edges than the initial snapshot.');
   assert(legacy.eventCount > 0, 'Legacy sample should remain valid.');
+  assert(aggregation.nodeCount >= 24, 'Aggregation demo should contain at least 24 nodes.');
+  assert(aggregation.edgeCount >= 100, 'Aggregation demo should contain at least 100 edges.');
+  assert(aggregation.eventCount >= 40, 'Aggregation demo should contain enough events to exercise playback expansion.');
 
   console.log(`Validated ${sampleFiles.length} sample files.`);
   for (let index = 0; index < sampleFiles.length; index += 1) {

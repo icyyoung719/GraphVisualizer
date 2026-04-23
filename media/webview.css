@@ -195,6 +195,17 @@ button:disabled {
   opacity: 0.4;
 }
 
+.edge.aggregate path {
+  stroke: #0d9488;
+  stroke-width: 2.8;
+  stroke-dasharray: 6 5;
+  opacity: 0.82;
+}
+
+.edge.aggregate text {
+  fill: #0b6b64;
+}
+
 .edge.deemphasized path {
   opacity: 0.2;
 }
@@ -246,6 +257,17 @@ button:disabled {
   filter:
     drop-shadow(0 0 0.28rem rgba(15, 118, 110, 0.2))
     drop-shadow(0 0 0.6rem rgba(217, 119, 6, 0.16));
+}
+
+.node.aggregate circle {
+  fill: #d7f5ec;
+  stroke: #0f766e;
+  stroke-dasharray: 4 4;
+}
+
+.node.aggregate text {
+  fill: #0b534f;
+  font-size: 0.8rem;
 }
 
 .detail-pane {

@@ -6,9 +6,11 @@
 
 已落地能力（与当前代码一致）：
 
-- VS Code 命令：`GraphDyVis: Show A* Demo`、`GraphDyVis: Show Legacy Sample`
+- VS Code 命令：`GraphDyVis: Show A* Demo`、`GraphDyVis: Show Aggregation Demo`、`GraphDyVis: Show Legacy Sample`
 - WebView + D3 渲染（静态快照 + 事件回放）
+- 智能聚合渲染：在大图场景下自动聚合低关注节点，并映射汇总边以降低视觉干扰
 - 交互：平移缩放、搜索聚焦、节点/边属性面板
+- 自动展开：点击聚合节点或播放命中聚合内部元素时自动展开
 - 回放控制：Play / Pause / Step / Reset / 速度调节（0.25x - 4x）
 - 事件原因展示：支持 `reason`
 - 协议校验：Host/WebView 消息与事件 JSON 均做运行时校验，非法输入安全忽略
@@ -24,6 +26,7 @@
 - 样例数据：`data/astar-sample-events.json`、`data/sample-events.json`
 - 样例校验：`scripts/validate-samples.js`
 - C++ 示例：`examples/cpp/graphdyvis_astar.hpp`、`examples/cpp/astar_demo.cpp`
+- 聚合测试示例：`examples/cpp/graphdyvis_workflow.hpp`、`examples/cpp/workflow_demo.cpp`
 
 ## 本地开发
 
@@ -61,6 +64,8 @@ npm run watch:webview
 1. 在 VS Code 中按 `F5` 启动 Extension Development Host。
 2. 在新窗口命令面板执行：`GraphDyVis: Show A* Demo`。
 
+可选执行聚合测试样例：`GraphDyVis: Show Aggregation Demo`。
+
 ## 事件协议（schemaVersion = "1.0"）
 
 源码真值：`src/protocol/events.ts`
@@ -85,6 +90,8 @@ npm run watch:webview
 - `edge_update`
 - `edge_delete`
 
+说明：当前聚合/展开能力是 WebView 渲染层的派生行为，本阶段未改动事件 schema。
+
 通用字段：
 
 - 必填：`eventType`、`timestampMs`
@@ -94,6 +101,13 @@ npm run watch:webview
 
 - 优先追加可选字段（additive）
 - 未识别字段/事件类型由消费端安全忽略
+
+## 聚合行为说明
+
+- 在节点规模较大时，前端会自动识别低关注节点组并渲染为聚合节点。
+- 聚合后边会映射为汇总连线（例如 `N edges`），以减少密集交叉。
+- 点击聚合节点会触发展开；播放事件命中聚合内部元素时也会自动展开。
+- 搜索/Focus 命中被聚合隐藏的节点时，会先展开对应聚合再执行镜头定位。
 
 ## WebView 消息契约（contractVersion = "1.0"）
 
