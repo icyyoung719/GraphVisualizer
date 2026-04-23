@@ -380,6 +380,26 @@ function formatPlaybackSpeed(value: number): string {
   return `${value.toFixed(2).replace(/\.00$/, "")}x`;
 }
 
+function formatPlaybackProgress(eventIndex: number, totalEvents: number): string {
+  const safeTotal = Math.max(0, totalEvents);
+  const safeIndex = Math.max(0, Math.min(eventIndex, safeTotal));
+  const width = Math.max(2, `${safeTotal}`.length);
+
+  return `${`${safeIndex}`.padStart(width, "0")}/${`${safeTotal}`.padStart(width, "0")}`;
+}
+
+function formatPlaybackStatusLine(
+  status: "playing" | "paused",
+  speedMultiplier: number,
+  eventIndex: number,
+  totalEvents: number,
+): string {
+  const normalizedStatus = status === "playing" ? "PLAYING" : "PAUSED";
+  const normalizedSpeed = `${clampPlaybackSpeed(speedMultiplier).toFixed(2)}x`;
+
+  return `Playback ${normalizedStatus} | ${normalizedSpeed} | ${formatPlaybackProgress(eventIndex, totalEvents)}`;
+}
+
 function getGraphRenderContext(): GraphRenderContext {
   return {
     selectedId: runtimeState.selectedId,
@@ -1107,7 +1127,12 @@ function bindHostMessages(): void {
         syncGraphToEventIndex(rawMessage.payload.eventIndex);
         updatePlaybackControls();
         setStatus(
-          `Playback: ${rawMessage.payload.status} ${formatPlaybackSpeed(rawMessage.payload.speedMultiplier)} (${runtimeState.eventCursor}/${rawMessage.payload.totalEvents})`,
+          formatPlaybackStatusLine(
+            rawMessage.payload.status,
+            rawMessage.payload.speedMultiplier,
+            runtimeState.eventCursor,
+            rawMessage.payload.totalEvents,
+          ),
         );
         return;
       case "error":
