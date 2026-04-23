@@ -5,12 +5,18 @@ export const CONTRACT_VERSION = "1.0" as const;
 export type ContractVersion = typeof CONTRACT_VERSION;
 
 export type PlaybackStatus = "playing" | "paused";
-export type PlaybackControlAction = "play" | "pause" | "step" | "reset";
+export type PlaybackControlAction =
+  | "play"
+  | "pause"
+  | "step"
+  | "reset"
+  | "set-speed";
 
 export interface PlaybackState {
   status: PlaybackStatus;
   eventIndex: number;
   totalEvents: number;
+  speedMultiplier: number;
 }
 
 export interface InitDataMessage {
@@ -53,6 +59,7 @@ export interface PlaybackControlMessage {
   type: "playback-control";
   contractVersion?: string;
   action: PlaybackControlAction;
+  speedMultiplier?: number;
 }
 
 export type WebviewToHostMessage =
@@ -77,10 +84,19 @@ export function isWebviewToHostMessage(
     case "focus-request":
       return typeof raw.targetId === "string" && raw.targetId.length > 0;
     case "playback-control":
-      return (
-        typeof raw.action === "string" &&
-        ["play", "pause", "step", "reset"].includes(raw.action)
-      );
+      if (typeof raw.action !== "string") {
+        return false;
+      }
+
+      if (!["play", "pause", "step", "reset", "set-speed"].includes(raw.action)) {
+        return false;
+      }
+
+      if (raw.action === "set-speed") {
+        return typeof raw.speedMultiplier === "number" && Number.isFinite(raw.speedMultiplier);
+      }
+
+      return true;
     default:
       return false;
   }
@@ -91,7 +107,9 @@ function isPlaybackState(value: unknown): value is PlaybackState {
     isRecord(value) &&
     (value.status === "playing" || value.status === "paused") &&
     typeof value.eventIndex === "number" &&
-    typeof value.totalEvents === "number"
+    typeof value.totalEvents === "number" &&
+    typeof value.speedMultiplier === "number" &&
+    Number.isFinite(value.speedMultiplier)
   );
 }
 

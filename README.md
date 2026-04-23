@@ -211,7 +211,7 @@ npm run watch:webview
 - payload: 完整图数据与事件流（GraphDataFile）
 
 2. `playback-state`
-- payload: `{ status, eventIndex, totalEvents }`
+- payload: `{ status, eventIndex, totalEvents, speedMultiplier }`
 
 3. `error`
 - payload: `{ message }`
@@ -225,13 +225,15 @@ WebView -> 扩展：
 
 3. `playback-control`
 - payload: `{ action }`
-- action: `play | pause | step | reset`
+- action: `play | pause | step | reset | set-speed`
+- `set-speed` 额外携带 `speedMultiplier`
 
 回放语义（MVP 当前实现）：
-- 扩展侧（Host）是播放状态与进度的唯一权威，维护 `{ status, eventIndex, totalEvents }`。
+- 扩展侧（Host）是播放状态与进度的唯一权威，维护 `{ status, eventIndex, totalEvents, speedMultiplier }`。
 - WebView 侧按钮只发送 `playback-control` 请求，不在本地启动独立定时器。
 - WebView 收到 `playback-state` 后按 `eventIndex` 同步渲染当前图状态（必要时 reset 后重放），避免双状态漂移。
 - `play` 到达事件流末尾会自动切回 `paused`；`step` 每次最多推进 1 个事件；`reset` 回到初始图并清零进度。
+- `set-speed` 会让 Host 按 `基础间隔 / speedMultiplier` 重新计算播放节奏。
 
 契约约束：
 - 每条消息均包含 `type`。

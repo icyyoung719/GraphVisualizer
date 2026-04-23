@@ -3,8 +3,8 @@ import * as vscode from "vscode";
 import { loadSampleGraphFile } from "./data/sampleLoader";
 import {
   HostToWebviewMessage,
-  PlaybackControlAction,
   PlaybackState,
+  WebviewToHostMessage,
   createErrorMessage,
   createInitDataMessage,
   createPlaybackStateMessage,
@@ -17,6 +17,8 @@ const SHOW_LEGACY_VISUALIZATION_COMMAND = "graphdyvis.showLegacyVisualization";
 const DEFAULT_SAMPLE_FILE = "astar-sample-events.json";
 const LEGACY_SAMPLE_FILE = "sample-events.json";
 const PLAYBACK_INTERVAL_MS = 900;
+const MIN_SPEED_MULTIPLIER = 0.25;
+const MAX_SPEED_MULTIPLIER = 4;
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
@@ -48,6 +50,7 @@ class GraphVisualizerPanel {
     status: "paused",
     eventIndex: 0,
     totalEvents: 0,
+    speedMultiplier: 1,
   };
 
   static createOrShow(
@@ -140,7 +143,7 @@ class GraphVisualizerPanel {
         );
         return;
       case "playback-control":
-        await this.handlePlaybackControl(rawMessage.action);
+        await this.handlePlaybackControl(rawMessage);
         return;
     }
   }
@@ -153,11 +156,11 @@ class GraphVisualizerPanel {
   }
 
   private async handlePlaybackControl(
-    action: PlaybackControlAction,
+    message: Extract<WebviewToHostMessage, { type: "playback-control" }>,
   ): Promise<void> {
     await this.ensureGraphDataLoaded();
 
-    switch (action) {
+    switch (message.action) {
       case "play":
         if (this.playbackState.eventIndex >= this.playbackState.totalEvents) {
           this.playbackState.status = "paused";
@@ -166,7 +169,7 @@ class GraphVisualizerPanel {
         }
 
         this.playbackState.status = "playing";
-        this.startPlaybackTimer();
+        this.restartPlaybackTimer();
         await this.broadcastPlaybackState();
         break;
       case "pause":
@@ -187,6 +190,13 @@ class GraphVisualizerPanel {
         this.stopPlaybackTimer();
         this.playbackState.status = "paused";
         this.playbackState.eventIndex = 0;
+        await this.broadcastPlaybackState();
+        break;
+      case "set-speed":
+        this.playbackState.speedMultiplier = clampSpeedMultiplier(message.speedMultiplier);
+        if (this.playbackState.status === "playing") {
+          this.restartPlaybackTimer();
+        }
         await this.broadcastPlaybackState();
         break;
     }
@@ -216,9 +226,17 @@ class GraphVisualizerPanel {
       return;
     }
 
+    const intervalMs = getPlaybackIntervalMs(this.playbackState.speedMultiplier);
     this.playbackTimer = setInterval(() => {
       void this.handlePlaybackTick();
-    }, PLAYBACK_INTERVAL_MS);
+    }, intervalMs);
+  }
+
+  private restartPlaybackTimer(): void {
+    this.stopPlaybackTimer();
+    if (this.playbackState.status === "playing") {
+      this.startPlaybackTimer();
+    }
   }
 
   private stopPlaybackTimer(): void {
@@ -286,6 +304,11 @@ class GraphVisualizerPanel {
         <input id="search-input" type="text" placeholder="node or edge id" />
         <button id="focus-button">Focus</button>
       </div>
+      <div class="speed-group">
+        <label for="playback-speed">Speed</label>
+        <input id="playback-speed" type="range" min="0.25" max="4" step="0.25" value="1" />
+        <span id="playback-speed-label">1x</span>
+      </div>
       <div class="playback-group">
         <button id="playback-play" data-action="play">Play</button>
         <button id="playback-pause" data-action="pause">Pause</button>
@@ -323,4 +346,16 @@ function getNonce(): string {
     value += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return value;
+}
+
+function clampSpeedMultiplier(value: number | undefined): number {
+  if (!Number.isFinite(value ?? Number.NaN)) {
+    return 1;
+  }
+
+  return Math.min(MAX_SPEED_MULTIPLIER, Math.max(MIN_SPEED_MULTIPLIER, value ?? 1));
+}
+
+function getPlaybackIntervalMs(speedMultiplier: number): number {
+  return Math.max(100, Math.round(PLAYBACK_INTERVAL_MS / clampSpeedMultiplier(speedMultiplier)));
 }

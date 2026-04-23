@@ -27,6 +27,9 @@ declare function acquireVsCodeApi<T = unknown>(): VsCodeApi<T>;
 
 type SelectedKind = "node" | "edge";
 
+const NODE_RADIUS = 20;
+const EDGE_PADDING = NODE_RADIUS + 4;
+
 interface RuntimeState {
   baseGraph: GraphSnapshot | undefined;
   workingGraph: GraphSnapshot | undefined;
@@ -58,6 +61,8 @@ const eventLogElement = getRequiredElement<HTMLElement>("event-log");
 const searchInputElement = getRequiredElement<HTMLInputElement>("search-input");
 const focusButtonElement = getRequiredElement<HTMLButtonElement>("focus-button");
 const statusTextElement = getRequiredElement<HTMLElement>("status-text");
+const playbackSpeedInputElement = getRequiredElement<HTMLInputElement>("playback-speed");
+const playbackSpeedLabelElement = getRequiredElement<HTMLElement>("playback-speed-label");
 const playbackButtonElements = {
   play: getRequiredElement<HTMLButtonElement>("playback-play"),
   pause: getRequiredElement<HTMLButtonElement>("playback-pause"),
@@ -67,6 +72,7 @@ const playbackButtonElements = {
 
 const EDGE_TRANSITION_MS = 240;
 const NODE_TRANSITION_MS = 260;
+const GRAPH_VIEWBOX_PADDING = 72;
 
 const svgSelection = d3.select<SVGSVGElement, unknown>(svgElement);
 const viewportGroup = svgSelection.append("g").attr("class", "viewport");
@@ -95,6 +101,35 @@ function resizeGraphSurface(): void {
   svgSelection.attr("width", Math.max(320, width)).attr("height", Math.max(320, height));
 }
 
+function fitGraphViewBox(): void {
+  const graph = runtimeState.workingGraph;
+  if (!graph || graph.nodes.length === 0) {
+    return;
+  }
+
+  const bounds = graph.nodes.reduce(
+    (accumulator, node) => ({
+      minX: Math.min(accumulator.minX, node.x),
+      minY: Math.min(accumulator.minY, node.y),
+      maxX: Math.max(accumulator.maxX, node.x),
+      maxY: Math.max(accumulator.maxY, node.y),
+    }),
+    {
+      minX: Number.POSITIVE_INFINITY,
+      minY: Number.POSITIVE_INFINITY,
+      maxX: Number.NEGATIVE_INFINITY,
+      maxY: Number.NEGATIVE_INFINITY,
+    },
+  );
+
+  const x = bounds.minX - GRAPH_VIEWBOX_PADDING;
+  const y = bounds.minY - GRAPH_VIEWBOX_PADDING;
+  const width = Math.max(1, bounds.maxX - bounds.minX + GRAPH_VIEWBOX_PADDING * 2);
+  const height = Math.max(1, bounds.maxY - bounds.minY + GRAPH_VIEWBOX_PADDING * 2);
+
+  svgSelection.attr("viewBox", `${x} ${y} ${width} ${height}`);
+}
+
 function setStatus(text: string, isError = false): void {
   statusTextElement.textContent = text;
   statusTextElement.classList.toggle("error", isError);
@@ -106,6 +141,52 @@ function findNodeById(id: string): NodeRecord | undefined {
 
 function findEdgeById(id: string): EdgeRecord | undefined {
   return runtimeState.workingGraph?.edges.find((edge) => edge.id === id);
+}
+
+function clampPlaybackSpeed(value: number): number {
+  return Math.min(4, Math.max(0.25, value));
+}
+
+function formatPlaybackSpeed(value: number): string {
+  return `${value.toFixed(2).replace(/\.00$/, "")}x`;
+}
+
+function getEdgeGeometry(
+  sourceNode: NodeRecord | undefined,
+  targetNode: NodeRecord | undefined,
+): { x1: number; y1: number; x2: number; y2: number; midX: number; midY: number } {
+  if (!sourceNode || !targetNode) {
+    return { x1: 0, y1: 0, x2: 0, y2: 0, midX: 0, midY: 0 };
+  }
+
+  const dx = targetNode.x - sourceNode.x;
+  const dy = targetNode.y - sourceNode.y;
+  const distance = Math.hypot(dx, dy);
+
+  if (!Number.isFinite(distance) || distance <= EDGE_PADDING * 2) {
+    const midX = (sourceNode.x + targetNode.x) / 2;
+    const midY = (sourceNode.y + targetNode.y) / 2;
+    return {
+      x1: sourceNode.x,
+      y1: sourceNode.y,
+      x2: targetNode.x,
+      y2: targetNode.y,
+      midX,
+      midY,
+    };
+  }
+
+  const offsetX = (dx / distance) * EDGE_PADDING;
+  const offsetY = (dy / distance) * EDGE_PADDING;
+
+  return {
+    x1: sourceNode.x + offsetX,
+    y1: sourceNode.y + offsetY,
+    x2: targetNode.x - offsetX,
+    y2: targetNode.y - offsetY,
+    midX: (sourceNode.x + targetNode.x) / 2,
+    midY: (sourceNode.y + targetNode.y) / 2,
+  };
 }
 
 function selectNode(nodeId: string): void {
@@ -200,6 +281,8 @@ function renderGraph(): void {
     return;
   }
 
+  fitGraphViewBox();
+
   const nodeMap = new Map(graph.nodes.map((node) => [node.id, node]));
 
   const edgeSelection = edgeLayer
@@ -233,10 +316,10 @@ function renderGraph(): void {
     .interrupt()
     .transition()
     .duration(EDGE_TRANSITION_MS)
-    .attr("x1", (edge: EdgeRecord) => nodeMap.get(edge.source)?.x ?? 0)
-    .attr("y1", (edge: EdgeRecord) => nodeMap.get(edge.source)?.y ?? 0)
-    .attr("x2", (edge: EdgeRecord) => nodeMap.get(edge.target)?.x ?? 0)
-    .attr("y2", (edge: EdgeRecord) => nodeMap.get(edge.target)?.y ?? 0);
+    .attr("x1", (edge: EdgeRecord) => getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).x1)
+    .attr("y1", (edge: EdgeRecord) => getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).y1)
+    .attr("x2", (edge: EdgeRecord) => getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).x2)
+    .attr("y2", (edge: EdgeRecord) => getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).y2);
 
   edgeMergedSelection
     .select("text")
@@ -246,12 +329,12 @@ function renderGraph(): void {
     .attr(
       "x",
       (edge: EdgeRecord) =>
-        ((nodeMap.get(edge.source)?.x ?? 0) + (nodeMap.get(edge.target)?.x ?? 0)) / 2,
+        getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).midX,
     )
     .attr(
       "y",
       (edge: EdgeRecord) =>
-        ((nodeMap.get(edge.source)?.y ?? 0) + (nodeMap.get(edge.target)?.y ?? 0)) / 2 - 8,
+        getEdgeGeometry(nodeMap.get(edge.source), nodeMap.get(edge.target)).midY - 8,
     )
     .text((edge: EdgeRecord) => {
       if (edge.weight !== undefined) {
@@ -286,12 +369,12 @@ function renderGraph(): void {
     .append("g")
     .attr("class", "node")
     .attr("transform", (node: NodeRecord) => `translate(${node.x}, ${node.y})`)
-    .style("opacity", 0)
+    .style("opacity", 1)
     .on("click", (_event: MouseEvent, node: NodeRecord) => {
       selectNode(node.id);
     });
 
-  nodeEnterSelection.append("circle").attr("r", 20);
+  nodeEnterSelection.append("circle").attr("r", NODE_RADIUS);
   nodeEnterSelection
     .append("text")
     .attr("text-anchor", "middle")
@@ -315,11 +398,7 @@ function renderGraph(): void {
 
   nodeMergedSelection.select("text").text((node: NodeRecord) => node.label);
 
-  nodeEnterSelection
-    .interrupt()
-    .transition()
-    .duration(NODE_TRANSITION_MS)
-    .style("opacity", 1);
+  nodeMergedSelection.style("opacity", 1);
 
   nodeSelection
     .exit()
@@ -426,12 +505,20 @@ function syncGraphToEventIndex(targetEventIndex: number): void {
   renderEventLog();
 }
 
-function postPlaybackAction(action: PlaybackControlAction): void {
-  const message: WebviewToHostMessage = {
-    type: "playback-control",
-    contractVersion: CONTRACT_VERSION,
-    action,
-  };
+function postPlaybackAction(action: PlaybackControlAction, speedMultiplier?: number): void {
+  const message: WebviewToHostMessage =
+    action === "set-speed"
+      ? {
+          type: "playback-control",
+          contractVersion: CONTRACT_VERSION,
+          action,
+          speedMultiplier,
+        }
+      : {
+          type: "playback-control",
+          contractVersion: CONTRACT_VERSION,
+          action,
+        };
   vscodeApi.postMessage(message);
 }
 
@@ -483,6 +570,8 @@ function handleInitData(payload: GraphDataFile): void {
   renderDetailsPanel();
   renderEventLog();
   updatePlaybackControls();
+  playbackSpeedInputElement.value = "1";
+  playbackSpeedLabelElement.textContent = formatPlaybackSpeed(1);
   setStatus(
     `Loaded ${payload.graph.nodes.length} nodes, ${payload.graph.edges.length} edges, ${payload.events.length} events.`,
   );
@@ -529,6 +618,12 @@ function bindUIEvents(): void {
     });
   });
 
+  playbackSpeedInputElement.addEventListener("input", () => {
+    const speedMultiplier = clampPlaybackSpeed(Number(playbackSpeedInputElement.value));
+    playbackSpeedLabelElement.textContent = formatPlaybackSpeed(speedMultiplier);
+    postPlaybackAction("set-speed", speedMultiplier);
+  });
+
   window.addEventListener("resize", () => {
     resizeGraphSurface();
     renderGraph();
@@ -550,10 +645,14 @@ function bindHostMessages(): void {
         return;
       case "playback-state":
         runtimeState.playbackStatus = rawMessage.payload.status;
+        playbackSpeedInputElement.value = `${rawMessage.payload.speedMultiplier}`;
+        playbackSpeedLabelElement.textContent = formatPlaybackSpeed(
+          rawMessage.payload.speedMultiplier,
+        );
         syncGraphToEventIndex(rawMessage.payload.eventIndex);
         updatePlaybackControls();
         setStatus(
-          `Playback: ${rawMessage.payload.status} (${runtimeState.eventCursor}/${rawMessage.payload.totalEvents})`,
+          `Playback: ${rawMessage.payload.status} ${formatPlaybackSpeed(rawMessage.payload.speedMultiplier)} (${runtimeState.eventCursor}/${rawMessage.payload.totalEvents})`,
         );
         return;
       case "error":
