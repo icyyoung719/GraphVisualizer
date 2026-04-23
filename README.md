@@ -17,6 +17,7 @@
 - 事件原因展示：支持 `reason`
 - 协议校验：Host/WebView 消息与事件 JSON 均做运行时校验，非法输入安全忽略
 - 样例校验脚本：校验 `data/` 中基线与 A* 事件流
+- 解析测试：补充了针对图 JSON 解析的自动化回归测试
 
 ## 目录与核心文件
 
@@ -50,6 +51,7 @@ npm run build
 
 ```bash
 npm run check
+npm run test
 ```
 
 可选拆分命令：
@@ -57,9 +59,12 @@ npm run check
 ```bash
 npm run check:ts
 npm run check:samples
+npm run test
 npm run watch:extension
 npm run watch:webview
 ```
+
+CI 会在 PR 和推送到 `main` 时执行：TypeScript 检查、样本校验、解析测试，以及 C++ 示例编译、导出和解析校验。
 
 调试扩展：
 
