@@ -1,60 +1,52 @@
 # GraphDyVis / GraphVisualizer
 
-代码驱动的图可视化 VS Code 扩展原型。当前仓库已经有可运行的 Extension + WebView 实现，不再是纯规划文档项目。
+A code-driven graph visualization VS Code extension prototype. The repository already includes a working Extension + WebView implementation, so it is no longer just a planning document set.
+## Current Status
 
-## 当前状态
+Implemented capabilities, aligned with the current codebase:
+- VS Code commands: `GraphDyVis: Show A* Demo`, `GraphDyVis: Show Aggregation Demo`, `GraphDyVis: Show Legacy Sample`
+- WebView + D3 rendering with a static snapshot and event playback
+- Adaptive aggregation rendering: automatically groups low-focus nodes in large graphs and maps edges to summary links to reduce visual clutter
+- Interactions: pan, zoom, search focus, and node/edge property panels
+- Automatic expansion: clicking an aggregate node or playing an event that hits an element inside an aggregate expands it; focus search also expands the matching hidden aggregate first
+- Automatic collapse recovery: after focus moves away from a temporarily expanded aggregate, it collapses again after a short delay
+- Edge visuals: complex links keep curves to reduce crossings, while simple chains prefer straight lines; edge weight labels try to avoid edge lines and crossing zones
+- Playback controls: Play / Pause / Step / Reset / speed adjustment (0.25x - 4x)
+- Event reason display: supports `reason`
+- Protocol validation: Host/WebView messages and event JSON are validated at runtime, and invalid input is ignored safely
+- Sample validation script: checks the baseline and A* event streams under `data/`
+- Parser tests: automated regression coverage for graph JSON parsing
+## Structure and Key Files
 
-已落地能力（与当前代码一致）：
+- Extension entry point: `src/extension.ts`
+- WebView frontend: `webview/main.ts`
+- WebView styles: `media/webview.css`
+- Message contract: `src/protocol/contracts.ts`
+- Event protocol and playback application: `src/protocol/events.ts`
+- Sample data: `data/astar-sample-events.json`, `data/sample-events.json`
+- Sample validation: `scripts/validate-samples.js`
+- C++ examples: `examples/cpp/graphdyvis_astar.hpp`, `examples/cpp/astar_demo.cpp`
+- Aggregation test example: `examples/cpp/graphdyvis_workflow.hpp`, `examples/cpp/workflow_demo.cpp`
+## Local Development
 
-- VS Code 命令：`GraphDyVis: Show A* Demo`、`GraphDyVis: Show Aggregation Demo`、`GraphDyVis: Show Legacy Sample`
-- WebView + D3 渲染（静态快照 + 事件回放）
-- 智能聚合渲染：在大图场景下自动聚合低关注节点，并映射汇总边以降低视觉干扰
-- 交互：平移缩放、搜索聚焦、节点/边属性面板
-- 自动展开：点击聚合节点或播放命中聚合内部元素时自动展开；focus 搜索命中隐藏节点时也会先展开对应聚合
-- 自动回收：focus 结束并切换到其他节点/边后，临时展开的聚合会在短延时后自动重新收起
-- 边视觉：复杂连线保留曲线以减少交叉，简单链路会优先退回直线；边 weight 标签会尽量避开边线与交叉区
-- 回放控制：Play / Pause / Step / Reset / 速度调节（0.25x - 4x）
-- 事件原因展示：支持 `reason`
-- 协议校验：Host/WebView 消息与事件 JSON 均做运行时校验，非法输入安全忽略
-- 样例校验脚本：校验 `data/` 中基线与 A* 事件流
-- 解析测试：补充了针对图 JSON 解析的自动化回归测试
-
-## 目录与核心文件
-
-- 插件入口：`src/extension.ts`
-- WebView 前端：`webview/main.ts`
-- WebView 样式：`media/webview.css`
-- 消息契约：`src/protocol/contracts.ts`
-- 事件协议与回放应用：`src/protocol/events.ts`
-- 样例数据：`data/astar-sample-events.json`、`data/sample-events.json`
-- 样例校验：`scripts/validate-samples.js`
-- C++ 示例：`examples/cpp/graphdyvis_astar.hpp`、`examples/cpp/astar_demo.cpp`
-- 聚合测试示例：`examples/cpp/graphdyvis_workflow.hpp`、`examples/cpp/workflow_demo.cpp`
-
-## 本地开发
-
-前置要求：Node.js 18+，VS Code。
-
-安装依赖：
+Prerequisites: Node.js 18+, VS Code.
+Install dependencies:
 
 ```bash
 npm install
 ```
-
-构建：
+Build:
 
 ```bash
 npm run build
 ```
-
-检查：
+Check:
 
 ```bash
 npm run check
 npm run test
 ```
-
-可选拆分命令：
+Optional split commands:
 
 ```bash
 npm run check:ts
@@ -63,21 +55,17 @@ npm run test
 npm run watch:extension
 npm run watch:webview
 ```
+CI runs on pull requests and pushes to `main`: TypeScript checks, sample validation, parser tests, and C++ example compilation, export, and validation.
 
-CI 会在 PR 和推送到 `main` 时执行：TypeScript 检查、样本校验、解析测试，以及 C++ 示例编译、导出和解析校验。
+Debug the extension:
+1. Press `F5` in VS Code to launch the Extension Development Host.
+2. Run `GraphDyVis: Show A* Demo` from the command palette in the new window.
 
-调试扩展：
+To open the aggregation test sample, run `GraphDyVis: Show Aggregation Demo`.
+## Event Protocol (`schemaVersion = "1.0"`)
 
-1. 在 VS Code 中按 `F5` 启动 Extension Development Host。
-2. 在新窗口命令面板执行：`GraphDyVis: Show A* Demo`。
-
-可选执行聚合测试样例：`GraphDyVis: Show Aggregation Demo`。
-
-## 事件协议（schemaVersion = "1.0"）
-
-源码真值：`src/protocol/events.ts`
-
-顶层结构：
+Source of truth: `src/protocol/events.ts`
+Top-level structure:
 
 ```json
 {
@@ -89,59 +77,51 @@ CI 会在 PR 和推送到 `main` 时执行：TypeScript 检查、样本校验、
   "events": []
 }
 ```
-
-事件类型：
+Event types:
 
 - `node_create`
 - `edge_create`
 - `edge_update`
 - `edge_delete`
 
-说明：当前聚合/展开能力是 WebView 渲染层的派生行为，本阶段未改动事件 schema。
+Note: the current aggregation and expansion behavior is derived in the WebView rendering layer, so this phase does not change the event schema.
+Shared fields:
 
-通用字段：
+- Required: `eventType`, `timestampMs`
+- Optional: `reason`
 
-- 必填：`eventType`、`timestampMs`
-- 可选：`reason`
+Compatibility strategy:
 
-兼容策略：
+- Prefer additive optional fields
+- Unrecognized fields and event types are safely ignored by consumers
+## Aggregation Behavior
 
-- 优先追加可选字段（additive）
-- 未识别字段/事件类型由消费端安全忽略
+- When the node count is large, the frontend automatically detects low-focus node groups and renders them as aggregate nodes.
+- Aggregate edges are mapped to summary connections, such as `N edges`, to reduce dense crossings.
+- Clicking an aggregate node expands it, and playback events that hit an element inside an aggregate also expand it automatically.
+- When search or focus hits a node hidden inside an aggregate, the aggregate is expanded first and then the camera is positioned.
+- When focus moves to another node or edge, aggregates that were temporarily expanded by focus collapse again after a short delay.
+- For simple edge chains without noticeable crossing pressure, rendering prefers straight lines; complex relationships still keep curves to reduce crossings.
+## WebView Message Contract (`contractVersion = "1.0"`)
 
-## 聚合行为说明
-
-- 在节点规模较大时，前端会自动识别低关注节点组并渲染为聚合节点。
-- 聚合后边会映射为汇总连线（例如 `N edges`），以减少密集交叉。
-- 点击聚合节点会触发展开；播放事件命中聚合内部元素时也会自动展开。
-- 搜索/Focus 命中被聚合隐藏的节点时，会先展开对应聚合再执行镜头定位。
-- 当 focus 切换到其他节点/边后，之前由 focus 临时展开的聚合会在短延时后自动收回。
-- 对于没有明显交叉压力的简单边链路，渲染会优先使用直线；复杂关系仍保留曲线来降低交叉。
-
-## WebView 消息契约（contractVersion = "1.0"）
-
-源码真值：`src/protocol/contracts.ts`
-
-Host -> WebView：
+Source of truth: `src/protocol/contracts.ts`
+Host -> WebView:
 
 - `init-data`
 - `playback-state`
 - `error`
 
-WebView -> Host：
-
+WebView -> Host:
 - `ready`
 - `focus-request`
-- `playback-control`（`play | pause | step | reset | set-speed`）
+- `playback-control` (`play | pause | step | reset | set-speed`)
 
-契约约束：
+Contract rules:
+- Every message has a `type`
+- Host messages always carry `contractVersion`
+- Receivers validate before updating state
+## Future Directions, Not Yet Implemented
 
-- 每条消息都有 `type`
-- Host 消息固定携带 `contractVersion`
-- 接收端先校验再更新状态
-
-## 后续方向（非当前实现）
-
-- 更大规模图的性能优化（在有测量瓶颈后再评估 WebGL）
-- 更丰富的动态事件类型（如 prune / push-pop 语义）
-- 更细粒度增量渲染与复杂交互策略
+- Performance optimizations for larger graphs, with WebGL only considered after measuring a bottleneck
+- Richer dynamic event types, such as prune and push-pop semantics
+- Finer-grained incremental rendering and more advanced interaction strategies
