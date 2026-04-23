@@ -1,0 +1,43 @@
+{
+  "name": "graphdyvis",
+  "displayName": "GraphDyVis",
+  "description": "Code-driven graph and DAG visualization in a VS Code WebView.",
+  "version": "0.0.1",
+  "publisher": "graphdyvis",
+  "private": true,
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "graphdyvis.showVisualization",
+        "title": "GraphDyVis: Show Visualization"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build:extension": "esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --outfile=dist/extension.js",
+    "build:webview": "esbuild webview/main.ts --bundle --platform=browser --format=iife --outfile=media/webview.js",
+    "build": "npm run build:extension && npm run build:webview",
+    "watch:extension": "npm run build:extension -- --watch",
+    "watch:webview": "npm run build:webview -- --watch",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "d3": "^7.9.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/node": "^20.14.9",
+    "@types/vscode": "^1.90.0",
+    "esbuild": "^0.25.5",
+    "typescript": "^5.5.2"
+  }
+}

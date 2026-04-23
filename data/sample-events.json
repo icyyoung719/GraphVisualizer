@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "1.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "x": 120,
+        "y": 160,
+        "properties": {
+          "distance": 0,
+          "role": "source"
+        }
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "x": 320,
+        "y": 90,
+        "properties": {
+          "distance": 8
+        }
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "x": 320,
+        "y": 230,
+        "properties": {
+          "distance": 5
+        }
+      },
+      {
+        "id": "D",
+        "label": "D",
+        "x": 520,
+        "y": 160,
+        "properties": {
+          "distance": 12,
+          "role": "target"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "A-B",
+        "source": "A",
+        "target": "B",
+        "label": "8",
+        "weight": 8,
+        "properties": {
+          "relaxed": false
+        }
+      },
+      {
+        "id": "A-C",
+        "source": "A",
+        "target": "C",
+        "label": "5",
+        "weight": 5,
+        "properties": {
+          "relaxed": false
+        }
+      },
+      {
+        "id": "B-D",
+        "source": "B",
+        "target": "D",
+        "label": "4",
+        "weight": 4,
+        "properties": {
+          "relaxed": false
+        }
+      },
+      {
+        "id": "C-D",
+        "source": "C",
+        "target": "D",
+        "label": "9",
+        "weight": 9,
+        "properties": {
+          "relaxed": false
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventType": "edge_update",
+      "id": "A-B",
+      "timestampMs": 1000,
+      "reason": "Relaxed from source A with a shorter candidate path.",
+      "newWeight": 6,
+      "newProperties": {
+        "relaxed": true,
+        "distanceToTarget": 6
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "B-D",
+      "timestampMs": 1800,
+      "reason": "Updated after processing node B frontier.",
+      "newWeight": 3,
+      "newProperties": {
+        "relaxed": true,
+        "distanceToTarget": 9
+      }
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "C-D",
+      "timestampMs": 2600,
+      "reason": "Pruned because B->D path dominates C->D path."
+    }
+  ]
+}

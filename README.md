@@ -86,3 +86,134 @@ cpp17，多使用现代特性，不要滥用智能指针
     - GPU 加速布局
     - 节点合并与智能放缩
     - 条件样式映射与交互优化
+
+---
+## ✅ 当前实现进度（MVP 启动）
+
+当前仓库已经落地第一批可运行代码：
+- VS Code 插件命令：`GraphDyVis: Show Visualization`
+- WebView + D3 静态图渲染
+- 基础交互：搜索聚焦、缩放/平移、节点/边属性面板
+- 动态事件回放：Play/Pause/Step/Reset
+- 事件原因日志展示（reason）
+- 协议与消息的运行时校验（非法消息安全忽略）
+
+关键文件：
+- 插件入口：`src/extension.ts`
+- 消息契约：`src/protocol/contracts.ts`
+- 事件协议与校验：`src/protocol/events.ts`
+- WebView 前端：`webview/main.ts`
+- 样式：`media/webview.css`
+- 示例事件流：`data/sample-events.json`
+
+---
+## 🚀 本地运行（Extension + WebView）
+
+前置：Node.js 18+，VS Code。
+
+1. 安装依赖
+```bash
+npm install
+```
+
+2. 构建扩展与 WebView
+```bash
+npm run build
+```
+
+3. 校验 TypeScript
+```bash
+npm run check
+```
+
+4. 在 VS Code 中按 `F5` 启动 Extension Development Host
+
+5. 在新窗口命令面板执行：
+```text
+GraphDyVis: Show Visualization
+```
+
+开发时可分别监听：
+```bash
+npm run watch:extension
+npm run watch:webview
+```
+
+---
+## 🧾 MVP 事件数据协议（schemaVersion = "1.0"）
+
+示例文件：`data/sample-events.json`
+
+顶层结构：
+```json
+{
+    "schemaVersion": "1.0",
+    "graph": {
+        "nodes": [...],
+        "edges": [...]
+    },
+    "events": [...]
+}
+```
+
+### 节点（NodeRecord）
+- 必填：`id` (string), `label` (string), `x` (number), `y` (number)
+- 选填：`properties` (object, value 仅支持 string/number/boolean/null)
+
+### 边（EdgeRecord）
+- 必填：`id` (string), `source` (string), `target` (string)
+- 选填：`label` (string), `weight` (number), `properties` (object)
+
+### 事件（GraphEvent）
+
+统一字段：
+- 必填：`eventType`, `timestampMs`
+- 选填：`reason`
+
+事件类型：
+1. `node_create`
+- 必填：`node` (NodeRecord)
+
+2. `edge_create`
+- 必填：`edge` (EdgeRecord)
+
+3. `edge_update`
+- 必填：`id` (string)
+- 选填：`newWeight` (number), `newProperties` (object)
+
+4. `edge_delete`
+- 必填：`id` (string)
+
+兼容策略（MVP）：
+- 顶层版本：`schemaVersion`
+- 新字段优先采用可选追加（additive）
+- 未识别字段或事件类型由消费端安全忽略，不导致崩溃
+
+---
+## 🔁 WebView 消息契约（contractVersion = "1.0"）
+
+扩展 -> WebView：
+1. `init-data`
+- payload: 完整图数据与事件流（GraphDataFile）
+
+2. `playback-state`
+- payload: `{ status, eventIndex, totalEvents }`
+
+3. `error`
+- payload: `{ message }`
+
+WebView -> 扩展：
+1. `ready`
+- 含义：WebView 已加载，可接收初始化数据
+
+2. `focus-request`
+- payload: `{ targetId }`
+
+3. `playback-control`
+- payload: `{ action }`
+- action: `play | pause | step | reset`
+
+契约约束：
+- 每条消息均包含 `type`。
+- Host 消息包含 `contractVersion = "1.0"`。
+- 对不合法消息进行校验并安全拒绝。
