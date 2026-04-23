@@ -65,6 +65,8 @@ interface RuntimeState {
   selectedKind: SelectedKind | undefined;
   playbackStatus: "playing" | "paused";
   expandedAggregateIds: Set<string>;
+  transientExpandedAggregateIds: Set<string>;
+  transientAggregateCollapseTimer: number | undefined;
   latestAggregation: AggregationResult | undefined;
 }
 
@@ -74,6 +76,9 @@ const EDGE_PADDING = NODE_RADIUS + 4;
 const EDGE_CURVE_BASE = 16;
 const EDGE_CURVE_STEP = 9;
 const EDGE_CURVE_MAX = 68;
+const EDGE_LABEL_BASE_OFFSET = 14;
+const EDGE_LABEL_STRAIGHT_OFFSET = 12;
+const TRANSIENT_AGGREGATE_REAPPEAR_DELAY_MS = 220;
 const AGGREGATION_MIN_TOTAL_NODES = 20;
 const AGGREGATION_MIN_GROUP_SIZE = 4;
 const AGGREGATION_RECENT_EVENT_WINDOW = 8;
@@ -82,6 +87,9 @@ interface EdgePathGeometry {
   path: string;
   midX: number;
   midY: number;
+  labelX: number;
+  labelY: number;
+  isStraight: boolean;
 }
 
 const vscodeApi = acquireVsCodeApi<{ selectedId?: string; selectedKind?: SelectedKind }>();
@@ -89,6 +97,8 @@ const vscodeApi = acquireVsCodeApi<{ selectedId?: string; selectedKind?: Selecte
 const runtimeState: RuntimeState = {
   baseGraph: undefined,
   expandedAggregateIds: new Set<string>(),
+  transientExpandedAggregateIds: new Set<string>(),
+  transientAggregateCollapseTimer: undefined,
   latestAggregation: undefined,
   workingGraph: undefined,
   events: [],
@@ -455,7 +465,7 @@ function deriveAggregation(snapshot: GraphSnapshot): AggregationResult {
   };
 }
 
-function ensureExpandedForNode(nodeId: string): boolean {
+function ensureExpandedForNode(nodeId: string, isTransient = false): boolean {
   const graph = runtimeState.workingGraph;
   if (!graph) {
     return false;
@@ -468,11 +478,95 @@ function ensureExpandedForNode(nodeId: string): boolean {
   }
 
   runtimeState.expandedAggregateIds.add(aggregateId);
+  if (isTransient) {
+    runtimeState.transientExpandedAggregateIds.add(aggregateId);
+  }
   return true;
 }
 
 function expandAggregate(aggregateId: string): void {
   runtimeState.expandedAggregateIds.add(aggregateId);
+  runtimeState.transientExpandedAggregateIds.delete(aggregateId);
+}
+
+function clearTransientAggregateCollapseTimer(): void {
+  if (runtimeState.transientAggregateCollapseTimer !== undefined) {
+    window.clearTimeout(runtimeState.transientAggregateCollapseTimer);
+    runtimeState.transientAggregateCollapseTimer = undefined;
+  }
+}
+
+function scheduleTransientAggregateCollapse(): void {
+  if (runtimeState.transientExpandedAggregateIds.size === 0) {
+    return;
+  }
+
+  clearTransientAggregateCollapseTimer();
+  runtimeState.transientAggregateCollapseTimer = window.setTimeout(() => {
+    runtimeState.transientAggregateCollapseTimer = undefined;
+
+    const graph = runtimeState.workingGraph;
+    if (!graph) {
+      return;
+    }
+
+    const keepExpandedAggregateIds = new Set<string>();
+    const aggregation = runtimeState.latestAggregation ?? deriveAggregation(graph);
+    const selectedId = runtimeState.selectedId;
+
+    if (runtimeState.selectedKind === "node" && selectedId) {
+      aggregation.aggregatesById.forEach((group) => {
+        if (group.memberNodeIds.includes(selectedId) && runtimeState.expandedAggregateIds.has(group.id)) {
+          keepExpandedAggregateIds.add(group.id);
+        }
+      });
+    }
+
+    if (runtimeState.selectedKind === "aggregate" && selectedId) {
+      keepExpandedAggregateIds.add(selectedId);
+    }
+
+    if (runtimeState.selectedKind === "edge" && selectedId) {
+      const selectedEdge = findEdgeById(selectedId);
+      if (selectedEdge) {
+        aggregation.aggregatesById.forEach((group) => {
+          if (!runtimeState.expandedAggregateIds.has(group.id)) {
+            return;
+          }
+
+          if (
+            group.memberNodeIds.includes(selectedEdge.source) ||
+            group.memberNodeIds.includes(selectedEdge.target)
+          ) {
+            keepExpandedAggregateIds.add(group.id);
+          }
+        });
+      }
+    }
+
+    let didCollapse = false;
+    for (const aggregateId of [...runtimeState.transientExpandedAggregateIds]) {
+      if (keepExpandedAggregateIds.has(aggregateId)) {
+        continue;
+      }
+
+      runtimeState.transientExpandedAggregateIds.delete(aggregateId);
+      if (runtimeState.expandedAggregateIds.delete(aggregateId)) {
+        didCollapse = true;
+      }
+    }
+
+    if (didCollapse) {
+      renderGraph();
+      reconcileSelection();
+      renderDetailsPanel();
+      setStatus("Re-aggregated temporary focus groups.");
+    }
+  }, TRANSIENT_AGGREGATE_REAPPEAR_DELAY_MS);
+}
+
+function markSelectionChanged(): void {
+  scheduleTransientAggregateCollapse();
 }
 
 function autoExpandForEvent(event: GraphEvent): boolean {
@@ -493,6 +587,7 @@ function autoExpandForEvent(event: GraphEvent): boolean {
 
     if (!runtimeState.expandedAggregateIds.has(aggregateId)) {
       runtimeState.expandedAggregateIds.add(aggregateId);
+      runtimeState.transientExpandedAggregateIds.delete(aggregateId);
       expanded = true;
     }
   });
@@ -581,6 +676,7 @@ function buildEdgePathGeometry(
   sourceNode: NodeRecord | undefined,
   targetNode: NodeRecord | undefined,
   sourceRanks: Map<string, number>,
+  visibleEdges: EdgeRecord[],
 ): EdgePathGeometry {
   const trimmed = getEdgeGeometry(sourceNode, targetNode);
   const dx = trimmed.x2 - trimmed.x1;
@@ -592,15 +688,42 @@ function buildEdgePathGeometry(
       path: `M ${trimmed.x1} ${trimmed.y1} L ${trimmed.x2} ${trimmed.y2}`,
       midX: (trimmed.x1 + trimmed.x2) / 2,
       midY: (trimmed.y1 + trimmed.y2) / 2,
+      labelX: (trimmed.x1 + trimmed.x2) / 2,
+      labelY: (trimmed.y1 + trimmed.y2) / 2 - EDGE_LABEL_STRAIGHT_OFFSET,
+      isStraight: true,
     };
   }
 
   const rank = sourceRanks.get(edge.id) ?? 0;
+  const normalX = -dy / distance;
+  const normalY = dx / distance;
+  const siblingEdges = visibleEdges.filter(
+    (candidate) =>
+      candidate.id !== edge.id &&
+      (candidate.source === edge.source ||
+        candidate.target === edge.target ||
+        (candidate.source === edge.target && candidate.target === edge.source)),
+  );
+  const visibleEdge = visibleEdges.find((candidate) => candidate.id === edge.id) as
+    | VisibleEdgeDatum
+    | undefined;
+  const isSimpleEdge = (visibleEdge?.memberEdgeIds.length ?? 1) === 1 && siblingEdges.length === 0 && rank === 0;
+
+  if (isSimpleEdge) {
+    const labelShift = Math.min(EDGE_LABEL_BASE_OFFSET, distance * 0.18);
+    return {
+      path: `M ${trimmed.x1} ${trimmed.y1} L ${trimmed.x2} ${trimmed.y2}`,
+      midX: (trimmed.x1 + trimmed.x2) / 2,
+      midY: (trimmed.y1 + trimmed.y2) / 2,
+      labelX: (trimmed.x1 + trimmed.x2) / 2 + normalX * labelShift,
+      labelY: (trimmed.y1 + trimmed.y2) / 2 + normalY * labelShift,
+      isStraight: true,
+    };
+  }
+
   const baseDirection = edge.source.localeCompare(edge.target) <= 0 ? 1 : -1;
   const rankDirection = rank < 0 ? -1 : 1;
   const direction = baseDirection * rankDirection;
-  const normalX = -dy / distance;
-  const normalY = dx / distance;
   const bendMagnitude = Math.min(
     EDGE_CURVE_MAX,
     EDGE_CURVE_BASE + Math.abs(rank) * EDGE_CURVE_STEP + Math.min(20, distance * 0.08),
@@ -620,10 +743,19 @@ function buildEdgePathGeometry(
     0.5 * controlY +
     0.25 * trimmed.y2;
 
+  const labelDirection = edge.weight !== undefined || edge.label ? 1 : -1;
+  const labelOffset = Math.min(
+    EDGE_LABEL_BASE_OFFSET + Math.abs(rank) * 4,
+    Math.max(12, distance * 0.15),
+  );
+
   return {
     path: `M ${trimmed.x1} ${trimmed.y1} Q ${controlX} ${controlY} ${trimmed.x2} ${trimmed.y2}`,
     midX,
     midY,
+    labelX: midX + normalX * labelOffset * direction * labelDirection,
+    labelY: midY + normalY * labelOffset * direction * labelDirection,
+    isStraight: false,
   };
 }
 
@@ -651,6 +783,7 @@ function selectNode(nodeId: string): void {
   vscodeApi.setState({ selectedId: nodeId, selectedKind: "node" });
   renderGraph();
   renderDetailsPanel();
+  markSelectionChanged();
 }
 
 function selectAggregate(aggregateId: string): void {
@@ -659,6 +792,7 @@ function selectAggregate(aggregateId: string): void {
   vscodeApi.setState({ selectedId: aggregateId, selectedKind: "aggregate" });
   renderGraph();
   renderDetailsPanel();
+  markSelectionChanged();
 }
 
 function selectEdge(edgeId: string): void {
@@ -667,12 +801,14 @@ function selectEdge(edgeId: string): void {
   vscodeApi.setState({ selectedId: edgeId, selectedKind: "edge" });
   renderGraph();
   renderDetailsPanel();
+  markSelectionChanged();
 }
 
 function clearSelection(): void {
   runtimeState.selectedId = undefined;
   runtimeState.selectedKind = undefined;
   vscodeApi.setState({ selectedId: undefined, selectedKind: undefined });
+  markSelectionChanged();
 }
 
 function reconcileSelection(): void {
@@ -785,7 +921,13 @@ function renderGraph(): void {
   aggregation.edges.forEach((edge) => {
     edgeGeometryMap.set(
       edge.id,
-      buildEdgePathGeometry(edge, nodeMap.get(edge.source), nodeMap.get(edge.target), sourceRanks),
+      buildEdgePathGeometry(
+        edge,
+        nodeMap.get(edge.source),
+        nodeMap.get(edge.target),
+        sourceRanks,
+        aggregation.edges,
+      ),
     );
   });
 
@@ -821,10 +963,19 @@ function renderGraph(): void {
   edgeMergedSelection.classed("state-best-path", (edge: VisibleEdgeDatum) => getEdgeStatus(edge) === "best-path");
   edgeMergedSelection.classed("state-pruned", (edge: VisibleEdgeDatum) => getEdgeStatus(edge) === "pruned");
   edgeMergedSelection.classed("aggregate", (edge: VisibleEdgeDatum) => edge.memberEdgeIds.length > 1);
+  edgeMergedSelection.classed("straight", (edge: VisibleEdgeDatum) => edgeGeometryMap.get(edge.id)?.isStraight ?? false);
   edgeMergedSelection.classed(
     "deemphasized",
     (edge: VisibleEdgeDatum) => !isEdgeRelevantToSelection(edge, aggregation),
   );
+  edgeMergedSelection
+    .filter(
+      (edge: VisibleEdgeDatum) =>
+        runtimeState.selectedKind === "edge" &&
+        !!runtimeState.selectedId &&
+        edge.memberEdgeIds.includes(runtimeState.selectedId),
+    )
+    .raise();
 
   edgeMergedSelection
     .select("path")
@@ -840,11 +991,11 @@ function renderGraph(): void {
     .duration(EDGE_TRANSITION_MS)
     .attr(
       "x",
-      (edge: VisibleEdgeDatum) => edgeGeometryMap.get(edge.id)?.midX ?? 0,
+      (edge: VisibleEdgeDatum) => edgeGeometryMap.get(edge.id)?.labelX ?? 0,
     )
     .attr(
       "y",
-      (edge: VisibleEdgeDatum) => (edgeGeometryMap.get(edge.id)?.midY ?? 0) - 8,
+      (edge: VisibleEdgeDatum) => edgeGeometryMap.get(edge.id)?.labelY ?? 0,
     )
     .text((edge: VisibleEdgeDatum) => {
       if (edge.memberEdgeIds.length > 1) {
@@ -930,6 +1081,14 @@ function renderGraph(): void {
     },
   );
   nodeMergedSelection.classed("aggregate", (node: VisibleNodeDatum) => node.isAggregate);
+  nodeMergedSelection
+    .filter(
+      (node: VisibleNodeDatum) =>
+        runtimeState.selectedKind === "node" &&
+        !!runtimeState.selectedId &&
+        (node.id === runtimeState.selectedId || (node.isAggregate && node.memberNodeIds.includes(runtimeState.selectedId))),
+    )
+    .raise();
 
   nodeMergedSelection
     .interrupt()
@@ -972,7 +1131,7 @@ function focusById(targetId: string): boolean {
   let targetY: number;
 
   if (node) {
-    if (ensureExpandedForNode(node.id)) {
+    if (ensureExpandedForNode(node.id, true)) {
       renderGraph();
     }
     targetX = node.x;
@@ -990,8 +1149,8 @@ function focusById(targetId: string): boolean {
       return false;
     }
 
-    const expandedSource = ensureExpandedForNode(sourceNode.id);
-    const expandedTarget = ensureExpandedForNode(targetNode.id);
+    const expandedSource = ensureExpandedForNode(sourceNode.id, true);
+    const expandedTarget = ensureExpandedForNode(targetNode.id, true);
     if (expandedSource || expandedTarget) {
       renderGraph();
     }
@@ -1023,6 +1182,8 @@ function resetGraphToBaseline(): void {
   runtimeState.workingGraph = cloneGraphSnapshot(runtimeState.baseGraph);
   runtimeState.appliedEvents = [];
   runtimeState.eventCursor = 0;
+  runtimeState.transientExpandedAggregateIds.clear();
+  clearTransientAggregateCollapseTimer();
   runtimeState.latestAggregation = undefined;
 }
 
@@ -1124,6 +1285,8 @@ function handleInitData(payload: GraphDataFile): void {
   runtimeState.eventCursor = 0;
   runtimeState.playbackStatus = "paused";
   runtimeState.expandedAggregateIds.clear();
+  runtimeState.transientExpandedAggregateIds.clear();
+  clearTransientAggregateCollapseTimer();
   runtimeState.latestAggregation = undefined;
 
   const persistedState = vscodeApi.getState();
