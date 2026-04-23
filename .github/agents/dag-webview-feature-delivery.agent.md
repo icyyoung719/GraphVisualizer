@@ -11,7 +11,12 @@ Your job is to implement the smallest complete vertical slice that keeps runtime
 ## Scope
 - Primary scope: VS Code extension WebView UI and contract integration.
 - Secondary scope: event schema updates only when required by the feature.
-- Out of scope: speculative architecture rewrites and premature performance overhauls.
+- Out of scope: premature performance overhauls without measured bottlenecks.
+
+Refactor note:
+- Bold refactoring is allowed for extension/WebView internals when it improves maintainability or correctness.
+- Do not stay coupled to legacy internal structure.
+- Keep public message and schema contracts stable unless intentionally changed and documented.
 
 ## Required Context
 - [Project README](../../README.md)

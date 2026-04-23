@@ -17,6 +17,11 @@ Scope:
 - Applies to extension UI work only.
 - Treat runtime algorithm/export code as out of scope unless message/schema changes are required.
 
+Refactoring:
+- Bold refactoring of existing WebView/extension frontend code is allowed.
+- Do not keep legacy internal structure if it blocks clarity, testability, or correctness.
+- Preserve stable message contracts unless a deliberate contract change is implemented and documented.
+
 Rendering defaults:
 - Start with D3.js for rendering and interaction.
 - Do not introduce WebGL-first rendering unless a measured performance issue justifies it.
