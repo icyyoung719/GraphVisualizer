@@ -51,8 +51,6 @@ const runtimeState: RuntimeState = {
   playbackStatus: "paused",
 };
 
-let playbackTimer: number | undefined;
-
 const graphPaneElement = getRequiredElement<HTMLElement>("graph-pane");
 const svgElement = getRequiredElement<SVGSVGElement>("graph-svg");
 const detailsElement = getRequiredElement<HTMLElement>("details-json");
@@ -60,6 +58,15 @@ const eventLogElement = getRequiredElement<HTMLElement>("event-log");
 const searchInputElement = getRequiredElement<HTMLInputElement>("search-input");
 const focusButtonElement = getRequiredElement<HTMLButtonElement>("focus-button");
 const statusTextElement = getRequiredElement<HTMLElement>("status-text");
+const playbackButtonElements = {
+  play: getRequiredElement<HTMLButtonElement>("playback-play"),
+  pause: getRequiredElement<HTMLButtonElement>("playback-pause"),
+  step: getRequiredElement<HTMLButtonElement>("playback-step"),
+  reset: getRequiredElement<HTMLButtonElement>("playback-reset"),
+};
+
+const EDGE_TRANSITION_MS = 240;
+const NODE_TRANSITION_MS = 260;
 
 const svgSelection = d3.select<SVGSVGElement, unknown>(svgElement);
 const viewportGroup = svgSelection.append("g").attr("class", "viewport");
@@ -174,6 +181,9 @@ function renderEventLog(): void {
   visibleEvents.forEach((event, index) => {
     const item = document.createElement("li");
     item.className = "event-log-item";
+    if (index === visibleEvents.length - 1) {
+      item.classList.add("current");
+    }
 
     const absoluteIndex = runtimeState.appliedEvents.length - visibleEvents.length + index + 1;
     const target = getEventTargetId(event);
@@ -200,6 +210,7 @@ function renderGraph(): void {
     .enter()
     .append("g")
     .attr("class", "edge")
+    .style("opacity", 0)
     .on("click", (_event: MouseEvent, edge: EdgeRecord) => {
       selectEdge(edge.id);
     });
@@ -219,6 +230,9 @@ function renderGraph(): void {
 
   edgeMergedSelection
     .select("line")
+    .interrupt()
+    .transition()
+    .duration(EDGE_TRANSITION_MS)
     .attr("x1", (edge: EdgeRecord) => nodeMap.get(edge.source)?.x ?? 0)
     .attr("y1", (edge: EdgeRecord) => nodeMap.get(edge.source)?.y ?? 0)
     .attr("x2", (edge: EdgeRecord) => nodeMap.get(edge.target)?.x ?? 0)
@@ -226,6 +240,9 @@ function renderGraph(): void {
 
   edgeMergedSelection
     .select("text")
+    .interrupt()
+    .transition()
+    .duration(EDGE_TRANSITION_MS)
     .attr(
       "x",
       (edge: EdgeRecord) =>
@@ -246,7 +263,19 @@ function renderGraph(): void {
       return edge.id;
     });
 
-  edgeSelection.exit().remove();
+  edgeEnterSelection
+    .interrupt()
+    .transition()
+    .duration(EDGE_TRANSITION_MS)
+    .style("opacity", 1);
+
+  edgeSelection
+    .exit()
+    .interrupt()
+    .transition()
+    .duration(EDGE_TRANSITION_MS)
+    .style("opacity", 0)
+    .remove();
 
   const nodeSelection = nodeLayer
     .selectAll<SVGGElement, NodeRecord>("g.node")
@@ -256,6 +285,8 @@ function renderGraph(): void {
     .enter()
     .append("g")
     .attr("class", "node")
+    .attr("transform", (node: NodeRecord) => `translate(${node.x}, ${node.y})`)
+    .style("opacity", 0)
     .on("click", (_event: MouseEvent, node: NodeRecord) => {
       selectNode(node.id);
     });
@@ -270,16 +301,33 @@ function renderGraph(): void {
     nodeSelection as d3.Selection<SVGGElement, NodeRecord, SVGGElement, unknown>,
   );
 
+  nodeMergedSelection.classed(
+    "selected",
+    (node: NodeRecord) =>
+      runtimeState.selectedKind === "node" && runtimeState.selectedId === node.id,
+  );
+
   nodeMergedSelection
-    .attr("transform", (node: NodeRecord) => `translate(${node.x}, ${node.y})`)
-    .classed(
-      "selected",
-      (node: NodeRecord) =>
-        runtimeState.selectedKind === "node" && runtimeState.selectedId === node.id,
-    );
+    .interrupt()
+    .transition()
+    .duration(NODE_TRANSITION_MS)
+    .attr("transform", (node: NodeRecord) => `translate(${node.x}, ${node.y})`);
 
   nodeMergedSelection.select("text").text((node: NodeRecord) => node.label);
-  nodeSelection.exit().remove();
+
+  nodeEnterSelection
+    .interrupt()
+    .transition()
+    .duration(NODE_TRANSITION_MS)
+    .style("opacity", 1);
+
+  nodeSelection
+    .exit()
+    .interrupt()
+    .transition()
+    .duration(NODE_TRANSITION_MS)
+    .style("opacity", 0)
+    .remove();
 }
 
 function focusById(targetId: string): boolean {
@@ -335,23 +383,11 @@ function resetGraphToBaseline(): void {
   runtimeState.workingGraph = cloneGraphSnapshot(runtimeState.baseGraph);
   runtimeState.appliedEvents = [];
   runtimeState.eventCursor = 0;
-  runtimeState.playbackStatus = "paused";
-  clearSelection();
-
-  renderGraph();
-  renderDetailsPanel();
-  renderEventLog();
-  setStatus("Playback reset to initial graph.");
 }
 
-function stepPlaybackForward(): boolean {
-  if (!runtimeState.workingGraph) {
-    return false;
-  }
-
-  if (runtimeState.eventCursor >= runtimeState.events.length) {
-    setStatus("Playback reached the end of the event stream.");
-    return false;
+function applyNextEvent(): GraphEvent | undefined {
+  if (!runtimeState.workingGraph || runtimeState.eventCursor >= runtimeState.events.length) {
+    return undefined;
   }
 
   const nextEvent = runtimeState.events[runtimeState.eventCursor];
@@ -359,16 +395,35 @@ function stepPlaybackForward(): boolean {
   runtimeState.appliedEvents.push(nextEvent);
   runtimeState.eventCursor += 1;
 
+  return nextEvent;
+}
+
+function clampEventIndex(value: number): number {
+  return Math.max(0, Math.min(runtimeState.events.length, value));
+}
+
+function syncGraphToEventIndex(targetEventIndex: number): void {
+  if (!runtimeState.baseGraph) {
+    return;
+  }
+
+  const clampedTarget = clampEventIndex(targetEventIndex);
+
+  if (clampedTarget < runtimeState.eventCursor) {
+    resetGraphToBaseline();
+  }
+
+  while (runtimeState.eventCursor < clampedTarget) {
+    const nextEvent = applyNextEvent();
+    if (!nextEvent) {
+      break;
+    }
+  }
+
   reconcileSelection();
   renderGraph();
   renderDetailsPanel();
   renderEventLog();
-
-  setStatus(
-    `Applied event ${runtimeState.eventCursor}/${runtimeState.events.length}: ${nextEvent.eventType}`,
-  );
-
-  return true;
 }
 
 function postPlaybackAction(action: PlaybackControlAction): void {
@@ -380,54 +435,21 @@ function postPlaybackAction(action: PlaybackControlAction): void {
   vscodeApi.postMessage(message);
 }
 
-function stopPlayback(sendHostUpdate: boolean): void {
-  if (playbackTimer !== undefined) {
-    window.clearInterval(playbackTimer);
-    playbackTimer = undefined;
-  }
+function updatePlaybackControls(): void {
+  const hasGraph = runtimeState.baseGraph !== undefined;
+  const atStart = runtimeState.eventCursor === 0;
+  const atEnd = runtimeState.eventCursor >= runtimeState.events.length;
+  const isPlaying = runtimeState.playbackStatus === "playing";
 
-  runtimeState.playbackStatus = "paused";
-  if (sendHostUpdate) {
-    postPlaybackAction("pause");
-  }
-}
-
-function startPlayback(): void {
-  if (runtimeState.playbackStatus === "playing") {
-    return;
-  }
-
-  runtimeState.playbackStatus = "playing";
-  postPlaybackAction("play");
-
-  playbackTimer = window.setInterval(() => {
-    const moved = stepPlaybackForward();
-    if (!moved) {
-      stopPlayback(true);
-    }
-  }, 950);
+  playbackButtonElements.play.disabled = !hasGraph || isPlaying || atEnd;
+  playbackButtonElements.pause.disabled = !hasGraph || !isPlaying;
+  playbackButtonElements.step.disabled = !hasGraph || isPlaying || atEnd;
+  playbackButtonElements.reset.disabled = !hasGraph || (atStart && !isPlaying);
 }
 
 function handlePlaybackAction(action: PlaybackControlAction): void {
-  switch (action) {
-    case "play":
-      startPlayback();
-      return;
-    case "pause":
-      stopPlayback(true);
-      setStatus("Playback paused.");
-      return;
-    case "step":
-      stopPlayback(false);
-      stepPlaybackForward();
-      postPlaybackAction("step");
-      return;
-    case "reset":
-      stopPlayback(false);
-      resetGraphToBaseline();
-      postPlaybackAction("reset");
-      return;
-  }
+  postPlaybackAction(action);
+  setStatus(`Requested host action: ${action}.`);
 }
 
 function postFocusRequest(targetId: string): void {
@@ -460,6 +482,7 @@ function handleInitData(payload: GraphDataFile): void {
   reconcileSelection();
   renderDetailsPanel();
   renderEventLog();
+  updatePlaybackControls();
   setStatus(
     `Loaded ${payload.graph.nodes.length} nodes, ${payload.graph.edges.length} edges, ${payload.events.length} events.`,
   );
@@ -488,11 +511,7 @@ function bindUIEvents(): void {
     }
   });
 
-  const playbackButtons = document.querySelectorAll<HTMLButtonElement>(
-    ".playback-group button[data-action]",
-  );
-
-  playbackButtons.forEach((button) => {
+  Object.values(playbackButtonElements).forEach((button) => {
     button.addEventListener("click", () => {
       const action = button.dataset.action;
       if (!action) {
@@ -530,8 +549,11 @@ function bindHostMessages(): void {
         handleInitData(rawMessage.payload);
         return;
       case "playback-state":
+        runtimeState.playbackStatus = rawMessage.payload.status;
+        syncGraphToEventIndex(rawMessage.payload.eventIndex);
+        updatePlaybackControls();
         setStatus(
-          `Host state: ${rawMessage.payload.status} (${rawMessage.payload.eventIndex}/${rawMessage.payload.totalEvents})`,
+          `Playback: ${rawMessage.payload.status} (${runtimeState.eventCursor}/${rawMessage.payload.totalEvents})`,
         );
         return;
       case "error":
@@ -543,6 +565,7 @@ function bindHostMessages(): void {
 
 function initialize(): void {
   resizeGraphSurface();
+  updatePlaybackControls();
   bindUIEvents();
   bindHostMessages();
 

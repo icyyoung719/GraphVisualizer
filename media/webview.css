@@ -89,6 +89,12 @@ button:active {
   transform: translateY(1px);
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+}
+
 .playback-group {
   display: inline-flex;
   gap: 6px;
@@ -204,6 +210,11 @@ button:active {
   border: 1px solid rgba(15, 118, 110, 0.12);
   border-radius: 8px;
   padding: 8px;
+}
+
+.event-log-item.current {
+  border-color: rgba(232, 93, 4, 0.45);
+  background: #fff2e8;
 }
 
 @media (max-width: 980px) {

@@ -13,6 +13,7 @@ import {
 import { GraphDataFile } from "./protocol/events";
 
 const SHOW_VISUALIZATION_COMMAND = "graphdyvis.showVisualization";
+const PLAYBACK_INTERVAL_MS = 900;
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
@@ -33,6 +34,7 @@ class GraphVisualizerPanel {
   private readonly panel: vscode.WebviewPanel;
   private readonly extensionContext: vscode.ExtensionContext;
   private readonly disposables: vscode.Disposable[] = [];
+  private playbackTimer: ReturnType<typeof setInterval> | undefined;
 
   private graphData: GraphDataFile | undefined;
   private playbackState: PlaybackState = {
@@ -90,6 +92,7 @@ class GraphVisualizerPanel {
   }
 
   private dispose(): void {
+    this.stopPlaybackTimer();
     GraphVisualizerPanel.currentPanel = undefined;
 
     while (this.disposables.length > 0) {
@@ -123,44 +126,111 @@ class GraphVisualizerPanel {
   }
 
   private async handleReadyMessage(): Promise<void> {
-    if (!this.graphData) {
-      const sampleFileUri = vscode.Uri.joinPath(
-        this.extensionContext.extensionUri,
-        "data",
-        "sample-events.json",
-      );
-      this.graphData = await loadSampleGraphFile(sampleFileUri);
-      this.playbackState.totalEvents = this.graphData.events.length;
-    }
+    const graphData = await this.ensureGraphDataLoaded();
 
-    await this.postMessage(createInitDataMessage(this.graphData));
-    await this.postMessage(createPlaybackStateMessage(this.playbackState));
+    await this.postMessage(createInitDataMessage(graphData));
+    await this.broadcastPlaybackState();
   }
 
   private async handlePlaybackControl(
     action: PlaybackControlAction,
   ): Promise<void> {
+    await this.ensureGraphDataLoaded();
+
     switch (action) {
       case "play":
+        if (this.playbackState.eventIndex >= this.playbackState.totalEvents) {
+          this.playbackState.status = "paused";
+          await this.broadcastPlaybackState();
+          return;
+        }
+
         this.playbackState.status = "playing";
+        this.startPlaybackTimer();
+        await this.broadcastPlaybackState();
         break;
       case "pause":
+        this.stopPlaybackTimer();
         this.playbackState.status = "paused";
+        await this.broadcastPlaybackState();
         break;
       case "step":
+        this.stopPlaybackTimer();
         this.playbackState.status = "paused";
         this.playbackState.eventIndex = Math.min(
           this.playbackState.totalEvents,
           this.playbackState.eventIndex + 1,
         );
+        await this.broadcastPlaybackState();
         break;
       case "reset":
+        this.stopPlaybackTimer();
         this.playbackState.status = "paused";
         this.playbackState.eventIndex = 0;
+        await this.broadcastPlaybackState();
         break;
     }
+  }
 
+  private async ensureGraphDataLoaded(): Promise<GraphDataFile> {
+    if (this.graphData) {
+      return this.graphData;
+    }
+
+    const sampleFileUri = vscode.Uri.joinPath(
+      this.extensionContext.extensionUri,
+      "data",
+      "sample-events.json",
+    );
+    this.graphData = await loadSampleGraphFile(sampleFileUri);
+    this.playbackState.totalEvents = this.graphData.events.length;
+    return this.graphData;
+  }
+
+  private async broadcastPlaybackState(): Promise<void> {
     await this.postMessage(createPlaybackStateMessage(this.playbackState));
+  }
+
+  private startPlaybackTimer(): void {
+    if (this.playbackTimer) {
+      return;
+    }
+
+    this.playbackTimer = setInterval(() => {
+      void this.handlePlaybackTick();
+    }, PLAYBACK_INTERVAL_MS);
+  }
+
+  private stopPlaybackTimer(): void {
+    if (!this.playbackTimer) {
+      return;
+    }
+
+    clearInterval(this.playbackTimer);
+    this.playbackTimer = undefined;
+  }
+
+  private async handlePlaybackTick(): Promise<void> {
+    if (this.playbackState.status !== "playing") {
+      this.stopPlaybackTimer();
+      return;
+    }
+
+    if (this.playbackState.eventIndex >= this.playbackState.totalEvents) {
+      this.playbackState.status = "paused";
+      this.stopPlaybackTimer();
+      await this.broadcastPlaybackState();
+      return;
+    }
+
+    this.playbackState.eventIndex += 1;
+
+    if (this.playbackState.eventIndex >= this.playbackState.totalEvents) {
+      this.playbackState.status = "paused";
+      this.stopPlaybackTimer();
+    }
+
+    await this.broadcastPlaybackState();
   }
 
   private async postMessage(message: HostToWebviewMessage): Promise<void> {
@@ -197,10 +267,10 @@ class GraphVisualizerPanel {
         <button id="focus-button">Focus</button>
       </div>
       <div class="playback-group">
-        <button data-action="play">Play</button>
-        <button data-action="pause">Pause</button>
-        <button data-action="step">Step</button>
-        <button data-action="reset">Reset</button>
+        <button id="playback-play" data-action="play">Play</button>
+        <button id="playback-pause" data-action="pause">Pause</button>
+        <button id="playback-step" data-action="step">Step</button>
+        <button id="playback-reset" data-action="reset">Reset</button>
       </div>
       <div id="status-text" class="status-text">Waiting for data...</div>
     </header>
