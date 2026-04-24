@@ -33,11 +33,13 @@ Supported keys and defaults:
 - `graphdyvis.aggregation.recentEventWindow` (default: `8`, integer `>= 1`)
 - `graphdyvis.aggregation.autoCollapseOnFocusAway` (default: `true`)
 - `graphdyvis.aggregation.autoCollapseDelayMs` (default: `220`, integer `>= 0`)
+- `graphdyvis.appearance.style` (default: `"polished"`, options: `"polished" | "simple"`)
 
 Behavior notes:
 
 - When `graphdyvis.playback.autoFocusOnEvent` is disabled, playback still applies events and keeps automatic highlight, but no longer auto-focuses event targets.
 - When `graphdyvis.aggregation.enabled` is disabled, aggregation is bypassed and full graph detail is rendered.
+- When `graphdyvis.appearance.style` is `simple`, the details panel uses a raw JSON presentation with minimal styling.
 ## Structure and Key Files
 
 - Extension entry point: `src/extension.ts`
@@ -111,6 +113,14 @@ Shared fields:
 
 - Required: `eventType`, `timestampMs`
 - Optional: `reason`
+
+Node/edge auxiliary metadata fields (additive):
+
+- `graph.nodes[].auxiliary` (optional JSON)
+- `graph.edges[].auxiliary` (optional JSON)
+- `events[].newAuxiliary` for `edge_update` (optional JSON)
+
+These fields are intended for rich non-algorithm metadata (debug context, source mapping, operational annotations) and are surfaced in the node/edge details panel.
 
 Compatibility strategy:
 

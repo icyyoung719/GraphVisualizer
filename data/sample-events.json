@@ -10,6 +10,16 @@
         "properties": {
           "distance": 0,
           "role": "source"
+        },
+        "auxiliary": {
+          "owner": {
+            "team": "routing",
+            "contact": "oncall-routing"
+          },
+          "tags": [
+            "entry",
+            "critical"
+          ]
         }
       },
       {
@@ -50,6 +60,16 @@
         "weight": 8,
         "properties": {
           "relaxed": false
+        },
+        "auxiliary": {
+          "origin": {
+            "file": "topology.graph.json",
+            "line": 18
+          },
+          "sla": {
+            "latencyMs": 120,
+            "priority": "high"
+          }
         }
       },
       {
@@ -94,6 +114,16 @@
       "newProperties": {
         "relaxed": true,
         "distanceToTarget": 6
+      },
+      "newAuxiliary": {
+        "trace": {
+          "requestId": "req-1001",
+          "worker": "planner-2"
+        },
+        "notes": [
+          "candidate path promoted",
+          "distance tightened"
+        ]
       }
     },
     {

@@ -46,6 +46,75 @@ describe("validateGraphDataFile", () => {
     });
   });
 
+  it("accepts nested auxiliary metadata on nodes, edges, and edge updates", () => {
+    const parsed = validateGraphDataFile({
+      schemaVersion: "1.0",
+      graph: {
+        nodes: [
+          {
+            id: "n1",
+            label: "Node 1",
+            x: 0,
+            y: 0,
+            auxiliary: {
+              owner: {
+                team: "infra",
+                contact: "ops@example.com",
+              },
+              tags: ["critical", "entry"],
+            },
+          },
+          {
+            id: "n2",
+            label: "Node 2",
+            x: 1,
+            y: 1,
+          },
+        ],
+        edges: [
+          {
+            id: "n1->n2",
+            source: "n1",
+            target: "n2",
+            weight: 3,
+            auxiliary: {
+              sourceFile: "pipeline.yaml",
+              line: 42,
+            },
+          },
+        ],
+      },
+      events: [
+        {
+          eventType: "edge_update",
+          id: "n1->n2",
+          timestampMs: 1,
+          newAuxiliary: {
+            trace: {
+              requestId: "req-001",
+              retries: 2,
+            },
+          },
+        },
+      ],
+    });
+
+    expect(parsed.graph.nodes[0].auxiliary).toMatchObject({
+      owner: {
+        team: "infra",
+      },
+    });
+    expect(parsed.events[0]).toMatchObject({
+      eventType: "edge_update",
+      newAuxiliary: {
+        trace: {
+          requestId: "req-001",
+          retries: 2,
+        },
+      },
+    });
+  });
+
   it("rejects missing required graph fields", () => {
     expect(() =>
       validateGraphDataFile({
@@ -116,5 +185,28 @@ describe("validateGraphDataFile", () => {
         ],
       }),
     ).toThrow("events[0].id must be a string for edge_update.");
+  });
+
+  it("rejects invalid auxiliary metadata", () => {
+    expect(() =>
+      validateGraphDataFile({
+        schemaVersion: "1.0",
+        graph: {
+          nodes: [
+            {
+              id: "n1",
+              label: "Node 1",
+              x: 0,
+              y: 0,
+              auxiliary: {
+                bad: () => "nope",
+              },
+            },
+          ],
+          edges: [],
+        },
+        events: [],
+      }),
+    ).toThrow("graph.nodes[0].auxiliary must be valid JSON data when provided.");
   });
 });

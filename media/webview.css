@@ -34,6 +34,27 @@ body {
     var(--bg);
 }
 
+body.appearance-simple {
+  background: #f4f6f5;
+}
+
+body.appearance-simple .toolbar,
+body.appearance-simple .graph-pane,
+body.appearance-simple .detail-pane {
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+body.appearance-simple .graph-pane,
+body.appearance-simple #graph-svg {
+  background: #ffffff;
+}
+
+body.appearance-simple button {
+  background: #f2f7f5;
+  border-color: rgba(22, 47, 39, 0.2);
+}
+
 .app-shell {
   height: 100vh;
   display: grid;
@@ -367,14 +388,98 @@ button:disabled {
   letter-spacing: 0.06em;
 }
 
-#details-json {
+#details-panel {
   background: var(--panel-muted);
   border-radius: 10px;
   padding: 10px;
-  white-space: pre-wrap;
   font-size: 0.82rem;
   margin: 0 0 10px;
   border: 1px solid rgba(15, 118, 110, 0.12);
+  min-height: 130px;
+}
+
+#details-panel.details-simple {
+  white-space: pre-wrap;
+  font-family: Consolas, "Courier New", monospace;
+  line-height: 1.4;
+}
+
+body.appearance-simple #details-panel {
+  background: #ffffff;
+  border-color: rgba(22, 47, 39, 0.2);
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.details-kind-badge {
+  border: 1px solid rgba(15, 118, 110, 0.25);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0b6b64;
+  background: #e4f5f1;
+}
+
+.details-section {
+  margin-top: 8px;
+}
+
+.details-section h3 {
+  margin: 0 0 6px;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+}
+
+.details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+
+.details-grid-row {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) 1.4fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.details-grid-row dt {
+  color: var(--ink-muted);
+  word-break: break-word;
+}
+
+.details-grid-row dd {
+  margin: 0;
+  color: var(--ink);
+  word-break: break-word;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.details-json-block {
+  margin: 0;
+  padding: 8px;
+  background: #f6fbf9;
+  border: 1px solid rgba(15, 118, 110, 0.12);
+  border-radius: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: Consolas, "Courier New", monospace;
+  line-height: 1.35;
+}
+
+.details-empty {
+  margin: 0;
+  color: var(--ink-muted);
 }
 
 #event-log {

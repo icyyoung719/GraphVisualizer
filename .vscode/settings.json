@@ -24,7 +24,10 @@
   "graphdyvis.aggregation.autoCollapseOnFocusAway": true,
 
   // Delay before auto-collapse runs (milliseconds).
-  "graphdyvis.aggregation.autoCollapseDelayMs": 220
+  "graphdyvis.aggregation.autoCollapseDelayMs": 220,
+
+  // Details panel appearance mode: polished structured sections or simple raw JSON.
+  "graphdyvis.appearance.style": "polished"
 
   // Future settings can be added here as new graphdyvis.* keys.
 }

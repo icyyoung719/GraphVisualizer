@@ -76,6 +76,15 @@
           "default": 220,
           "minimum": 0,
           "description": "Delay in milliseconds before temporary aggregate expansions collapse."
+        },
+        "graphdyvis.appearance.style": {
+          "type": "string",
+          "enum": [
+            "polished",
+            "simple"
+          ],
+          "default": "polished",
+          "description": "Controls details panel presentation: polished structured sections or simple raw JSON view."
         }
       }
     }

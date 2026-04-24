@@ -394,7 +394,7 @@ class GraphVisualizerPanel {
 
       <aside class="detail-pane">
         <h2>Element Details</h2>
-        <pre id="details-json">Select a node or edge.</pre>
+        <div id="details-panel">Select a node or edge.</div>
 
         <h2>Event Log</h2>
         <ul id="event-log"></ul>
@@ -424,6 +424,9 @@ class GraphVisualizerPanel {
           "aggregation.autoCollapseOnFocusAway",
         ),
         autoCollapseDelayMs: configuration.get<number>("aggregation.autoCollapseDelayMs"),
+      },
+      appearance: {
+        style: configuration.get<"polished" | "simple">("appearance.style"),
       },
     };
 

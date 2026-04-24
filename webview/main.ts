@@ -88,7 +88,7 @@ const runtimeState: RuntimeState = {
 
 const graphPaneElement = getRequiredElement<HTMLElement>("graph-pane");
 const svgElement = getRequiredElement<SVGSVGElement>("graph-svg");
-const detailsElement = getRequiredElement<HTMLElement>("details-json");
+const detailsElement = getRequiredElement<HTMLElement>("details-panel");
 const eventLogElement = getRequiredElement<HTMLElement>("event-log");
 const searchInputElement = getRequiredElement<HTMLInputElement>("search-input");
 const focusButtonElement = getRequiredElement<HTMLButtonElement>("focus-button");
@@ -110,6 +110,8 @@ const svgSelection = d3.select<SVGSVGElement, unknown>(svgElement);
 const viewportGroup = svgSelection.append("g").attr("class", "viewport");
 const edgeLayer = viewportGroup.append("g").attr("class", "edges");
 const nodeLayer = viewportGroup.append("g").attr("class", "nodes");
+
+applyAppearanceStyle();
 
 const zoomBehavior = d3
   .zoom<SVGSVGElement, unknown>()
@@ -133,6 +135,154 @@ function getRequiredElement<TElement extends Element>(id: string): TElement {
     throw new Error(`Missing required element with id \"${id}\".`);
   }
   return element as unknown as TElement;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function formatPrimitiveValue(value: unknown): string {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return `${value}`;
+  }
+
+  if (value === null) {
+    return "null";
+  }
+
+  return JSON.stringify(value);
+}
+
+function createDetailsSection(title: string): HTMLElement {
+  const section = document.createElement("section");
+  section.className = "details-section";
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+  section.appendChild(heading);
+
+  return section;
+}
+
+function appendEmptyState(container: HTMLElement, text: string): void {
+  const paragraph = document.createElement("p");
+  paragraph.className = "details-empty";
+  paragraph.textContent = text;
+  container.appendChild(paragraph);
+}
+
+function appendKeyValueGrid(
+  container: HTMLElement,
+  values: Record<string, unknown>,
+  emptyText: string,
+): void {
+  const entries = Object.entries(values);
+  if (entries.length === 0) {
+    appendEmptyState(container, emptyText);
+    return;
+  }
+
+  const grid = document.createElement("dl");
+  grid.className = "details-grid";
+
+  entries.forEach(([key, value]) => {
+    const row = document.createElement("div");
+    row.className = "details-grid-row";
+
+    const keyElement = document.createElement("dt");
+    keyElement.textContent = key;
+    row.appendChild(keyElement);
+
+    const valueElement = document.createElement("dd");
+    valueElement.textContent =
+      typeof value === "object" && value !== null ? JSON.stringify(value) : formatPrimitiveValue(value);
+    row.appendChild(valueElement);
+
+    grid.appendChild(row);
+  });
+
+  container.appendChild(grid);
+}
+
+function appendJsonBlock(container: HTMLElement, value: unknown, emptyText: string): void {
+  if (value === undefined) {
+    appendEmptyState(container, emptyText);
+    return;
+  }
+
+  if (isRecord(value) && Object.keys(value).length === 0) {
+    appendEmptyState(container, emptyText);
+    return;
+  }
+
+  const pre = document.createElement("pre");
+  pre.className = "details-json-block";
+  pre.textContent = JSON.stringify(value, null, 2);
+  container.appendChild(pre);
+}
+
+function renderSimpleDetails(value: unknown): void {
+  detailsElement.classList.add("details-simple");
+  detailsElement.classList.remove("details-polished");
+
+  if (typeof value === "string") {
+    detailsElement.textContent = value;
+    return;
+  }
+
+  detailsElement.textContent = JSON.stringify(value, null, 2);
+}
+
+function renderPolishedDetails(
+  kind: "Node" | "Edge" | "Aggregate",
+  core: Record<string, unknown>,
+  properties: Record<string, unknown> | undefined,
+  auxiliary: unknown,
+  raw: unknown,
+): void {
+  detailsElement.classList.remove("details-simple");
+  detailsElement.classList.add("details-polished");
+  detailsElement.innerHTML = "";
+
+  const header = document.createElement("div");
+  header.className = "details-header";
+
+  const title = document.createElement("strong");
+  title.textContent = `${kind} Details`;
+  header.appendChild(title);
+
+  const badge = document.createElement("span");
+  badge.className = "details-kind-badge";
+  badge.textContent = kind;
+  header.appendChild(badge);
+
+  detailsElement.appendChild(header);
+
+  const coreSection = createDetailsSection("Core Fields");
+  appendKeyValueGrid(coreSection, core, "No core fields available.");
+  detailsElement.appendChild(coreSection);
+
+  const propertySection = createDetailsSection("Properties");
+  appendKeyValueGrid(propertySection, properties ?? {}, "No properties available.");
+  detailsElement.appendChild(propertySection);
+
+  const auxiliarySection = createDetailsSection("Auxiliary Metadata");
+  appendJsonBlock(auxiliarySection, auxiliary, "No auxiliary metadata attached.");
+  detailsElement.appendChild(auxiliarySection);
+
+  const rawSection = createDetailsSection("Raw JSON");
+  appendJsonBlock(rawSection, raw, "No raw details available.");
+  detailsElement.appendChild(rawSection);
+}
+
+function applyAppearanceStyle(): void {
+  const simpleMode = runtimeState.settings.appearance.style === "simple";
+  document.body.classList.toggle("appearance-simple", simpleMode);
+  document.body.classList.toggle("appearance-polished", !simpleMode);
 }
 
 function resizeGraphSurface(): void {
@@ -583,39 +733,98 @@ function applyPlaybackSelection(event: GraphEvent, graphBeforeEvent: GraphSnapsh
 
 function renderDetailsPanel(): void {
   if (!runtimeState.selectedId || !runtimeState.selectedKind) {
-    detailsElement.textContent = "Select a node or edge.";
+    renderSimpleDetails("Select a node or edge.");
     return;
   }
+
+  const simpleMode = runtimeState.settings.appearance.style === "simple";
 
   if (runtimeState.selectedKind === "aggregate") {
     const aggregate = runtimeState.latestAggregation?.aggregatesById.get(runtimeState.selectedId);
     if (!aggregate) {
-      detailsElement.textContent = "Selected aggregate is no longer present in the active graph state.";
+      renderSimpleDetails("Selected aggregate is no longer present in the active graph state.");
       return;
     }
 
-    detailsElement.textContent = JSON.stringify(
+    const aggregateDetails = {
+      id: aggregate.id,
+      groupKey: aggregate.groupKey,
+      layer: aggregate.representativeLayer,
+      memberCount: aggregate.memberNodeIds.length,
+      memberPreview: aggregate.memberNodeIds.slice(0, 20),
+    };
+
+    if (simpleMode) {
+      renderSimpleDetails(aggregateDetails);
+    } else {
+      renderPolishedDetails(
+        "Aggregate",
+        {
+          id: aggregate.id,
+          groupKey: aggregate.groupKey,
+          layer: aggregate.representativeLayer,
+          memberCount: aggregate.memberNodeIds.length,
+        },
+        undefined,
+        undefined,
+        aggregateDetails,
+      );
+    }
+
+    return;
+  }
+
+  if (runtimeState.selectedKind === "node") {
+    const details = findNodeById(runtimeState.selectedId);
+    if (!details) {
+      renderSimpleDetails("Selected element is no longer present in the active graph state.");
+      return;
+    }
+
+    if (simpleMode) {
+      renderSimpleDetails(details);
+      return;
+    }
+
+    renderPolishedDetails(
+      "Node",
       {
-        id: aggregate.id,
-        groupKey: aggregate.groupKey,
-        layer: aggregate.representativeLayer,
-        memberCount: aggregate.memberNodeIds.length,
-        memberPreview: aggregate.memberNodeIds.slice(0, 20),
+        id: details.id,
+        label: details.label,
+        x: details.x,
+        y: details.y,
       },
-      null,
-      2,
+      details.properties,
+      details.auxiliary,
+      details,
     );
     return;
   }
 
-  const details =
-    runtimeState.selectedKind === "node"
-      ? findNodeById(runtimeState.selectedId)
-      : findEdgeById(runtimeState.selectedId);
+  const details = findEdgeById(runtimeState.selectedId);
+  if (!details) {
+    renderSimpleDetails("Selected element is no longer present in the active graph state.");
+    return;
+  }
 
-  detailsElement.textContent = details
-    ? JSON.stringify(details, null, 2)
-    : "Selected element is no longer present in the active graph state.";
+  if (simpleMode) {
+    renderSimpleDetails(details);
+    return;
+  }
+
+  renderPolishedDetails(
+    "Edge",
+    {
+      id: details.id,
+      source: details.source,
+      target: details.target,
+      label: details.label,
+      weight: details.weight,
+    },
+    details.properties,
+    details.auxiliary,
+    details,
+  );
 }
 
 function renderEventLog(): void {
@@ -1171,6 +1380,7 @@ function bindHostMessages(): void {
         return;
       case "settings": {
         runtimeState.settings = normalizeGraphDyVisSettings(rawMessage.payload);
+        applyAppearanceStyle();
         if (!runtimeState.settings.aggregation.autoCollapseOnFocusAway) {
           clearTransientAggregateCollapseTimer();
         }

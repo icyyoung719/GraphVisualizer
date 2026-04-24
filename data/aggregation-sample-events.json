@@ -11,6 +11,16 @@
           "role": "source",
           "layer": 0,
           "domain": "gateway"
+        },
+        "auxiliary": {
+          "service": {
+            "name": "api-gateway",
+            "region": "us-east-1"
+          },
+          "owners": [
+            "edge-platform",
+            "traffic-ops"
+          ]
         }
       },
       {
@@ -1501,6 +1511,12 @@
       "newProperties": {
         "status": "best-path",
         "throughput": 120
+      },
+      "newAuxiliary": {
+        "telemetry": {
+          "p95LatencyMs": 14,
+          "errorRate": 0.002
+        }
       }
     },
     {

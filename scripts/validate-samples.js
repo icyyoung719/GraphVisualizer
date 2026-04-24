@@ -22,6 +22,22 @@ function isPrimitive(value) {
   return value === null || ['string', 'number', 'boolean'].includes(typeof value);
 }
 
+function isJsonValue(value) {
+  if (isPrimitive(value)) {
+    return true;
+  }
+
+  if (Array.isArray(value)) {
+    return value.every((entry) => isJsonValue(entry));
+  }
+
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return Object.values(value).every((entry) => isJsonValue(entry));
+}
+
 function parseJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
@@ -37,12 +53,21 @@ function validatePropertyMap(value, pathLabel) {
   }
 }
 
+function validateAuxiliary(value, pathLabel) {
+  if (value === undefined) {
+    return;
+  }
+
+  assert(isJsonValue(value), `${pathLabel} must be valid JSON data when provided.`);
+}
+
 function validateNode(node, pathLabel) {
   assert(isRecord(node), `${pathLabel} must be an object.`);
   assert(typeof node.id === 'string' && node.id.length > 0, `${pathLabel}.id must be a non-empty string.`);
   assert(typeof node.label === 'string', `${pathLabel}.label must be a string.`);
   assert(typeof node.x === 'number' && typeof node.y === 'number', `${pathLabel}.x and ${pathLabel}.y must be numbers.`);
   validatePropertyMap(node.properties, `${pathLabel}.properties`);
+  validateAuxiliary(node.auxiliary, `${pathLabel}.auxiliary`);
 }
 
 function validateEdge(edge, pathLabel) {
@@ -56,6 +81,7 @@ function validateEdge(edge, pathLabel) {
     assert(typeof edge.weight === 'number', `${pathLabel}.weight must be a number when provided.`);
   }
   validatePropertyMap(edge.properties, `${pathLabel}.properties`);
+  validateAuxiliary(edge.auxiliary, `${pathLabel}.auxiliary`);
 }
 
 function validateEvent(event, pathLabel) {
@@ -79,6 +105,7 @@ function validateEvent(event, pathLabel) {
         assert(typeof event.newWeight === 'number', `${pathLabel}.newWeight must be a number when provided.`);
       }
       validatePropertyMap(event.newProperties, `${pathLabel}.newProperties`);
+      validateAuxiliary(event.newAuxiliary, `${pathLabel}.newAuxiliary`);
       break;
     case 'edge_delete':
       assert(typeof event.id === 'string', `${pathLabel}.id must be a string for edge_delete.`);
@@ -93,10 +120,12 @@ function cloneGraph(graph) {
     nodes: graph.nodes.map((node) => ({
       ...node,
       properties: node.properties ? { ...node.properties } : undefined,
+      auxiliary: node.auxiliary !== undefined ? structuredClone(node.auxiliary) : undefined,
     })),
     edges: graph.edges.map((edge) => ({
       ...edge,
       properties: edge.properties ? { ...edge.properties } : undefined,
+      auxiliary: edge.auxiliary !== undefined ? structuredClone(edge.auxiliary) : undefined,
     })),
   };
 }
@@ -136,6 +165,12 @@ function applyEventToGraph(snapshot, event) {
           ...(edge.properties ?? {}),
           ...(event.newProperties ?? {}),
         },
+        auxiliary:
+          event.newAuxiliary !== undefined
+            ? structuredClone(event.newAuxiliary)
+            : edge.auxiliary !== undefined
+              ? structuredClone(edge.auxiliary)
+              : undefined,
       };
       return next;
     }

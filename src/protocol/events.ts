@@ -1,4 +1,5 @@
 export type Primitive = string | number | boolean | null;
+export type JsonValue = Primitive | JsonValue[] | { [key: string]: JsonValue };
 export type PropertyMap = Record<string, Primitive>;
 
 export interface NodeRecord {
@@ -7,6 +8,7 @@ export interface NodeRecord {
   x: number;
   y: number;
   properties?: PropertyMap;
+  auxiliary?: JsonValue;
 }
 
 export interface EdgeRecord {
@@ -16,6 +18,7 @@ export interface EdgeRecord {
   label?: string;
   weight?: number;
   properties?: PropertyMap;
+  auxiliary?: JsonValue;
 }
 
 export interface GraphSnapshot {
@@ -43,6 +46,7 @@ export interface EdgeUpdateEvent extends EventBase {
   id: string;
   newWeight?: number;
   newProperties?: PropertyMap;
+  newAuxiliary?: JsonValue;
 }
 
 export interface EdgeDeleteEvent extends EventBase {
@@ -98,6 +102,34 @@ function parsePropertyMap(value: unknown, path: string): PropertyMap | undefined
   return mapped;
 }
 
+function isJsonValue(value: unknown): value is JsonValue {
+  if (isPrimitive(value)) {
+    return true;
+  }
+
+  if (Array.isArray(value)) {
+    return value.every((entry) => isJsonValue(entry));
+  }
+
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return Object.values(value).every((entry) => isJsonValue(entry));
+}
+
+function parseAuxiliary(value: unknown, path: string): JsonValue | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (!isJsonValue(value)) {
+    throw new Error(`${path} must be valid JSON data when provided.`);
+  }
+
+  return value;
+}
+
 function parseNode(raw: unknown, path: string): NodeRecord {
   if (!isRecord(raw)) {
     throw new Error(`${path} must be an object.`);
@@ -121,6 +153,7 @@ function parseNode(raw: unknown, path: string): NodeRecord {
     x: raw.x,
     y: raw.y,
     properties: parsePropertyMap(raw.properties, `${path}.properties`),
+    auxiliary: parseAuxiliary(raw.auxiliary, `${path}.auxiliary`),
   };
 }
 
@@ -152,6 +185,7 @@ function parseEdge(raw: unknown, path: string): EdgeRecord {
     label: raw.label,
     weight: raw.weight,
     properties: parsePropertyMap(raw.properties, `${path}.properties`),
+    auxiliary: parseAuxiliary(raw.auxiliary, `${path}.auxiliary`),
   };
 }
 
@@ -217,6 +251,7 @@ function parseGraphEvent(raw: unknown, index: number): GraphEvent {
         reason: parseReason(raw.reason, `${path}.reason`),
         newWeight: raw.newWeight,
         newProperties: parsePropertyMap(raw.newProperties, `${path}.newProperties`),
+        newAuxiliary: parseAuxiliary(raw.newAuxiliary, `${path}.newAuxiliary`),
       };
     case "edge_delete":
       if (typeof raw.id !== "string") {
@@ -280,12 +315,37 @@ export function cloneGraphSnapshot(graph: GraphSnapshot): GraphSnapshot {
     nodes: graph.nodes.map((node) => ({
       ...node,
       properties: node.properties ? { ...node.properties } : undefined,
+      auxiliary:
+        node.auxiliary !== undefined
+          ? cloneAuxiliary(node.auxiliary)
+          : undefined,
     })),
     edges: graph.edges.map((edge) => ({
       ...edge,
       properties: edge.properties ? { ...edge.properties } : undefined,
+      auxiliary:
+        edge.auxiliary !== undefined
+          ? cloneAuxiliary(edge.auxiliary)
+          : undefined,
     })),
   };
+}
+
+function cloneAuxiliary(value: JsonValue): JsonValue {
+  if (isPrimitive(value)) {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((entry) => cloneAuxiliary(entry));
+  }
+
+  const cloned: { [key: string]: JsonValue } = {};
+  Object.entries(value).forEach(([key, entry]) => {
+    cloned[key] = cloneAuxiliary(entry);
+  });
+
+  return cloned;
 }
 
 export function applyEventToGraph(
@@ -333,6 +393,12 @@ export function applyEventToGraph(
           ...(edge.properties ?? {}),
           ...(event.newProperties ?? {}),
         },
+        auxiliary:
+          event.newAuxiliary !== undefined
+            ? cloneAuxiliary(event.newAuxiliary)
+            : edge.auxiliary !== undefined
+              ? cloneAuxiliary(edge.auxiliary)
+              : undefined,
       };
 
       return nextSnapshot;

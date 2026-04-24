@@ -11,6 +11,13 @@
           "distance": 0,
           "layer": 0,
           "role": "source"
+        },
+        "auxiliary": {
+          "stage": "open-set",
+          "debug": {
+            "heapIndex": 0,
+            "queuedAtMs": 0
+          }
         }
       },
       {
@@ -887,6 +894,12 @@
         "relaxed": true,
         "bestPath": true,
         "cumulativeCost": 1
+      },
+      "newAuxiliary": {
+        "trace": {
+          "expandedFrom": "S",
+          "openSetSize": 3
+        }
       }
     },
     {

@@ -15,14 +15,22 @@ export interface GraphDyVisAggregationSettings {
   autoCollapseDelayMs: number;
 }
 
+export type GraphDyVisAppearanceStyle = "polished" | "simple";
+
+export interface GraphDyVisAppearanceSettings {
+  style: GraphDyVisAppearanceStyle;
+}
+
 export interface GraphDyVisSettings {
   playback: GraphDyVisPlaybackSettings;
   aggregation: GraphDyVisAggregationSettings;
+  appearance: GraphDyVisAppearanceSettings;
 }
 
 export interface GraphDyVisSettingsInput {
   playback?: Partial<GraphDyVisPlaybackSettings>;
   aggregation?: Partial<GraphDyVisAggregationSettings>;
+  appearance?: Partial<GraphDyVisAppearanceSettings>;
 }
 
 export const DEFAULT_GRAPH_DY_VIS_SETTINGS: GraphDyVisSettings = {
@@ -37,6 +45,9 @@ export const DEFAULT_GRAPH_DY_VIS_SETTINGS: GraphDyVisSettings = {
     recentEventWindow: 8,
     autoCollapseOnFocusAway: true,
     autoCollapseDelayMs: 220,
+  },
+  appearance: {
+    style: "polished",
   },
 };
 
@@ -63,6 +74,8 @@ export function normalizePlaybackSpeed(value: unknown): number {
 export function normalizeGraphDyVisSettings(
   input: GraphDyVisSettingsInput | undefined,
 ): GraphDyVisSettings {
+  const rawStyle = input?.appearance?.style;
+
   return {
     playback: {
       autoFocusOnEvent:
@@ -101,6 +114,12 @@ export function normalizeGraphDyVisSettings(
         0,
       ),
     },
+    appearance: {
+      style:
+        rawStyle === "simple" || rawStyle === "polished"
+          ? rawStyle
+          : DEFAULT_GRAPH_DY_VIS_SETTINGS.appearance.style,
+    },
   };
 }
 
@@ -121,6 +140,9 @@ export function isGraphDyVisSettings(raw: unknown): raw is GraphDyVisSettings {
       recentEventWindow?: unknown;
       autoCollapseOnFocusAway?: unknown;
       autoCollapseDelayMs?: unknown;
+    };
+    appearance?: {
+      style?: unknown;
     };
   };
 
@@ -143,6 +165,7 @@ export function isGraphDyVisSettings(raw: unknown): raw is GraphDyVisSettings {
     typeof value.aggregation?.autoCollapseOnFocusAway === "boolean" &&
     typeof value.aggregation?.autoCollapseDelayMs === "number" &&
     Number.isInteger(value.aggregation.autoCollapseDelayMs) &&
-    value.aggregation.autoCollapseDelayMs >= 0
+    value.aggregation.autoCollapseDelayMs >= 0 &&
+    (value.appearance?.style === "polished" || value.appearance?.style === "simple")
   );
 }
