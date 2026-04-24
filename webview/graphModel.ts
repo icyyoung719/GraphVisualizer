@@ -4,6 +4,10 @@ import {
   GraphSnapshot,
   NodeRecord,
 } from "../src/protocol/events";
+import {
+  DEFAULT_GRAPH_DY_VIS_SETTINGS,
+  GraphDyVisAggregationSettings,
+} from "../src/protocol/settings";
 
 export type SelectedKind = "node" | "edge" | "aggregate";
 
@@ -42,6 +46,7 @@ export interface GraphRenderContext {
   events: GraphEvent[];
   appliedEvents: GraphEvent[];
   expandedAggregateIds: Set<string>;
+  aggregationSettings: GraphDyVisAggregationSettings;
 }
 
 export interface EdgePathGeometry {
@@ -60,9 +65,7 @@ const EDGE_CURVE_STEP = 9;
 const EDGE_CURVE_MAX = 68;
 const EDGE_LABEL_BASE_OFFSET = 14;
 const EDGE_LABEL_STRAIGHT_OFFSET = 12;
-const AGGREGATION_MIN_TOTAL_NODES = 20;
-const AGGREGATION_MIN_GROUP_SIZE = 4;
-const AGGREGATION_RECENT_EVENT_WINDOW = 8;
+const DEFAULT_AGGREGATION_SETTINGS = DEFAULT_GRAPH_DY_VIS_SETTINGS.aggregation;
 
 function getNodeLayerValue(node: NodeRecord): string {
   const layer = node.properties?.layer;
@@ -141,7 +144,8 @@ function getInterestingNodeIds(
     }
   }
 
-  const recentEvents = context.appliedEvents.slice(-AGGREGATION_RECENT_EVENT_WINDOW);
+  const recentEventWindow = Math.max(1, context.aggregationSettings.recentEventWindow);
+  const recentEvents = context.appliedEvents.slice(-recentEventWindow);
   recentEvents.forEach((event) => {
     getEventRelatedNodeIds(event, snapshot, context).forEach((nodeId) => interestingIds.add(nodeId));
   });
@@ -186,7 +190,13 @@ export function deriveAggregation(
   snapshot: GraphSnapshot,
   context: GraphRenderContext,
 ): AggregationResult {
-  if (snapshot.nodes.length < AGGREGATION_MIN_TOTAL_NODES) {
+  const aggregationSettings = context.aggregationSettings ?? DEFAULT_AGGREGATION_SETTINGS;
+
+  if (!aggregationSettings.enabled) {
+    return createIdentityAggregation(snapshot);
+  }
+
+  if (snapshot.nodes.length < aggregationSettings.minTotalNodes) {
     return createIdentityAggregation(snapshot);
   }
 
@@ -206,7 +216,7 @@ export function deriveAggregation(
 
   const aggregatesById = new Map<string, AggregateGroup>();
   groupedCandidates.forEach((members, groupKey) => {
-    if (members.length < AGGREGATION_MIN_GROUP_SIZE) {
+    if (members.length < aggregationSettings.minGroupSize) {
       return;
     }
 

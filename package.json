@@ -27,7 +27,58 @@
         "command": "graphdyvis.showLegacyVisualization",
         "title": "GraphDyVis: Show Legacy Sample"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "GraphDyVis",
+      "properties": {
+        "graphdyvis.playback.autoFocusOnEvent": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically focus and highlight the current event target during playback."
+        },
+        "graphdyvis.playback.defaultSpeed": {
+          "type": "number",
+          "default": 1,
+          "minimum": 0.25,
+          "maximum": 4,
+          "description": "Default playback speed multiplier when a visualizer opens."
+        },
+        "graphdyvis.aggregation.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable adaptive aggregation for dense graphs."
+        },
+        "graphdyvis.aggregation.minTotalNodes": {
+          "type": "number",
+          "default": 20,
+          "minimum": 1,
+          "description": "Minimum node count required before aggregation is considered."
+        },
+        "graphdyvis.aggregation.minGroupSize": {
+          "type": "number",
+          "default": 4,
+          "minimum": 2,
+          "description": "Minimum member count required to collapse a node group into an aggregate node."
+        },
+        "graphdyvis.aggregation.recentEventWindow": {
+          "type": "number",
+          "default": 8,
+          "minimum": 1,
+          "description": "Number of recent events used to keep related nodes from being aggregated."
+        },
+        "graphdyvis.aggregation.autoCollapseOnFocusAway": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically collapse temporary aggregate expansions after focus moves away."
+        },
+        "graphdyvis.aggregation.autoCollapseDelayMs": {
+          "type": "number",
+          "default": 220,
+          "minimum": 0,
+          "description": "Delay in milliseconds before temporary aggregate expansions collapse."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run build",

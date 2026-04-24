@@ -12,10 +12,32 @@ Implemented capabilities, aligned with the current codebase:
 - Automatic collapse recovery: after focus moves away from a temporarily expanded aggregate, it collapses again after a short delay
 - Edge visuals: complex links keep curves to reduce crossings, while simple chains prefer straight lines; edge weight labels try to avoid edge lines and crossing zones
 - Playback controls: Play / Pause / Step / Reset / speed adjustment (0.25x - 4x)
+- Configurable settings: playback auto-focus/default speed and aggregation thresholds/auto-collapse behavior via VS Code settings (user/workspace scope)
 - Event reason display: supports `reason`
 - Protocol validation: Host/WebView messages and event JSON are validated at runtime, and invalid input is ignored safely
 - Sample validation script: checks the baseline and A* event streams under `data/`
 - Parser tests: automated regression coverage for graph JSON parsing
+
+## Settings
+
+GraphDyVis settings are available in the VS Code Settings UI and can be overridden per user or workspace.
+Workspace-level template with comments: `.vscode/settings.json`.
+
+Supported keys and defaults:
+
+- `graphdyvis.playback.autoFocusOnEvent` (default: `true`)
+- `graphdyvis.playback.defaultSpeed` (default: `1`, range: `0.25` to `4`)
+- `graphdyvis.aggregation.enabled` (default: `true`)
+- `graphdyvis.aggregation.minTotalNodes` (default: `20`, integer `>= 1`)
+- `graphdyvis.aggregation.minGroupSize` (default: `4`, integer `>= 2`)
+- `graphdyvis.aggregation.recentEventWindow` (default: `8`, integer `>= 1`)
+- `graphdyvis.aggregation.autoCollapseOnFocusAway` (default: `true`)
+- `graphdyvis.aggregation.autoCollapseDelayMs` (default: `220`, integer `>= 0`)
+
+Behavior notes:
+
+- When `graphdyvis.playback.autoFocusOnEvent` is disabled, playback still applies events and keeps automatic highlight, but no longer auto-focuses event targets.
+- When `graphdyvis.aggregation.enabled` is disabled, aggregation is bypassed and full graph detail is rendered.
 ## Structure and Key Files
 
 - Extension entry point: `src/extension.ts`
@@ -109,6 +131,7 @@ Source of truth: `src/protocol/contracts.ts`
 Host -> WebView:
 
 - `init-data`
+- `settings`
 - `playback-state`
 - `error`
 

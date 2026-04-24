@@ -1,0 +1,30 @@
+{
+  // GraphDyVis playback settings
+  // Automatically focus the current event target during playback.
+  "graphdyvis.playback.autoFocusOnEvent": true,
+
+  // Default playback speed multiplier applied when a visualizer opens.
+  // Allowed range: 0.25 to 4.0.
+  "graphdyvis.playback.defaultSpeed": 1,
+
+  // GraphDyVis aggregation settings
+  // Enable adaptive aggregation for large graphs.
+  "graphdyvis.aggregation.enabled": true,
+
+  // Minimum number of nodes required before aggregation is considered.
+  "graphdyvis.aggregation.minTotalNodes": 20,
+
+  // Minimum member count required to collapse a group into one aggregate node.
+  "graphdyvis.aggregation.minGroupSize": 4,
+
+  // Number of recent playback events used to keep related nodes unaggregated.
+  "graphdyvis.aggregation.recentEventWindow": 8,
+
+  // Auto-collapse temporary aggregate expansions when focus moves away.
+  "graphdyvis.aggregation.autoCollapseOnFocusAway": true,
+
+  // Delay before auto-collapse runs (milliseconds).
+  "graphdyvis.aggregation.autoCollapseDelayMs": 220
+
+  // Future settings can be added here as new graphdyvis.* keys.
+}

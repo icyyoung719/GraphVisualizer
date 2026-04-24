@@ -1,4 +1,8 @@
 import { GraphDataFile, validateGraphDataFile } from "./events";
+import {
+  GraphDyVisSettings,
+  isGraphDyVisSettings,
+} from "./settings";
 
 export const CONTRACT_VERSION = "1.0" as const;
 
@@ -39,9 +43,16 @@ export interface ErrorMessage {
   };
 }
 
+export interface SettingsMessage {
+  type: "settings";
+  contractVersion: ContractVersion;
+  payload: GraphDyVisSettings;
+}
+
 export type HostToWebviewMessage =
   | InitDataMessage
   | PlaybackStateMessage
+  | SettingsMessage
   | ErrorMessage;
 
 export interface ReadyMessage {
@@ -132,6 +143,8 @@ export function isHostToWebviewMessage(raw: unknown): raw is HostToWebviewMessag
       }
     case "playback-state":
       return isPlaybackState(raw.payload);
+    case "settings":
+      return isGraphDyVisSettings(raw.payload);
     case "error":
       return (
         isRecord(raw.payload) &&
@@ -168,5 +181,13 @@ export function createErrorMessage(message: string): ErrorMessage {
     payload: {
       message,
     },
+  };
+}
+
+export function createSettingsMessage(payload: GraphDyVisSettings): SettingsMessage {
+  return {
+    type: "settings",
+    contractVersion: CONTRACT_VERSION,
+    payload,
   };
 }

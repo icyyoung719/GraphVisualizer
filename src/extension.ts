@@ -8,9 +8,17 @@ import {
   createErrorMessage,
   createInitDataMessage,
   createPlaybackStateMessage,
+  createSettingsMessage,
   isWebviewToHostMessage,
 } from "./protocol/contracts";
 import { GraphDataFile } from "./protocol/events";
+import {
+  GraphDyVisSettings,
+  GraphDyVisSettingsInput,
+  MAX_PLAYBACK_SPEED_MULTIPLIER,
+  MIN_PLAYBACK_SPEED_MULTIPLIER,
+  normalizeGraphDyVisSettings,
+} from "./protocol/settings";
 
 const SHOW_VISUALIZATION_COMMAND = "graphdyvis.showVisualization";
 const SHOW_AGGREGATION_VISUALIZATION_COMMAND = "graphdyvis.showAggregationDemo";
@@ -20,8 +28,6 @@ const AGGREGATION_SAMPLE_FILE = "aggregation-sample-events.json";
 const LEGACY_SAMPLE_FILE = "sample-events.json";
 const PLAYBACK_INTERVAL_MS = 900;
 const PLAYBACK_FRAME_MS = 33;
-const MIN_SPEED_MULTIPLIER = 0.25;
-const MAX_SPEED_MULTIPLIER = 4;
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
@@ -54,6 +60,7 @@ class GraphVisualizerPanel {
   private lastPlaybackTickMs = 0;
 
   private graphData: GraphDataFile | undefined;
+  private settings: GraphDyVisSettings;
   private playbackState: PlaybackState = {
     status: "paused",
     eventIndex: 0,
@@ -112,6 +119,8 @@ class GraphVisualizerPanel {
     this.panel = panel;
     this.extensionContext = extensionContext;
     this.sampleFileName = sampleFileName;
+    this.settings = this.loadSettingsFromConfiguration();
+    this.playbackState.speedMultiplier = this.settings.playback.defaultSpeed;
 
     this.panel.webview.html = this.getHtmlForWebview(this.panel.webview);
 
@@ -123,6 +132,16 @@ class GraphVisualizerPanel {
       },
       null,
       this.disposables,
+    );
+
+    this.disposables.push(
+      vscode.workspace.onDidChangeConfiguration((event) => {
+        if (!event.affectsConfiguration("graphdyvis")) {
+          return;
+        }
+
+        void this.handleConfigurationChanged();
+      }),
     );
   }
 
@@ -164,6 +183,23 @@ class GraphVisualizerPanel {
     const graphData = await this.ensureGraphDataLoaded();
 
     await this.postMessage(createInitDataMessage(graphData));
+    await this.postMessage(createSettingsMessage(this.settings));
+    await this.broadcastPlaybackState();
+  }
+
+  private async handleConfigurationChanged(): Promise<void> {
+    const previousDefaultSpeed = this.settings.playback.defaultSpeed;
+    this.settings = this.loadSettingsFromConfiguration();
+
+    if (
+      this.playbackState.status === "paused" &&
+      this.playbackState.eventIndex === 0 &&
+      this.playbackState.speedMultiplier === previousDefaultSpeed
+    ) {
+      this.playbackState.speedMultiplier = this.settings.playback.defaultSpeed;
+    }
+
+    await this.postMessage(createSettingsMessage(this.settings));
     await this.broadcastPlaybackState();
   }
 
@@ -339,8 +375,8 @@ class GraphVisualizerPanel {
       </div>
       <div class="speed-group">
         <label for="playback-speed">Speed</label>
-        <input id="playback-speed" type="range" min="0.25" max="4" step="0.25" value="1" />
-        <span id="playback-speed-label">1x</span>
+        <input id="playback-speed" type="range" min="${MIN_PLAYBACK_SPEED_MULTIPLIER}" max="${MAX_PLAYBACK_SPEED_MULTIPLIER}" step="0.25" value="${this.settings.playback.defaultSpeed}" />
+        <span id="playback-speed-label">${this.settings.playback.defaultSpeed}x</span>
       </div>
       <div class="playback-group">
         <button id="playback-play" data-action="play">Play</button>
@@ -370,6 +406,29 @@ class GraphVisualizerPanel {
 </body>
 </html>`;
   }
+
+  private loadSettingsFromConfiguration(): GraphDyVisSettings {
+    const configuration = vscode.workspace.getConfiguration("graphdyvis");
+
+    const input: GraphDyVisSettingsInput = {
+      playback: {
+        autoFocusOnEvent: configuration.get<boolean>("playback.autoFocusOnEvent"),
+        defaultSpeed: configuration.get<number>("playback.defaultSpeed"),
+      },
+      aggregation: {
+        enabled: configuration.get<boolean>("aggregation.enabled"),
+        minTotalNodes: configuration.get<number>("aggregation.minTotalNodes"),
+        minGroupSize: configuration.get<number>("aggregation.minGroupSize"),
+        recentEventWindow: configuration.get<number>("aggregation.recentEventWindow"),
+        autoCollapseOnFocusAway: configuration.get<boolean>(
+          "aggregation.autoCollapseOnFocusAway",
+        ),
+        autoCollapseDelayMs: configuration.get<number>("aggregation.autoCollapseDelayMs"),
+      },
+    };
+
+    return normalizeGraphDyVisSettings(input);
+  }
 }
 
 function getNonce(): string {
@@ -386,7 +445,10 @@ function clampSpeedMultiplier(value: number | undefined): number {
     return 1;
   }
 
-  return Math.min(MAX_SPEED_MULTIPLIER, Math.max(MIN_SPEED_MULTIPLIER, value ?? 1));
+  return Math.min(
+    MAX_PLAYBACK_SPEED_MULTIPLIER,
+    Math.max(MIN_PLAYBACK_SPEED_MULTIPLIER, value ?? 1),
+  );
 }
 
 function getPlaybackIntervalMs(speedMultiplier: number): number {

@@ -17,6 +17,13 @@ import {
   getEventTargetId,
 } from "../src/protocol/events";
 import {
+  DEFAULT_GRAPH_DY_VIS_SETTINGS,
+  GraphDyVisSettings,
+  MAX_PLAYBACK_SPEED_MULTIPLIER,
+  MIN_PLAYBACK_SPEED_MULTIPLIER,
+  normalizeGraphDyVisSettings,
+} from "../src/protocol/settings";
+import {
   AggregationResult,
   EdgePathGeometry,
   GraphRenderContext,
@@ -54,12 +61,11 @@ interface RuntimeState {
   transientExpandedAggregateIds: Set<string>;
   transientAggregateCollapseTimer: number | undefined;
   latestAggregation: AggregationResult | undefined;
+  settings: GraphDyVisSettings;
 }
 
 const NODE_RADIUS = 20;
 const AGGREGATE_NODE_RADIUS = 27;
-const TRANSIENT_AGGREGATE_REAPPEAR_DELAY_MS = 220;
-
 const vscodeApi = acquireVsCodeApi<{ selectedId?: string; selectedKind?: SelectedKind }>();
 
 const runtimeState: RuntimeState = {
@@ -77,6 +83,7 @@ const runtimeState: RuntimeState = {
   playbackStatus: "paused",
   playbackHighlightNodeIds: new Set<string>(),
   playbackHighlightEdgeIds: new Set<string>(),
+  settings: DEFAULT_GRAPH_DY_VIS_SETTINGS,
 };
 
 const graphPaneElement = getRequiredElement<HTMLElement>("graph-pane");
@@ -273,6 +280,11 @@ function clearTransientAggregateCollapseTimer(): void {
 }
 
 function scheduleTransientAggregateCollapse(): void {
+  if (!runtimeState.settings.aggregation.autoCollapseOnFocusAway) {
+    clearTransientAggregateCollapseTimer();
+    return;
+  }
+
   if (runtimeState.transientExpandedAggregateIds.size === 0) {
     return;
   }
@@ -338,7 +350,7 @@ function scheduleTransientAggregateCollapse(): void {
       renderDetailsPanel();
       setStatus("Re-aggregated temporary focus groups.");
     }
-  }, TRANSIENT_AGGREGATE_REAPPEAR_DELAY_MS);
+  }, runtimeState.settings.aggregation.autoCollapseDelayMs);
 }
 
 function markSelectionChanged(): void {
@@ -373,7 +385,7 @@ function autoExpandForEvent(event: GraphEvent): boolean {
 }
 
 function clampPlaybackSpeed(value: number): number {
-  return Math.min(4, Math.max(0.25, value));
+  return Math.min(MAX_PLAYBACK_SPEED_MULTIPLIER, Math.max(MIN_PLAYBACK_SPEED_MULTIPLIER, value));
 }
 
 function formatPlaybackSpeed(value: number): string {
@@ -408,6 +420,7 @@ function getGraphRenderContext(): GraphRenderContext {
     events: runtimeState.events,
     appliedEvents: runtimeState.appliedEvents,
     expandedAggregateIds: runtimeState.expandedAggregateIds,
+    aggregationSettings: runtimeState.settings.aggregation,
   };
 }
 
@@ -465,6 +478,8 @@ function reconcileSelection(): void {
 }
 
 function applyPlaybackSelection(event: GraphEvent, graphBeforeEvent: GraphSnapshot | undefined): void {
+  const shouldAutoFocus = runtimeState.settings.playback.autoFocusOnEvent;
+
   const focusNodeIds = new Set<string>();
   const highlightEdgeIds = new Set<string>();
 
@@ -473,12 +488,16 @@ function applyPlaybackSelection(event: GraphEvent, graphBeforeEvent: GraphSnapsh
       const createdNode = findNodeById(event.node.id);
       if (!createdNode) {
         clearPlaybackHighlights();
-        clearSelection();
+        if (shouldAutoFocus) {
+          clearSelection();
+        }
         return;
       }
 
       focusNodeIds.add(createdNode.id);
-      ensureExpandedForNode(createdNode.id, true);
+      if (shouldAutoFocus) {
+        ensureExpandedForNode(createdNode.id, true);
+      }
       runtimeState.workingGraph?.edges.forEach((edge) => {
         if (edge.source === createdNode.id || edge.target === createdNode.id) {
           highlightEdgeIds.add(edge.id);
@@ -486,13 +505,15 @@ function applyPlaybackSelection(event: GraphEvent, graphBeforeEvent: GraphSnapsh
       });
       setPlaybackHighlights(focusNodeIds, highlightEdgeIds);
 
-      if (findNodeById(event.node.id)) {
-        setSelection(event.node.id, "node", false);
-      } else {
-        clearSelection();
-      }
+      if (shouldAutoFocus) {
+        if (findNodeById(event.node.id)) {
+          setSelection(event.node.id, "node", false);
+        } else {
+          clearSelection();
+        }
 
-      focusViewportOnNodeIds(focusNodeIds);
+        focusViewportOnNodeIds(focusNodeIds);
+      }
       return;
     }
     case "edge_create":
@@ -501,48 +522,60 @@ function applyPlaybackSelection(event: GraphEvent, graphBeforeEvent: GraphSnapsh
       const edge = findEdgeById(edgeId);
       if (!edge) {
         clearPlaybackHighlights();
-        clearSelection();
+        if (shouldAutoFocus) {
+          clearSelection();
+        }
         return;
       }
 
       highlightEdgeIds.add(edge.id);
       focusNodeIds.add(edge.source);
       focusNodeIds.add(edge.target);
-      ensureExpandedForNode(edge.source, true);
-      ensureExpandedForNode(edge.target, true);
+      if (shouldAutoFocus) {
+        ensureExpandedForNode(edge.source, true);
+        ensureExpandedForNode(edge.target, true);
+      }
       setPlaybackHighlights(focusNodeIds, highlightEdgeIds);
 
-      setSelection(edgeId, "edge", false);
-      focusViewportOnNodeIds(focusNodeIds);
+      if (shouldAutoFocus) {
+        setSelection(edgeId, "edge", false);
+        focusViewportOnNodeIds(focusNodeIds);
+      }
       return;
     }
     case "edge_delete": {
       const deletedEdge = graphBeforeEvent?.edges.find((edge) => edge.id === event.id);
       if (!deletedEdge) {
         clearPlaybackHighlights();
-        clearSelection();
+        if (shouldAutoFocus) {
+          clearSelection();
+        }
         return;
       }
 
       focusNodeIds.add(deletedEdge.source);
       focusNodeIds.add(deletedEdge.target);
-      ensureExpandedForNode(deletedEdge.source, true);
-      ensureExpandedForNode(deletedEdge.target, true);
+      if (shouldAutoFocus) {
+        ensureExpandedForNode(deletedEdge.source, true);
+        ensureExpandedForNode(deletedEdge.target, true);
+      }
       setPlaybackHighlights(focusNodeIds, highlightEdgeIds);
 
-      const focusNodeId = findNodeById(deletedEdge.source)
-        ? deletedEdge.source
-        : findNodeById(deletedEdge.target)
-          ? deletedEdge.target
-          : undefined;
+      if (shouldAutoFocus) {
+        const focusNodeId = findNodeById(deletedEdge.source)
+          ? deletedEdge.source
+          : findNodeById(deletedEdge.target)
+            ? deletedEdge.target
+            : undefined;
 
-      if (focusNodeId) {
-        setSelection(focusNodeId, "node", false);
-      } else {
-        clearSelection();
+        if (focusNodeId) {
+          setSelection(focusNodeId, "node", false);
+        } else {
+          clearSelection();
+        }
+
+        focusViewportOnNodeIds(focusNodeIds);
       }
-
-      focusViewportOnNodeIds(focusNodeIds);
       return;
     }
   }
@@ -950,7 +983,7 @@ function syncGraphToEventIndex(targetEventIndex: number): void {
   while (runtimeState.eventCursor < clampedTarget) {
     const pendingEvent = runtimeState.events[runtimeState.eventCursor];
     const graphBeforeEvent = runtimeState.workingGraph;
-    if (pendingEvent) {
+    if (pendingEvent && runtimeState.settings.playback.autoFocusOnEvent) {
       autoExpandForEvent(pendingEvent);
     }
 
@@ -1037,8 +1070,9 @@ function handleInitData(payload: GraphDataFile): void {
   renderDetailsPanel();
   renderEventLog();
   updatePlaybackControls();
-  playbackSpeedInputElement.value = "1";
-  playbackSpeedLabelElement.textContent = formatPlaybackSpeed(1);
+  const defaultSpeed = runtimeState.settings.playback.defaultSpeed;
+  playbackSpeedInputElement.value = `${defaultSpeed}`;
+  playbackSpeedLabelElement.textContent = formatPlaybackSpeed(defaultSpeed);
   setStatus(
     `Loaded ${payload.graph.nodes.length} nodes, ${payload.graph.edges.length} edges, ${payload.events.length} events.`,
   );
@@ -1135,6 +1169,15 @@ function bindHostMessages(): void {
           ),
         );
         return;
+      case "settings": {
+        runtimeState.settings = normalizeGraphDyVisSettings(rawMessage.payload);
+        if (!runtimeState.settings.aggregation.autoCollapseOnFocusAway) {
+          clearTransientAggregateCollapseTimer();
+        }
+        renderGraph();
+        renderDetailsPanel();
+        return;
+      }
       case "error":
         setStatus(rawMessage.payload.message, true);
         return;
