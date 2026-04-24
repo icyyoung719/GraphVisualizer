@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 
 import { GraphDataFile, validateGraphDataFile } from "../protocol/events";
 
-export async function loadSampleGraphFile(
+export async function loadGraphDataFile(
   fileUri: vscode.Uri,
 ): Promise<GraphDataFile> {
   const rawBytes = await vscode.workspace.fs.readFile(fileUri);
@@ -13,7 +13,7 @@ export async function loadSampleGraphFile(
     parsed = JSON.parse(fileText);
   } catch (error) {
     throw new Error(
-      `Unable to parse sample graph JSON from ${fileUri.path}: ${String(error)}`,
+      `Unable to parse graph JSON from ${fileUri.fsPath}: ${String(error)}`,
     );
   }
 

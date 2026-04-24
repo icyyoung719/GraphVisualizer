@@ -4,7 +4,7 @@ A code-driven graph visualization VS Code extension prototype. The repository al
 ## Current Status
 
 Implemented capabilities, aligned with the current codebase:
-- VS Code commands: `GraphDyVis: Show A* Demo`, `GraphDyVis: Show Aggregation Demo`, `GraphDyVis: Show Legacy Sample`
+- File-scoped preview entry point: `.graphdyvis.json` files show a GraphDyVis preview icon in the editor title, and the old demo command palette entries are removed
 - WebView + D3 rendering with a static snapshot and event playback
 - Adaptive aggregation rendering: automatically groups low-focus nodes in large graphs and maps edges to summary links to reduce visual clutter
 - Interactions: pan, zoom, search focus, and node/edge property panels
@@ -43,11 +43,12 @@ Behavior notes:
 ## Structure and Key Files
 
 - Extension entry point: `src/extension.ts`
+- Custom editor host: `src/graphDyVisExtension.ts`
 - WebView frontend: `webview/main.ts`
 - WebView styles: `media/webview.css`
 - Message contract: `src/protocol/contracts.ts`
 - Event protocol and playback application: `src/protocol/events.ts`
-- Sample data: `data/astar-sample-events.json`, `data/sample-events.json`
+- Sample data: `data/preview.graphdyvis.json`, `data/astar-sample-events.json`, `data/sample-events.json`
 - Sample validation: `scripts/validate-samples.js`
 - C++ generic exporter: `examples/cpp/graphdyvis_export.hpp`
 - C++ algorithm demos: `examples/cpp/algorithm/astar.cpp`, `examples/cpp/algorithm/workflow.cpp`, plus Dijkstra/Prim/Kruskal/TSP/Hamiltonian examples
@@ -83,9 +84,9 @@ CI runs on pull requests and pushes to `main`: TypeScript checks, sample validat
 
 Debug the extension:
 1. Press `F5` in VS Code to launch the Extension Development Host.
-2. Run `GraphDyVis: Show A* Demo` from the command palette in the new window.
+2. Open `data/preview.graphdyvis.json` in the new window and click the GraphDyVis preview icon in the editor title.
 
-To open the aggregation test sample, run `GraphDyVis: Show Aggregation Demo`.
+To export your own previewable file, use the `.graphdyvis.json` suffix so VS Code shows the same entry point.
 ## Event Protocol (`schemaVersion = "1.0"`)
 
 Source of truth: `src/protocol/events.ts`

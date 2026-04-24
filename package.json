@@ -16,18 +16,38 @@
   "contributes": {
     "commands": [
       {
-        "command": "graphdyvis.showVisualization",
-        "title": "GraphDyVis: Show A* Demo"
-      },
-      {
-        "command": "graphdyvis.showAggregationDemo",
-        "title": "GraphDyVis: Show Aggregation Demo"
-      },
-      {
-        "command": "graphdyvis.showLegacyVisualization",
-        "title": "GraphDyVis: Show Legacy Sample"
+        "command": "graphdyvis.openPreview",
+        "title": "GraphDyVis: Open Preview",
+        "icon": "$(preview)"
       }
     ],
+    "customEditors": [
+      {
+        "viewType": "graphdyvis.visualizer",
+        "displayName": "GraphDyVis Preview",
+        "selector": [
+          {
+            "filenamePattern": "*.graphdyvis.json"
+          }
+        ],
+        "priority": "option"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "graphdyvis.openPreview",
+          "group": "navigation@1",
+          "when": "editorTextFocus && resourceScheme == file && resourceFilename =~ /\\.graphdyvis\\.json$/"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "graphdyvis.openPreview",
+          "when": "false"
+        }
+      ]
+    },
     "configuration": {
       "title": "GraphDyVis",
       "properties": {

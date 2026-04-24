@@ -32,7 +32,7 @@ g++ -std=c++17 -O2 -I . examples/cpp/algorithm/astar.cpp -o astar
 Run the demo with parameters to control graph size and randomness:
 
 ```powershell
-.\astar.exe --layers=6 --width=4 --seed=17 --output=data\astar-sample-events.json
+.\astar.exe --layers=6 --width=4 --seed=17 --output=data\astar-sample-events.graphdyvis.json
 ```
 
 Useful knobs:
@@ -45,7 +45,7 @@ Useful knobs:
 Generate the richer aggregation-oriented sample:
 
 ```powershell
-.\workflow.exe --domains=4 --services=6 --seed=23 --output=data\aggregation-sample-events.json
+.\workflow.exe --domains=4 --services=6 --seed=23 --output=data\aggregation-sample-events.graphdyvis.json
 ```
 
 Workflow knobs:
@@ -68,9 +68,11 @@ g++ -std=c++17 -O2 -I . examples/cpp/algorithm/hamiltonian_path_backtracking.cpp
 ```
 
 ```bash
-./dijkstra --regions=4 --hubs=5 --seed=29 --output=data/dijkstra-sample-events.json
-./prim --clusters=4 --width=5 --seed=31 --output=data/prim-sample-events.json
-./kruskal --clusters=4 --width=5 --seed=37 --output=data/kruskal-sample-events.json
-./tsp_nearest_neighbor --cities=12 --seed=41 --output=data/tsp-nearest-neighbor-sample-events.json
-./hamiltonian_path_backtracking --layers=4 --width=3 --seed=43 --output=data/hamiltonian-path-backtracking-sample-events.json
+./dijkstra --regions=4 --hubs=5 --seed=29 --output=data/dijkstra-sample-events.graphdyvis.json
+./prim --clusters=4 --width=5 --seed=31 --output=data/prim-sample-events.graphdyvis.json
+./kruskal --clusters=4 --width=5 --seed=37 --output=data/kruskal-sample-events.graphdyvis.json
+./tsp_nearest_neighbor --cities=12 --seed=41 --output=data/tsp-nearest-neighbor-sample-events.graphdyvis.json
+./hamiltonian_path_backtracking --layers=4 --width=3 --seed=43 --output=data/hamiltonian-path-backtracking-sample-events.graphdyvis.json
 ```
+
+Use the `.graphdyvis.json` suffix for exported preview documents so VS Code shows the GraphDyVis entry point only on files that are meant to open in the preview.
