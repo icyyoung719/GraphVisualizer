@@ -49,8 +49,8 @@ Behavior notes:
 - Event protocol and playback application: `src/protocol/events.ts`
 - Sample data: `data/astar-sample-events.json`, `data/sample-events.json`
 - Sample validation: `scripts/validate-samples.js`
-- C++ examples: `examples/cpp/graphdyvis_astar.hpp`, `examples/cpp/astar_demo.cpp`
-- Aggregation test example: `examples/cpp/graphdyvis_workflow.hpp`, `examples/cpp/workflow_demo.cpp`
+- C++ generic exporter: `examples/cpp/graphdyvis_export.hpp`
+- C++ algorithm demos: `examples/cpp/astar_demo.cpp`, `examples/cpp/workflow_demo.cpp`
 ## Local Development
 
 Prerequisites: Node.js 18+, VS Code.

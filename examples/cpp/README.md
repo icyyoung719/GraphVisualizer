@@ -1,13 +1,12 @@
-# C++ A* Demo
+# C++ GraphDyVis Export Demos
 
-This folder contains a lightweight C++17 example that emits GraphDyVis-compatible JSON for visualization testing.
+This folder contains lightweight C++17 demos that emit GraphDyVis-compatible JSON for visualization testing.
 
 ## Files
 
-- `graphdyvis_astar.hpp`: header-only demo library
-- `astar_demo.cpp`: minimal CLI that writes JSON to stdout or a file
-- `graphdyvis_workflow.hpp`: layered service-flow demo for aggregation testing
-- `workflow_demo.cpp`: CLI for the workflow demo generator
+- `graphdyvis_export.hpp`: generic GraphDyVis JSON exporter (algorithm-agnostic)
+- `astar_demo.cpp`: A* scenario simulator that builds data and exports via the generic header
+- `workflow_demo.cpp`: layered service-flow simulator for aggregation testing, also using the generic header
 
 ## Build
 
