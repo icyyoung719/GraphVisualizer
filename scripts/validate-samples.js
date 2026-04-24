@@ -6,6 +6,11 @@ const sampleFiles = [
   path.join(rootDir, 'data', 'sample-events.json'),
   path.join(rootDir, 'data', 'astar-sample-events.json'),
   path.join(rootDir, 'data', 'aggregation-sample-events.json'),
+  path.join(rootDir, 'data', 'dijkstra-sample-events.json'),
+  path.join(rootDir, 'data', 'prim-sample-events.json'),
+  path.join(rootDir, 'data', 'kruskal-sample-events.json'),
+  path.join(rootDir, 'data', 'tsp-nearest-neighbor-sample-events.json'),
+  path.join(rootDir, 'data', 'hamiltonian-path-backtracking-sample-events.json'),
 ];
 
 function assert(condition, message) {
@@ -229,6 +234,11 @@ function main() {
   const legacy = results[0];
   const astar = results[1];
   const aggregation = results[2];
+  const dijkstra = results[3];
+  const prim = results[4];
+  const kruskal = results[5];
+  const tsp = results[6];
+  const hamiltonian = results[7];
 
   assert(astar.nodeCount >= 10, 'A* demo should contain at least 10 nodes for visualization testing.');
   assert(astar.eventCount >= 5, 'A* demo should contain enough events to exercise playback.');
@@ -237,6 +247,18 @@ function main() {
   assert(aggregation.nodeCount >= 24, 'Aggregation demo should contain at least 24 nodes.');
   assert(aggregation.edgeCount >= 100, 'Aggregation demo should contain at least 100 edges.');
   assert(aggregation.eventCount >= 40, 'Aggregation demo should contain enough events to exercise playback expansion.');
+  assert(dijkstra.nodeCount >= 12, 'Dijkstra demo should contain at least 12 nodes.');
+  assert(dijkstra.edgeCount >= 35, 'Dijkstra demo should contain enough weighted alternatives.');
+  assert(dijkstra.eventCount >= 20, 'Dijkstra demo should contain enough events to show settling and pruning.');
+  assert(prim.nodeCount >= 12, 'Prim demo should contain at least 12 nodes.');
+  assert(prim.eventCount >= 20, 'Prim demo should contain enough events for MST growth.');
+  assert(kruskal.nodeCount >= 12, 'Kruskal demo should contain at least 12 nodes.');
+  assert(kruskal.eventCount >= 20, 'Kruskal demo should contain enough events for cycle filtering.');
+  assert(tsp.nodeCount >= 8, 'TSP demo should contain at least 8 cities.');
+  assert(tsp.edgeCount >= 20, 'TSP demo should contain a dense distance graph.');
+  assert(tsp.eventCount >= 20, 'TSP demo should contain enough events to show tour construction.');
+  assert(hamiltonian.nodeCount >= 9, 'Hamiltonian demo should contain at least 9 nodes.');
+  assert(hamiltonian.eventCount >= 20, 'Hamiltonian demo should contain enough events to show exploration and backtracking.');
 
   console.log(`Validated ${sampleFiles.length} sample files.`);
   for (let index = 0; index < sampleFiles.length; index += 1) {

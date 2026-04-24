@@ -1,4 +1,4 @@
-#include "graphdyvis_export.hpp"
+#include "../graphdyvis_export.hpp"
 
 #include <algorithm>
 #include <cstddef>
@@ -290,7 +290,7 @@ std::string readStringArg(int argc, char** argv, std::string_view prefix, std::s
 }
 
 void printUsage() {
-  std::cout << "Usage: astar_demo [--layers=N] [--width=N] [--seed=N] [--output=FILE]\n";
+  std::cout << "Usage: astar [--layers=N] [--width=N] [--seed=N] [--output=FILE]\n";
 }
 
 }  // namespace

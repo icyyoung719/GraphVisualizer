@@ -6,3 +6,6 @@ media/webview.js
 
 # Output of example output
 *.exe
+
+# Output of C++ examples
+data/

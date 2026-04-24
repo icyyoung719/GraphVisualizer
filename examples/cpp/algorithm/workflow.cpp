@@ -1,4 +1,4 @@
-#include "graphdyvis_export.hpp"
+#include "../graphdyvis_export.hpp"
 
 #include <algorithm>
 #include <cstddef>
@@ -278,7 +278,7 @@ std::string readStringArg(int argc, char** argv, std::string_view prefix, std::s
 }
 
 void printUsage() {
-  std::cout << "Usage: workflow_demo [--domains=N] [--services=N] [--seed=N] [--output=FILE]\n";
+  std::cout << "Usage: workflow [--domains=N] [--services=N] [--seed=N] [--output=FILE]\n";
 }
 
 }  // namespace

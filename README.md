@@ -50,7 +50,7 @@ Behavior notes:
 - Sample data: `data/astar-sample-events.json`, `data/sample-events.json`
 - Sample validation: `scripts/validate-samples.js`
 - C++ generic exporter: `examples/cpp/graphdyvis_export.hpp`
-- C++ algorithm demos: `examples/cpp/astar_demo.cpp`, `examples/cpp/workflow_demo.cpp`
+- C++ algorithm demos: `examples/cpp/algorithm/astar.cpp`, `examples/cpp/algorithm/workflow.cpp`, plus Dijkstra/Prim/Kruskal/TSP/Hamiltonian examples
 ## Local Development
 
 Prerequisites: Node.js 18+, VS Code.
