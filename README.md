@@ -48,7 +48,7 @@ Behavior notes:
 - WebView styles: `media/webview.css`
 - Message contract: `src/protocol/contracts.ts`
 - Event protocol and playback application: `src/protocol/events.ts`
-- Sample data: `data/preview.graphdyvis.json`, `data/astar-sample-events.json`, `data/sample-events.json`
+- Sample data: `data/preview.graphdyvis.json`, `data/astar-sample-events.graphdyvis.json`, `data/sample-events.graphdyvis.json` (all `.graphdyvis.json` files are previewable with the custom editor)
 - Sample validation: `scripts/validate-samples.js`
 - C++ generic exporter: `examples/cpp/graphdyvis_export.hpp`
 - C++ algorithm demos: `examples/cpp/algorithm/astar.cpp`, `examples/cpp/algorithm/workflow.cpp`, plus Dijkstra/Prim/Kruskal/TSP/Hamiltonian examples
@@ -84,9 +84,9 @@ CI runs on pull requests and pushes to `main`: TypeScript checks, sample validat
 
 Debug the extension:
 1. Press `F5` in VS Code to launch the Extension Development Host.
-2. Open `data/preview.graphdyvis.json` in the new window and click the GraphDyVis preview icon in the editor title.
+2. Open any `.graphdyvis.json` file (e.g., `data/preview.graphdyvis.json` or `data/astar-sample-events.graphdyvis.json`) and click the GraphDyVis preview icon in the editor title.
 
-To export your own previewable file, use the `.graphdyvis.json` suffix so VS Code shows the same entry point.
+All sample files in `data/` use the `.graphdyvis.json` extension for consistent custom editor integration. To export your own previewable file, use the same `.graphdyvis.json` suffix.
 ## Event Protocol (`schemaVersion = "1.0"`)
 
 Source of truth: `src/protocol/events.ts`

@@ -56,13 +56,13 @@ jobs:
 
       - name: Export example samples
         run: |
-          ./astar --layers=6 --width=4 --seed=17 --output=data/astar-sample-events.json
-          ./workflow --domains=4 --services=6 --seed=23 --output=data/aggregation-sample-events.json
-          ./dijkstra --regions=4 --hubs=5 --seed=29 --output=data/dijkstra-sample-events.json
-          ./prim --clusters=4 --width=5 --seed=31 --output=data/prim-sample-events.json
-          ./kruskal --clusters=4 --width=5 --seed=37 --output=data/kruskal-sample-events.json
-          ./tsp_nearest_neighbor --cities=12 --seed=41 --output=data/tsp-nearest-neighbor-sample-events.json
-          ./hamiltonian_path_backtracking --layers=4 --width=3 --seed=43 --output=data/hamiltonian-path-backtracking-sample-events.json
+          ./astar --layers=6 --width=4 --seed=17 --output=data/astar-sample-events.graphdyvis.json
+          ./workflow --domains=4 --services=6 --seed=23 --output=data/aggregation-sample-events.graphdyvis.json
+          ./dijkstra --regions=4 --hubs=5 --seed=29 --output=data/dijkstra-sample-events.graphdyvis.json
+          ./prim --clusters=4 --width=5 --seed=31 --output=data/prim-sample-events.graphdyvis.json
+          ./kruskal --clusters=4 --width=5 --seed=37 --output=data/kruskal-sample-events.graphdyvis.json
+          ./tsp_nearest_neighbor --cities=12 --seed=41 --output=data/tsp-nearest-neighbor-sample-events.graphdyvis.json
+          ./hamiltonian_path_backtracking --layers=4 --width=3 --seed=43 --output=data/hamiltonian-path-backtracking-sample-events.graphdyvis.json
 
       - name: Validate exported samples
         run: npm run check:samples

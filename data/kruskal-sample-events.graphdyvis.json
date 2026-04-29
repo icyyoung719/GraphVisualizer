@@ -1,0 +1,2691 @@
+{
+  "schemaVersion": "1.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "C0_0",
+        "label": "C0_0",
+        "x": 100,
+        "y": 60,
+        "properties": {
+          "cluster": 0,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C0_1",
+        "label": "C0_1",
+        "x": 100,
+        "y": 170,
+        "properties": {
+          "cluster": 0,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C0_2",
+        "label": "C0_2",
+        "x": 100,
+        "y": 280,
+        "properties": {
+          "cluster": 0,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C0_3",
+        "label": "C0_3",
+        "x": 100,
+        "y": 390,
+        "properties": {
+          "cluster": 0,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C1_0",
+        "label": "C1_0",
+        "x": 280,
+        "y": 60,
+        "properties": {
+          "cluster": 1,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C1_1",
+        "label": "C1_1",
+        "x": 280,
+        "y": 170,
+        "properties": {
+          "cluster": 1,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C1_2",
+        "label": "C1_2",
+        "x": 280,
+        "y": 280,
+        "properties": {
+          "cluster": 1,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C1_3",
+        "label": "C1_3",
+        "x": 280,
+        "y": 390,
+        "properties": {
+          "cluster": 1,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C2_0",
+        "label": "C2_0",
+        "x": 460,
+        "y": 60,
+        "properties": {
+          "cluster": 2,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C2_1",
+        "label": "C2_1",
+        "x": 460,
+        "y": 170,
+        "properties": {
+          "cluster": 2,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C2_2",
+        "label": "C2_2",
+        "x": 460,
+        "y": 280,
+        "properties": {
+          "cluster": 2,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C2_3",
+        "label": "C2_3",
+        "x": 460,
+        "y": 390,
+        "properties": {
+          "cluster": 2,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C3_0",
+        "label": "C3_0",
+        "x": 640,
+        "y": 60,
+        "properties": {
+          "cluster": 3,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C3_1",
+        "label": "C3_1",
+        "x": 640,
+        "y": 170,
+        "properties": {
+          "cluster": 3,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C3_2",
+        "label": "C3_2",
+        "x": 640,
+        "y": 280,
+        "properties": {
+          "cluster": 3,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C3_3",
+        "label": "C3_3",
+        "x": 640,
+        "y": 390,
+        "properties": {
+          "cluster": 3,
+          "role": "waypoint"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "C0_1->C0_2",
+        "source": "C0_1",
+        "target": "C0_2",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C0_1->C0_3",
+        "source": "C0_1",
+        "target": "C0_3",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C0_3->C1_0",
+        "source": "C0_3",
+        "target": "C1_0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C1_1->C2_2",
+        "source": "C1_1",
+        "target": "C2_2",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C1_2->C3_3",
+        "source": "C1_2",
+        "target": "C3_3",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C1_3->C3_2",
+        "source": "C1_3",
+        "target": "C3_2",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C2_0->C3_1",
+        "source": "C2_0",
+        "target": "C3_1",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C2_1->C3_3",
+        "source": "C2_1",
+        "target": "C3_3",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C0_0->C2_1",
+        "source": "C0_0",
+        "target": "C2_1",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C0_0->C3_3",
+        "source": "C0_0",
+        "target": "C3_3",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C2_3",
+        "source": "C0_1",
+        "target": "C2_3",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C0_1->C3_2",
+        "source": "C0_1",
+        "target": "C3_2",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C0_2->C2_1",
+        "source": "C0_2",
+        "target": "C2_1",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C1_1->C1_2",
+        "source": "C1_1",
+        "target": "C1_2",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C1_1->C3_0",
+        "source": "C1_1",
+        "target": "C3_0",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C1_3->C2_1",
+        "source": "C1_3",
+        "target": "C2_1",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C3_0",
+        "source": "C0_1",
+        "target": "C3_0",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C1_0",
+        "source": "C0_2",
+        "target": "C1_0",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C1_1",
+        "source": "C0_2",
+        "target": "C1_1",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C3_1",
+        "source": "C0_2",
+        "target": "C3_1",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": true,
+          "cycleDetected": false
+        }
+      },
+      {
+        "id": "C0_3->C3_1",
+        "source": "C0_3",
+        "target": "C3_1",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C1_3",
+        "source": "C1_0",
+        "target": "C1_3",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C2_0",
+        "source": "C1_0",
+        "target": "C2_0",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_2->C3_0",
+        "source": "C1_2",
+        "target": "C3_0",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_2->C3_2",
+        "source": "C1_2",
+        "target": "C3_2",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_0->C2_1",
+        "source": "C2_0",
+        "target": "C2_1",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_0->C3_2",
+        "source": "C2_0",
+        "target": "C3_2",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_0->C3_3",
+        "source": "C2_0",
+        "target": "C3_3",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_1->C2_3",
+        "source": "C2_1",
+        "target": "C2_3",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_2->C3_0",
+        "source": "C2_2",
+        "target": "C3_0",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_3->C3_3",
+        "source": "C2_3",
+        "target": "C3_3",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C1_1",
+        "source": "C0_0",
+        "target": "C1_1",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C1_2",
+        "source": "C0_0",
+        "target": "C1_2",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C1_0",
+        "source": "C0_1",
+        "target": "C1_0",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C2_0",
+        "source": "C0_1",
+        "target": "C2_0",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C1_2",
+        "source": "C0_2",
+        "target": "C1_2",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C1_1",
+        "source": "C1_0",
+        "target": "C1_1",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_3->C3_1",
+        "source": "C1_3",
+        "target": "C3_1",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_2->C3_1",
+        "source": "C2_2",
+        "target": "C3_1",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_2->C3_2",
+        "source": "C2_2",
+        "target": "C3_2",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_3->C3_0",
+        "source": "C2_3",
+        "target": "C3_0",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C2_1",
+        "source": "C0_1",
+        "target": "C2_1",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C1_2",
+        "source": "C0_3",
+        "target": "C1_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C2_3",
+        "source": "C0_3",
+        "target": "C2_3",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C2_3",
+        "source": "C1_0",
+        "target": "C2_3",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_3->C2_0",
+        "source": "C1_3",
+        "target": "C2_0",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_3->C2_2",
+        "source": "C1_3",
+        "target": "C2_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_0->C2_2",
+        "source": "C2_0",
+        "target": "C2_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_1->C3_0",
+        "source": "C2_1",
+        "target": "C3_0",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C3_1->C3_2",
+        "source": "C3_1",
+        "target": "C3_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C3_2->C3_3",
+        "source": "C3_2",
+        "target": "C3_3",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C1_0",
+        "source": "C0_0",
+        "target": "C1_0",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C1_3",
+        "source": "C0_0",
+        "target": "C1_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C1_2",
+        "source": "C0_1",
+        "target": "C1_2",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C1_3",
+        "source": "C0_1",
+        "target": "C1_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C2_3",
+        "source": "C0_2",
+        "target": "C2_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C3_0",
+        "source": "C0_2",
+        "target": "C3_0",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C3_3",
+        "source": "C0_2",
+        "target": "C3_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C1_1",
+        "source": "C0_3",
+        "target": "C1_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C3_2",
+        "source": "C0_3",
+        "target": "C3_2",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C3_0",
+        "source": "C1_0",
+        "target": "C3_0",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C3_1",
+        "source": "C1_0",
+        "target": "C3_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_1->C3_3",
+        "source": "C1_1",
+        "target": "C3_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C3_0->C3_1",
+        "source": "C3_0",
+        "target": "C3_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C3_0->C3_3",
+        "source": "C3_0",
+        "target": "C3_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C0_3",
+        "source": "C0_0",
+        "target": "C0_3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C1_1",
+        "source": "C0_1",
+        "target": "C1_1",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C3_0",
+        "source": "C0_3",
+        "target": "C3_0",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C1_2",
+        "source": "C1_0",
+        "target": "C1_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C2_1",
+        "source": "C1_0",
+        "target": "C2_1",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_2->C2_3",
+        "source": "C1_2",
+        "target": "C2_3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_3->C2_3",
+        "source": "C1_3",
+        "target": "C2_3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_0->C2_3",
+        "source": "C2_0",
+        "target": "C2_3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C3_0->C3_2",
+        "source": "C3_0",
+        "target": "C3_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C0_1",
+        "source": "C0_0",
+        "target": "C0_1",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C0_2",
+        "source": "C0_0",
+        "target": "C0_2",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C3_2",
+        "source": "C0_2",
+        "target": "C3_2",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_1->C2_1",
+        "source": "C1_1",
+        "target": "C2_1",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_1->C2_3",
+        "source": "C1_1",
+        "target": "C2_3",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_3->C3_0",
+        "source": "C1_3",
+        "target": "C3_0",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_0->C3_0",
+        "source": "C2_0",
+        "target": "C3_0",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_1->C2_2",
+        "source": "C2_1",
+        "target": "C2_2",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_2->C2_3",
+        "source": "C2_2",
+        "target": "C2_3",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_2->C3_3",
+        "source": "C2_2",
+        "target": "C3_3",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C2_0",
+        "source": "C0_0",
+        "target": "C2_0",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C2_2",
+        "source": "C0_0",
+        "target": "C2_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C3_0",
+        "source": "C0_0",
+        "target": "C3_0",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C3_2",
+        "source": "C0_0",
+        "target": "C3_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C0_3",
+        "source": "C0_2",
+        "target": "C0_3",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C2_0",
+        "source": "C0_2",
+        "target": "C2_0",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C2_2",
+        "source": "C0_3",
+        "target": "C2_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C2_2",
+        "source": "C1_0",
+        "target": "C2_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_1->C1_3",
+        "source": "C1_1",
+        "target": "C1_3",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_1->C3_2",
+        "source": "C1_1",
+        "target": "C3_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_2->C1_3",
+        "source": "C1_2",
+        "target": "C1_3",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_2->C2_2",
+        "source": "C1_2",
+        "target": "C2_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_2->C3_1",
+        "source": "C1_2",
+        "target": "C3_1",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_3->C3_3",
+        "source": "C1_3",
+        "target": "C3_3",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_1->C3_1",
+        "source": "C2_1",
+        "target": "C3_1",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_1->C3_2",
+        "source": "C2_1",
+        "target": "C3_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C3_1->C3_3",
+        "source": "C3_1",
+        "target": "C3_3",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C2_3",
+        "source": "C0_0",
+        "target": "C2_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_0->C3_1",
+        "source": "C0_0",
+        "target": "C3_1",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C2_2",
+        "source": "C0_1",
+        "target": "C2_2",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C3_1",
+        "source": "C0_1",
+        "target": "C3_1",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_1->C3_3",
+        "source": "C0_1",
+        "target": "C3_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C1_3",
+        "source": "C0_2",
+        "target": "C1_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_2->C2_2",
+        "source": "C0_2",
+        "target": "C2_2",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C1_3",
+        "source": "C0_3",
+        "target": "C1_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C2_0",
+        "source": "C0_3",
+        "target": "C2_0",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C2_1",
+        "source": "C0_3",
+        "target": "C2_1",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C0_3->C3_3",
+        "source": "C0_3",
+        "target": "C3_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C3_2",
+        "source": "C1_0",
+        "target": "C3_2",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_0->C3_3",
+        "source": "C1_0",
+        "target": "C3_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_1->C2_0",
+        "source": "C1_1",
+        "target": "C2_0",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_1->C3_1",
+        "source": "C1_1",
+        "target": "C3_1",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_2->C2_0",
+        "source": "C1_2",
+        "target": "C2_0",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C1_2->C2_1",
+        "source": "C1_2",
+        "target": "C2_1",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_3->C3_1",
+        "source": "C2_3",
+        "target": "C3_1",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      },
+      {
+        "id": "C2_3->C3_2",
+        "source": "C2_3",
+        "target": "C3_2",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "cycleDetected": true
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C0_2",
+      "timestampMs": 200,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C0_3",
+      "timestampMs": 400,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C1_0",
+      "timestampMs": 600,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C2_2",
+      "timestampMs": 800,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_2->C3_3",
+      "timestampMs": 1000,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_3->C3_2",
+      "timestampMs": 1200,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_0->C3_1",
+      "timestampMs": 1400,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_1->C3_3",
+      "timestampMs": 1600,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C2_1",
+      "timestampMs": 1800,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C3_3",
+      "timestampMs": 2000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C2_3",
+      "timestampMs": 2200,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C3_2",
+      "timestampMs": 2400,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C2_1",
+      "timestampMs": 2600,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C1_2",
+      "timestampMs": 2800,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C3_0",
+      "timestampMs": 3000,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_3->C2_1",
+      "timestampMs": 3200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C3_0",
+      "timestampMs": 3400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C1_0",
+      "timestampMs": 3600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C1_1",
+      "timestampMs": 3800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C3_1",
+      "timestampMs": 4000,
+      "reason": "Kruskal added this edge to the MST (no cycle).",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C3_1",
+      "timestampMs": 4200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C1_3",
+      "timestampMs": 4400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C2_0",
+      "timestampMs": 4600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_2->C3_0",
+      "timestampMs": 4800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_2->C3_2",
+      "timestampMs": 5000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_0->C2_1",
+      "timestampMs": 5200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_0->C3_2",
+      "timestampMs": 5400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_0->C3_3",
+      "timestampMs": 5600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_1->C2_3",
+      "timestampMs": 5800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_2->C3_0",
+      "timestampMs": 6000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_3->C3_3",
+      "timestampMs": 6200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C1_1",
+      "timestampMs": 6400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C1_2",
+      "timestampMs": 6600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C1_0",
+      "timestampMs": 6800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C2_0",
+      "timestampMs": 7000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C1_2",
+      "timestampMs": 7200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C1_1",
+      "timestampMs": 7400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_3->C3_1",
+      "timestampMs": 7600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_2->C3_1",
+      "timestampMs": 7800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_2->C3_2",
+      "timestampMs": 8000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_3->C3_0",
+      "timestampMs": 8200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C2_1",
+      "timestampMs": 8400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C1_2",
+      "timestampMs": 8600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C2_3",
+      "timestampMs": 8800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C2_3",
+      "timestampMs": 9000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_3->C2_0",
+      "timestampMs": 9200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_3->C2_2",
+      "timestampMs": 9400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_0->C2_2",
+      "timestampMs": 9600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_1->C3_0",
+      "timestampMs": 9800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C3_1->C3_2",
+      "timestampMs": 10000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C3_2->C3_3",
+      "timestampMs": 10200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C1_0",
+      "timestampMs": 10400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C1_3",
+      "timestampMs": 10600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C1_2",
+      "timestampMs": 10800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C1_3",
+      "timestampMs": 11000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C2_3",
+      "timestampMs": 11200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C3_0",
+      "timestampMs": 11400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C3_3",
+      "timestampMs": 11600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C1_1",
+      "timestampMs": 11800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C3_2",
+      "timestampMs": 12000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C3_0",
+      "timestampMs": 12200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C3_1",
+      "timestampMs": 12400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C3_3",
+      "timestampMs": 12600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C3_0->C3_1",
+      "timestampMs": 12800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C3_0->C3_3",
+      "timestampMs": 13000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C0_3",
+      "timestampMs": 13200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C1_1",
+      "timestampMs": 13400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C3_0",
+      "timestampMs": 13600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C1_2",
+      "timestampMs": 13800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C2_1",
+      "timestampMs": 14000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_2->C2_3",
+      "timestampMs": 14200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_3->C2_3",
+      "timestampMs": 14400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_0->C2_3",
+      "timestampMs": 14600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C3_0->C3_2",
+      "timestampMs": 14800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C0_1",
+      "timestampMs": 15000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C0_2",
+      "timestampMs": 15200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C3_2",
+      "timestampMs": 15400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C2_1",
+      "timestampMs": 15600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C2_3",
+      "timestampMs": 15800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_3->C3_0",
+      "timestampMs": 16000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_0->C3_0",
+      "timestampMs": 16200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_1->C2_2",
+      "timestampMs": 16400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_2->C2_3",
+      "timestampMs": 16600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_2->C3_3",
+      "timestampMs": 16800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C2_0",
+      "timestampMs": 17000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C2_2",
+      "timestampMs": 17200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C3_0",
+      "timestampMs": 17400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C3_2",
+      "timestampMs": 17600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C0_3",
+      "timestampMs": 17800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C2_0",
+      "timestampMs": 18000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C2_2",
+      "timestampMs": 18200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C2_2",
+      "timestampMs": 18400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C1_3",
+      "timestampMs": 18600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C3_2",
+      "timestampMs": 18800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_2->C1_3",
+      "timestampMs": 19000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_2->C2_2",
+      "timestampMs": 19200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_2->C3_1",
+      "timestampMs": 19400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_3->C3_3",
+      "timestampMs": 19600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_1->C3_1",
+      "timestampMs": 19800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_1->C3_2",
+      "timestampMs": 20000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C3_1->C3_3",
+      "timestampMs": 20200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C2_3",
+      "timestampMs": 20400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C3_1",
+      "timestampMs": 20600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C2_2",
+      "timestampMs": 20800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C3_1",
+      "timestampMs": 21000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C3_3",
+      "timestampMs": 21200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C1_3",
+      "timestampMs": 21400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C2_2",
+      "timestampMs": 21600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C1_3",
+      "timestampMs": 21800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C2_0",
+      "timestampMs": 22000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C2_1",
+      "timestampMs": 22200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C3_3",
+      "timestampMs": 22400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C3_2",
+      "timestampMs": 22600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_0->C3_3",
+      "timestampMs": 22800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C2_0",
+      "timestampMs": 23000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C3_1",
+      "timestampMs": 23200,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_2->C2_0",
+      "timestampMs": 23400,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_2->C2_1",
+      "timestampMs": 23600,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_3->C3_1",
+      "timestampMs": 23800,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_3->C3_2",
+      "timestampMs": 24000,
+      "reason": "Kruskal rejected this edge (would create a cycle).",
+      "newProperties": {
+        "status": "pruned",
+        "cycleDetected": true
+      }
+    }
+  ]
+}

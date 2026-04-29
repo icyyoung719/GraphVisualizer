@@ -3,14 +3,14 @@ const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
 const sampleFiles = [
-  path.join(rootDir, 'data', 'sample-events.json'),
-  path.join(rootDir, 'data', 'astar-sample-events.json'),
-  path.join(rootDir, 'data', 'aggregation-sample-events.json'),
-  path.join(rootDir, 'data', 'dijkstra-sample-events.json'),
-  path.join(rootDir, 'data', 'prim-sample-events.json'),
-  path.join(rootDir, 'data', 'kruskal-sample-events.json'),
-  path.join(rootDir, 'data', 'tsp-nearest-neighbor-sample-events.json'),
-  path.join(rootDir, 'data', 'hamiltonian-path-backtracking-sample-events.json'),
+  path.join(rootDir, 'data', 'sample-events.graphdyvis.json'),
+  path.join(rootDir, 'data', 'astar-sample-events.graphdyvis.json'),
+  path.join(rootDir, 'data', 'aggregation-sample-events.graphdyvis.json'),
+  path.join(rootDir, 'data', 'dijkstra-sample-events.graphdyvis.json'),
+  path.join(rootDir, 'data', 'prim-sample-events.graphdyvis.json'),
+  path.join(rootDir, 'data', 'kruskal-sample-events.graphdyvis.json'),
+  path.join(rootDir, 'data', 'tsp-nearest-neighbor-sample-events.graphdyvis.json'),
+  path.join(rootDir, 'data', 'hamiltonian-path-backtracking-sample-events.graphdyvis.json'),
 ];
 
 function assert(condition, message) {

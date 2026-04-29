@@ -1,0 +1,1757 @@
+{
+  "schemaVersion": "1.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "C0_0",
+        "label": "C0_0",
+        "x": 100,
+        "y": 60,
+        "properties": {
+          "cluster": 0,
+          "priority": "frontier",
+          "role": "source"
+        }
+      },
+      {
+        "id": "C0_1",
+        "label": "C0_1",
+        "x": 100,
+        "y": 170,
+        "properties": {
+          "cluster": 0,
+          "priority": "candidate",
+          "role": "source"
+        }
+      },
+      {
+        "id": "C0_2",
+        "label": "C0_2",
+        "x": 100,
+        "y": 280,
+        "properties": {
+          "cluster": 0,
+          "priority": "candidate",
+          "role": "source"
+        }
+      },
+      {
+        "id": "C0_3",
+        "label": "C0_3",
+        "x": 100,
+        "y": 390,
+        "properties": {
+          "cluster": 0,
+          "priority": "candidate",
+          "role": "source"
+        }
+      },
+      {
+        "id": "C1_0",
+        "label": "C1_0",
+        "x": 280,
+        "y": 60,
+        "properties": {
+          "cluster": 1,
+          "priority": "frontier",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C1_1",
+        "label": "C1_1",
+        "x": 280,
+        "y": 170,
+        "properties": {
+          "cluster": 1,
+          "priority": "candidate",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C1_2",
+        "label": "C1_2",
+        "x": 280,
+        "y": 280,
+        "properties": {
+          "cluster": 1,
+          "priority": "candidate",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C1_3",
+        "label": "C1_3",
+        "x": 280,
+        "y": 390,
+        "properties": {
+          "cluster": 1,
+          "priority": "candidate",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C2_0",
+        "label": "C2_0",
+        "x": 460,
+        "y": 60,
+        "properties": {
+          "cluster": 2,
+          "priority": "frontier",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C2_1",
+        "label": "C2_1",
+        "x": 460,
+        "y": 170,
+        "properties": {
+          "cluster": 2,
+          "priority": "candidate",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C2_2",
+        "label": "C2_2",
+        "x": 460,
+        "y": 280,
+        "properties": {
+          "cluster": 2,
+          "priority": "candidate",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C2_3",
+        "label": "C2_3",
+        "x": 460,
+        "y": 390,
+        "properties": {
+          "cluster": 2,
+          "priority": "candidate",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C3_0",
+        "label": "C3_0",
+        "x": 640,
+        "y": 60,
+        "properties": {
+          "cluster": 3,
+          "priority": "frontier",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C3_1",
+        "label": "C3_1",
+        "x": 640,
+        "y": 170,
+        "properties": {
+          "cluster": 3,
+          "priority": "candidate",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C3_2",
+        "label": "C3_2",
+        "x": 640,
+        "y": 280,
+        "properties": {
+          "cluster": 3,
+          "priority": "candidate",
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C3_3",
+        "label": "C3_3",
+        "x": 640,
+        "y": 390,
+        "properties": {
+          "cluster": 3,
+          "priority": "candidate",
+          "role": "waypoint"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "C0_0->C0_1",
+        "source": "C0_0",
+        "target": "C0_1",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C0_2",
+        "source": "C0_0",
+        "target": "C0_2",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C0_3",
+        "source": "C0_0",
+        "target": "C0_3",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C1_0",
+        "source": "C0_0",
+        "target": "C1_0",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C1_1",
+        "source": "C0_0",
+        "target": "C1_1",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C1_2",
+        "source": "C0_0",
+        "target": "C1_2",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C1_3",
+        "source": "C0_0",
+        "target": "C1_3",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C2_0",
+        "source": "C0_0",
+        "target": "C2_0",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C2_1",
+        "source": "C0_0",
+        "target": "C2_1",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C2_2",
+        "source": "C0_0",
+        "target": "C2_2",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C2_3",
+        "source": "C0_0",
+        "target": "C2_3",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C3_0",
+        "source": "C0_0",
+        "target": "C3_0",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C3_1",
+        "source": "C0_0",
+        "target": "C3_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C3_2",
+        "source": "C0_0",
+        "target": "C3_2",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_0->C3_3",
+        "source": "C0_0",
+        "target": "C3_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C0_2",
+        "source": "C0_1",
+        "target": "C0_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C0_3",
+        "source": "C0_1",
+        "target": "C0_3",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C1_0",
+        "source": "C0_1",
+        "target": "C1_0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C1_1",
+        "source": "C0_1",
+        "target": "C1_1",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C1_2",
+        "source": "C0_1",
+        "target": "C1_2",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C1_3",
+        "source": "C0_1",
+        "target": "C1_3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C2_0",
+        "source": "C0_1",
+        "target": "C2_0",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C2_1",
+        "source": "C0_1",
+        "target": "C2_1",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C2_2",
+        "source": "C0_1",
+        "target": "C2_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C2_3",
+        "source": "C0_1",
+        "target": "C2_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C3_0",
+        "source": "C0_1",
+        "target": "C3_0",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C3_1",
+        "source": "C0_1",
+        "target": "C3_1",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C3_2",
+        "source": "C0_1",
+        "target": "C3_2",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_1->C3_3",
+        "source": "C0_1",
+        "target": "C3_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C0_3",
+        "source": "C0_2",
+        "target": "C0_3",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C1_0",
+        "source": "C0_2",
+        "target": "C1_0",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C1_1",
+        "source": "C0_2",
+        "target": "C1_1",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C1_2",
+        "source": "C0_2",
+        "target": "C1_2",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C1_3",
+        "source": "C0_2",
+        "target": "C1_3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C2_0",
+        "source": "C0_2",
+        "target": "C2_0",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C2_1",
+        "source": "C0_2",
+        "target": "C2_1",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C2_2",
+        "source": "C0_2",
+        "target": "C2_2",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C2_3",
+        "source": "C0_2",
+        "target": "C2_3",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C3_0",
+        "source": "C0_2",
+        "target": "C3_0",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C3_1",
+        "source": "C0_2",
+        "target": "C3_1",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C3_2",
+        "source": "C0_2",
+        "target": "C3_2",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_2->C3_3",
+        "source": "C0_2",
+        "target": "C3_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C1_0",
+        "source": "C0_3",
+        "target": "C1_0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C1_1",
+        "source": "C0_3",
+        "target": "C1_1",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C1_2",
+        "source": "C0_3",
+        "target": "C1_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C1_3",
+        "source": "C0_3",
+        "target": "C1_3",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C2_0",
+        "source": "C0_3",
+        "target": "C2_0",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C2_1",
+        "source": "C0_3",
+        "target": "C2_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C2_2",
+        "source": "C0_3",
+        "target": "C2_2",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C2_3",
+        "source": "C0_3",
+        "target": "C2_3",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C3_0",
+        "source": "C0_3",
+        "target": "C3_0",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C3_1",
+        "source": "C0_3",
+        "target": "C3_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C3_2",
+        "source": "C0_3",
+        "target": "C3_2",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C0_3->C3_3",
+        "source": "C0_3",
+        "target": "C3_3",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C1_1",
+        "source": "C1_0",
+        "target": "C1_1",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C1_2",
+        "source": "C1_0",
+        "target": "C1_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C1_3",
+        "source": "C1_0",
+        "target": "C1_3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C2_0",
+        "source": "C1_0",
+        "target": "C2_0",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C2_1",
+        "source": "C1_0",
+        "target": "C2_1",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C2_2",
+        "source": "C1_0",
+        "target": "C2_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C2_3",
+        "source": "C1_0",
+        "target": "C2_3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C3_0",
+        "source": "C1_0",
+        "target": "C3_0",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C3_1",
+        "source": "C1_0",
+        "target": "C3_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C3_2",
+        "source": "C1_0",
+        "target": "C3_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_0->C3_3",
+        "source": "C1_0",
+        "target": "C3_3",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C1_2",
+        "source": "C1_1",
+        "target": "C1_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C1_3",
+        "source": "C1_1",
+        "target": "C1_3",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C2_0",
+        "source": "C1_1",
+        "target": "C2_0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C2_1",
+        "source": "C1_1",
+        "target": "C2_1",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C2_2",
+        "source": "C1_1",
+        "target": "C2_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C2_3",
+        "source": "C1_1",
+        "target": "C2_3",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C3_0",
+        "source": "C1_1",
+        "target": "C3_0",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C3_1",
+        "source": "C1_1",
+        "target": "C3_1",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C3_2",
+        "source": "C1_1",
+        "target": "C3_2",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_1->C3_3",
+        "source": "C1_1",
+        "target": "C3_3",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_2->C1_3",
+        "source": "C1_2",
+        "target": "C1_3",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_2->C2_0",
+        "source": "C1_2",
+        "target": "C2_0",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_2->C2_1",
+        "source": "C1_2",
+        "target": "C2_1",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_2->C2_2",
+        "source": "C1_2",
+        "target": "C2_2",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_2->C2_3",
+        "source": "C1_2",
+        "target": "C2_3",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_2->C3_0",
+        "source": "C1_2",
+        "target": "C3_0",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_2->C3_1",
+        "source": "C1_2",
+        "target": "C3_1",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_2->C3_2",
+        "source": "C1_2",
+        "target": "C3_2",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_2->C3_3",
+        "source": "C1_2",
+        "target": "C3_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_3->C2_0",
+        "source": "C1_3",
+        "target": "C2_0",
+        "weight": 10,
+        "label": "10",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_3->C2_1",
+        "source": "C1_3",
+        "target": "C2_1",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_3->C2_2",
+        "source": "C1_3",
+        "target": "C2_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_3->C2_3",
+        "source": "C1_3",
+        "target": "C2_3",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_3->C3_0",
+        "source": "C1_3",
+        "target": "C3_0",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_3->C3_1",
+        "source": "C1_3",
+        "target": "C3_1",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_3->C3_2",
+        "source": "C1_3",
+        "target": "C3_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C1_3->C3_3",
+        "source": "C1_3",
+        "target": "C3_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_0->C2_1",
+        "source": "C2_0",
+        "target": "C2_1",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_0->C2_2",
+        "source": "C2_0",
+        "target": "C2_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_0->C2_3",
+        "source": "C2_0",
+        "target": "C2_3",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_0->C3_0",
+        "source": "C2_0",
+        "target": "C3_0",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_0->C3_1",
+        "source": "C2_0",
+        "target": "C3_1",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_0->C3_2",
+        "source": "C2_0",
+        "target": "C3_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_0->C3_3",
+        "source": "C2_0",
+        "target": "C3_3",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_1->C2_2",
+        "source": "C2_1",
+        "target": "C2_2",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_1->C2_3",
+        "source": "C2_1",
+        "target": "C2_3",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_1->C3_0",
+        "source": "C2_1",
+        "target": "C3_0",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_1->C3_1",
+        "source": "C2_1",
+        "target": "C3_1",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_1->C3_2",
+        "source": "C2_1",
+        "target": "C3_2",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_1->C3_3",
+        "source": "C2_1",
+        "target": "C3_3",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_2->C2_3",
+        "source": "C2_2",
+        "target": "C2_3",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_2->C3_0",
+        "source": "C2_2",
+        "target": "C3_0",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_2->C3_1",
+        "source": "C2_2",
+        "target": "C3_1",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_2->C3_2",
+        "source": "C2_2",
+        "target": "C3_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_2->C3_3",
+        "source": "C2_2",
+        "target": "C3_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_3->C3_0",
+        "source": "C2_3",
+        "target": "C3_0",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_3->C3_1",
+        "source": "C2_3",
+        "target": "C3_1",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_3->C3_2",
+        "source": "C2_3",
+        "target": "C3_2",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C2_3->C3_3",
+        "source": "C2_3",
+        "target": "C3_3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C3_0->C3_1",
+        "source": "C3_0",
+        "target": "C3_1",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C3_0->C3_2",
+        "source": "C3_0",
+        "target": "C3_2",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C3_0->C3_3",
+        "source": "C3_0",
+        "target": "C3_3",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C3_1->C3_2",
+        "source": "C3_1",
+        "target": "C3_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C3_1->C3_3",
+        "source": "C3_1",
+        "target": "C3_3",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      },
+      {
+        "id": "C3_2->C3_3",
+        "source": "C3_2",
+        "target": "C3_3",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "mst": false,
+          "frontier": false
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C0_2",
+      "timestampMs": 200,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C1_2",
+      "timestampMs": 500,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C2_2",
+      "timestampMs": 800,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C1_2",
+      "timestampMs": 1100,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C1_0",
+      "timestampMs": 1400,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_2->C0_3",
+      "timestampMs": 1700,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C1_1",
+      "timestampMs": 2000,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C3_2",
+      "timestampMs": 2300,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C2_0",
+      "timestampMs": 2600,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_1->C2_3",
+      "timestampMs": 2900,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_1->C2_1",
+      "timestampMs": 3200,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C1_3->C2_1",
+      "timestampMs": 3500,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C2_1->C3_1",
+      "timestampMs": 3800,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C3_0->C3_1",
+      "timestampMs": 4100,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_3->C3_3",
+      "timestampMs": 4400,
+      "reason": "Prim added this edge to the MST.",
+      "newProperties": {
+        "status": "best-path",
+        "mst": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C0_1",
+      "timestampMs": 4700,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C0_3",
+      "timestampMs": 4900,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C1_0",
+      "timestampMs": 5100,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C1_1",
+      "timestampMs": 5300,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C1_3",
+      "timestampMs": 5500,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C2_0",
+      "timestampMs": 5700,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C2_1",
+      "timestampMs": 5900,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C2_3",
+      "timestampMs": 6100,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C3_0",
+      "timestampMs": 6300,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "C0_0->C3_1",
+      "timestampMs": 6500,
+      "reason": "Prim evaluated this frontier edge.",
+      "newProperties": {
+        "status": "evaluated",
+        "frontier": true
+      }
+    }
+  ]
+}

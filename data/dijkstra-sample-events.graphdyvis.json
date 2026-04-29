@@ -1,0 +1,839 @@
+{
+  "schemaVersion": "1.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "src",
+        "label": "Source",
+        "x": 80,
+        "y": 160,
+        "properties": {
+          "region": 0,
+          "hub": 0,
+          "distance": 0,
+          "role": "source"
+        }
+      },
+      {
+        "id": "R1_H0",
+        "label": "R1_H0",
+        "x": 260,
+        "y": 50,
+        "properties": {
+          "region": 1,
+          "hub": 0,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R1_H1",
+        "label": "R1_H1",
+        "x": 260,
+        "y": 150,
+        "properties": {
+          "region": 1,
+          "hub": 1,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R1_H2",
+        "label": "R1_H2",
+        "x": 260,
+        "y": 250,
+        "properties": {
+          "region": 1,
+          "hub": 2,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R1_H3",
+        "label": "R1_H3",
+        "x": 260,
+        "y": 350,
+        "properties": {
+          "region": 1,
+          "hub": 3,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R2_H0",
+        "label": "R2_H0",
+        "x": 440,
+        "y": 50,
+        "properties": {
+          "region": 2,
+          "hub": 0,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R2_H1",
+        "label": "R2_H1",
+        "x": 440,
+        "y": 150,
+        "properties": {
+          "region": 2,
+          "hub": 1,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R2_H2",
+        "label": "R2_H2",
+        "x": 440,
+        "y": 250,
+        "properties": {
+          "region": 2,
+          "hub": 2,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R2_H3",
+        "label": "R2_H3",
+        "x": 440,
+        "y": 350,
+        "properties": {
+          "region": 2,
+          "hub": 3,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R3_H0",
+        "label": "R3_H0",
+        "x": 620,
+        "y": 50,
+        "properties": {
+          "region": 3,
+          "hub": 0,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R3_H1",
+        "label": "R3_H1",
+        "x": 620,
+        "y": 150,
+        "properties": {
+          "region": 3,
+          "hub": 1,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R3_H2",
+        "label": "R3_H2",
+        "x": 620,
+        "y": 250,
+        "properties": {
+          "region": 3,
+          "hub": 2,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "R3_H3",
+        "label": "R3_H3",
+        "x": 620,
+        "y": 350,
+        "properties": {
+          "region": 3,
+          "hub": 3,
+          "distance": 999,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "dst",
+        "label": "Target",
+        "x": 800,
+        "y": 160,
+        "properties": {
+          "region": 4,
+          "hub": 0,
+          "distance": 999,
+          "role": "target"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "src->R1_H0",
+        "source": "src",
+        "target": "R1_H0",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "src->R1_H1",
+        "source": "src",
+        "target": "R1_H1",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "src->R1_H2",
+        "source": "src",
+        "target": "R1_H2",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "src->R1_H3",
+        "source": "src",
+        "target": "R1_H3",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H0->R2_H0",
+        "source": "R1_H0",
+        "target": "R2_H0",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H0->R2_H1",
+        "source": "R1_H0",
+        "target": "R2_H1",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H0->R2_H2",
+        "source": "R1_H0",
+        "target": "R2_H2",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H0->R2_H3",
+        "source": "R1_H0",
+        "target": "R2_H3",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H1->R2_H0",
+        "source": "R1_H1",
+        "target": "R2_H0",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H1->R2_H1",
+        "source": "R1_H1",
+        "target": "R2_H1",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H1->R2_H2",
+        "source": "R1_H1",
+        "target": "R2_H2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H1->R2_H3",
+        "source": "R1_H1",
+        "target": "R2_H3",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H2->R2_H0",
+        "source": "R1_H2",
+        "target": "R2_H0",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H2->R2_H1",
+        "source": "R1_H2",
+        "target": "R2_H1",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H2->R2_H2",
+        "source": "R1_H2",
+        "target": "R2_H2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H2->R2_H3",
+        "source": "R1_H2",
+        "target": "R2_H3",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H3->R2_H0",
+        "source": "R1_H3",
+        "target": "R2_H0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H3->R2_H1",
+        "source": "R1_H3",
+        "target": "R2_H1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H3->R2_H2",
+        "source": "R1_H3",
+        "target": "R2_H2",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R1_H3->R2_H3",
+        "source": "R1_H3",
+        "target": "R2_H3",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H0->R3_H0",
+        "source": "R2_H0",
+        "target": "R3_H0",
+        "weight": 8,
+        "label": "8",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H0->R3_H1",
+        "source": "R2_H0",
+        "target": "R3_H1",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H0->R3_H2",
+        "source": "R2_H0",
+        "target": "R3_H2",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H0->R3_H3",
+        "source": "R2_H0",
+        "target": "R3_H3",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H1->R3_H0",
+        "source": "R2_H1",
+        "target": "R3_H0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H1->R3_H1",
+        "source": "R2_H1",
+        "target": "R3_H1",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H1->R3_H2",
+        "source": "R2_H1",
+        "target": "R3_H2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H1->R3_H3",
+        "source": "R2_H1",
+        "target": "R3_H3",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H2->R3_H0",
+        "source": "R2_H2",
+        "target": "R3_H0",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H2->R3_H1",
+        "source": "R2_H2",
+        "target": "R3_H1",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H2->R3_H2",
+        "source": "R2_H2",
+        "target": "R3_H2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H2->R3_H3",
+        "source": "R2_H2",
+        "target": "R3_H3",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H3->R3_H0",
+        "source": "R2_H3",
+        "target": "R3_H0",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H3->R3_H1",
+        "source": "R2_H3",
+        "target": "R3_H1",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H3->R3_H2",
+        "source": "R2_H3",
+        "target": "R3_H2",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R2_H3->R3_H3",
+        "source": "R2_H3",
+        "target": "R3_H3",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R3_H0->dst",
+        "source": "R3_H0",
+        "target": "dst",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R3_H1->dst",
+        "source": "R3_H1",
+        "target": "dst",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R3_H2->dst",
+        "source": "R3_H2",
+        "target": "dst",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      },
+      {
+        "id": "R3_H3->dst",
+        "source": "R3_H3",
+        "target": "dst",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "settled": false,
+          "bestPath": false
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventType": "edge_update",
+      "id": "src->R1_H0",
+      "timestampMs": 300,
+      "reason": "Dijkstra evaluated edge src->R1_H0.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "src->R1_H1",
+      "timestampMs": 500,
+      "reason": "Dijkstra evaluated edge src->R1_H1.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "src->R1_H2",
+      "timestampMs": 700,
+      "reason": "Dijkstra evaluated edge src->R1_H2.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "src->R1_H3",
+      "timestampMs": 900,
+      "reason": "Dijkstra evaluated edge src->R1_H3.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H0->R2_H0",
+      "timestampMs": 1100,
+      "reason": "Dijkstra evaluated edge R1_H0->R2_H0.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "src->R1_H2",
+      "timestampMs": 1300,
+      "reason": "Marked as best-path candidate.",
+      "newProperties": {
+        "status": "best-path",
+        "bestPath": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H0->R2_H1",
+      "timestampMs": 1450,
+      "reason": "Dijkstra evaluated edge R1_H0->R2_H1.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H0->R2_H2",
+      "timestampMs": 1650,
+      "reason": "Dijkstra evaluated edge R1_H0->R2_H2.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H0->R2_H3",
+      "timestampMs": 1850,
+      "reason": "Dijkstra evaluated edge R1_H0->R2_H3.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H1->R2_H0",
+      "timestampMs": 2050,
+      "reason": "Dijkstra evaluated edge R1_H1->R2_H0.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H1->R2_H1",
+      "timestampMs": 2250,
+      "reason": "Dijkstra evaluated edge R1_H1->R2_H1.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H0->R2_H3",
+      "timestampMs": 2450,
+      "reason": "Marked as best-path candidate.",
+      "newProperties": {
+        "status": "best-path",
+        "bestPath": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H1->R2_H2",
+      "timestampMs": 2600,
+      "reason": "Dijkstra evaluated edge R1_H1->R2_H2.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H1->R2_H3",
+      "timestampMs": 2800,
+      "reason": "Dijkstra evaluated edge R1_H1->R2_H3.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H2->R2_H0",
+      "timestampMs": 3000,
+      "reason": "Dijkstra evaluated edge R1_H2->R2_H0.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H2->R2_H1",
+      "timestampMs": 3200,
+      "reason": "Dijkstra evaluated edge R1_H2->R2_H1.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H2->R2_H2",
+      "timestampMs": 3400,
+      "reason": "Dijkstra evaluated edge R1_H2->R2_H2.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H2->R2_H0",
+      "timestampMs": 3600,
+      "reason": "Marked as best-path candidate.",
+      "newProperties": {
+        "status": "best-path",
+        "bestPath": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H2->R2_H3",
+      "timestampMs": 3750,
+      "reason": "Dijkstra evaluated edge R1_H2->R2_H3.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H3->R2_H0",
+      "timestampMs": 3950,
+      "reason": "Dijkstra evaluated edge R1_H3->R2_H0.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H3->R2_H1",
+      "timestampMs": 4150,
+      "reason": "Dijkstra evaluated edge R1_H3->R2_H1.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "R1_H3->R2_H2",
+      "timestampMs": 4350,
+      "reason": "Dijkstra evaluated edge R1_H3->R2_H2.",
+      "newProperties": {
+        "status": "settled",
+        "settled": true
+      }
+    }
+  ]
+}

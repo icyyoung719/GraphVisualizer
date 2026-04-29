@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Node A",
+        "x": 100,
+        "y": 100,
+        "properties": {
+          "role": "source"
+        }
+      },
+      {
+        "id": "B",
+        "label": "Node B",
+        "x": 300,
+        "y": 100,
+        "properties": {
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "C",
+        "label": "Node C",
+        "x": 500,
+        "y": 100,
+        "properties": {
+          "role": "target"
+        }
+      },
+      {
+        "id": "D",
+        "label": "Node D",
+        "x": 300,
+        "y": 300,
+        "properties": {
+          "role": "waypoint"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "A->B",
+        "source": "A",
+        "target": "B",
+        "weight": 2,
+        "label": "2",
+        "properties": {
+          "active": true
+        }
+      },
+      {
+        "id": "B->C",
+        "source": "B",
+        "target": "C",
+        "weight": 3,
+        "label": "3",
+        "properties": {
+          "active": true
+        }
+      },
+      {
+        "id": "A->D",
+        "source": "A",
+        "target": "D",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "active": true
+        }
+      },
+      {
+        "id": "D->C",
+        "source": "D",
+        "target": "C",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "active": true
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventType": "edge_update",
+      "id": "A->B",
+      "timestampMs": 500,
+      "reason": "Path A->B is under evaluation.",
+      "newWeight": 2,
+      "newProperties": {
+        "status": "exploring",
+        "cumulativeCost": 2
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "B->C",
+      "timestampMs": 1000,
+      "reason": "Path B->C confirmed as part of the best route.",
+      "newWeight": 3,
+      "newProperties": {
+        "status": "best-path",
+        "cumulativeCost": 5
+      }
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "A->D",
+      "timestampMs": 1500,
+      "reason": "Path A->D pruned — a cheaper alternative exists."
+    }
+  ]
+}

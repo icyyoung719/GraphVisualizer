@@ -1,0 +1,758 @@
+{
+  "schemaVersion": "1.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "start",
+        "label": "Start",
+        "x": 80,
+        "y": 200,
+        "properties": {
+          "layer": 0,
+          "role": "source"
+        }
+      },
+      {
+        "id": "L1_0",
+        "label": "L1_0",
+        "x": 250,
+        "y": 60,
+        "properties": {
+          "layer": 1,
+          "visited": false,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L1_1",
+        "label": "L1_1",
+        "x": 250,
+        "y": 180,
+        "properties": {
+          "layer": 1,
+          "visited": false,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L1_2",
+        "label": "L1_2",
+        "x": 250,
+        "y": 300,
+        "properties": {
+          "layer": 1,
+          "visited": false,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L2_0",
+        "label": "L2_0",
+        "x": 420,
+        "y": 60,
+        "properties": {
+          "layer": 2,
+          "visited": false,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L2_1",
+        "label": "L2_1",
+        "x": 420,
+        "y": 180,
+        "properties": {
+          "layer": 2,
+          "visited": false,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L2_2",
+        "label": "L2_2",
+        "x": 420,
+        "y": 300,
+        "properties": {
+          "layer": 2,
+          "visited": false,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L3_0",
+        "label": "L3_0",
+        "x": 590,
+        "y": 60,
+        "properties": {
+          "layer": 3,
+          "visited": false,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L3_1",
+        "label": "L3_1",
+        "x": 590,
+        "y": 180,
+        "properties": {
+          "layer": 3,
+          "visited": false,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L3_2",
+        "label": "L3_2",
+        "x": 590,
+        "y": 300,
+        "properties": {
+          "layer": 3,
+          "visited": false,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "end",
+        "label": "End",
+        "x": 760,
+        "y": 200,
+        "properties": {
+          "layer": 4,
+          "role": "target"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "start->L1_0",
+        "source": "start",
+        "target": "L1_0",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": true
+        }
+      },
+      {
+        "id": "start->L1_1",
+        "source": "start",
+        "target": "L1_1",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "start->L1_2",
+        "source": "start",
+        "target": "L1_2",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L1_0->L2_0",
+        "source": "L1_0",
+        "target": "L2_0",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": true
+        }
+      },
+      {
+        "id": "L1_0->L2_1",
+        "source": "L1_0",
+        "target": "L2_1",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L1_0->L2_2",
+        "source": "L1_0",
+        "target": "L2_2",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L1_1->L2_0",
+        "source": "L1_1",
+        "target": "L2_0",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L1_1->L2_1",
+        "source": "L1_1",
+        "target": "L2_1",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L1_1->L2_2",
+        "source": "L1_1",
+        "target": "L2_2",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L1_2->L2_0",
+        "source": "L1_2",
+        "target": "L2_0",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L1_2->L2_1",
+        "source": "L1_2",
+        "target": "L2_1",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L1_2->L2_2",
+        "source": "L1_2",
+        "target": "L2_2",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L2_0->L3_0",
+        "source": "L2_0",
+        "target": "L3_0",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": true
+        }
+      },
+      {
+        "id": "L2_0->L3_1",
+        "source": "L2_0",
+        "target": "L3_1",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L2_0->L3_2",
+        "source": "L2_0",
+        "target": "L3_2",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L2_1->L3_0",
+        "source": "L2_1",
+        "target": "L3_0",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L2_1->L3_1",
+        "source": "L2_1",
+        "target": "L3_1",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L2_1->L3_2",
+        "source": "L2_1",
+        "target": "L3_2",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L2_2->L3_0",
+        "source": "L2_2",
+        "target": "L3_0",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": false,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L2_2->L3_1",
+        "source": "L2_2",
+        "target": "L3_1",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": false,
+          "backtracked": false,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L2_2->L3_2",
+        "source": "L2_2",
+        "target": "L3_2",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": false,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L3_0->end",
+        "source": "L3_0",
+        "target": "end",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": true,
+          "backtracked": false,
+          "pathEdge": true
+        }
+      },
+      {
+        "id": "L3_1->end",
+        "source": "L3_1",
+        "target": "end",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": false,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      },
+      {
+        "id": "L3_2->end",
+        "source": "L3_2",
+        "target": "end",
+        "weight": 1,
+        "label": "",
+        "properties": {
+          "explored": false,
+          "backtracked": true,
+          "pathEdge": false
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventType": "edge_update",
+      "id": "start->L1_0",
+      "timestampMs": 200,
+      "reason": "Exploring edge start->L1_0 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "start->L1_1",
+      "timestampMs": 400,
+      "reason": "Exploring edge start->L1_1 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "start->L1_2",
+      "timestampMs": 600,
+      "reason": "Exploring edge start->L1_2 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_0->L2_0",
+      "timestampMs": 800,
+      "reason": "Exploring edge L1_0->L2_0 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_0->L2_1",
+      "timestampMs": 1000,
+      "reason": "Exploring edge L1_0->L2_1 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_0->L2_2",
+      "timestampMs": 1200,
+      "reason": "Exploring edge L1_0->L2_2 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_1->L2_0",
+      "timestampMs": 1400,
+      "reason": "Exploring edge L1_1->L2_0 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_1->L2_1",
+      "timestampMs": 1600,
+      "reason": "Exploring edge L1_1->L2_1 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_1->L2_2",
+      "timestampMs": 1800,
+      "reason": "Exploring edge L1_1->L2_2 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_2->L2_0",
+      "timestampMs": 2000,
+      "reason": "Exploring edge L1_2->L2_0 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_2->L2_1",
+      "timestampMs": 2200,
+      "reason": "Exploring edge L1_2->L2_1 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_2->L2_2",
+      "timestampMs": 2400,
+      "reason": "Exploring edge L1_2->L2_2 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_0->L3_0",
+      "timestampMs": 2600,
+      "reason": "Exploring edge L2_0->L3_0 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_0->L3_1",
+      "timestampMs": 2800,
+      "reason": "Exploring edge L2_0->L3_1 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_0->L3_2",
+      "timestampMs": 3000,
+      "reason": "Exploring edge L2_0->L3_2 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_1->L3_0",
+      "timestampMs": 3200,
+      "reason": "Exploring edge L2_1->L3_0 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_1->L3_1",
+      "timestampMs": 3400,
+      "reason": "Exploring edge L2_1->L3_1 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_1->L3_2",
+      "timestampMs": 3600,
+      "reason": "Exploring edge L2_1->L3_2 as candidate for Hamiltonian path.",
+      "newProperties": {
+        "status": "exploring",
+        "explored": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "start->L1_0",
+      "timestampMs": 3800,
+      "reason": "Exploring step: selected start->L1_0 for Hamiltonian path.",
+      "newProperties": {
+        "status": "best-path",
+        "pathEdge": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_0->L2_0",
+      "timestampMs": 4100,
+      "reason": "Backtracking step: selected L1_0->L2_0 for Hamiltonian path.",
+      "newProperties": {
+        "status": "best-path",
+        "pathEdge": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_0->L3_0",
+      "timestampMs": 4400,
+      "reason": "Backtracking step: selected L2_0->L3_0 for Hamiltonian path.",
+      "newProperties": {
+        "status": "best-path",
+        "pathEdge": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L3_0->end",
+      "timestampMs": 4700,
+      "reason": "Backtracking step: selected L3_0->end for Hamiltonian path.",
+      "newProperties": {
+        "status": "best-path",
+        "pathEdge": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "start->L1_2",
+      "timestampMs": 5000,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_0->L2_1",
+      "timestampMs": 5200,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_0->L2_2",
+      "timestampMs": 5400,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_1->L2_1",
+      "timestampMs": 5600,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_1->L2_2",
+      "timestampMs": 5800,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_2->L2_1",
+      "timestampMs": 6000,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_2->L2_2",
+      "timestampMs": 6200,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_1->L3_1",
+      "timestampMs": 6400,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_2->L3_0",
+      "timestampMs": 6600,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_2->L3_2",
+      "timestampMs": 6800,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L3_1->end",
+      "timestampMs": 7000,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L3_2->end",
+      "timestampMs": 7200,
+      "reason": "Backtracked: dead end reached.",
+      "newProperties": {
+        "status": "pruned",
+        "backtracked": true
+      }
+    }
+  ]
+}

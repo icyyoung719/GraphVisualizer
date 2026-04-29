@@ -11,7 +11,7 @@ function loadSample(relativePath: string): unknown {
 
 describe("validateGraphDataFile", () => {
   it("accepts the checked-in legacy sample", () => {
-    const sample = loadSample("data/sample-events.json");
+    const sample = loadSample("data/sample-events.graphdyvis.json");
 
     const parsed = validateGraphDataFile(sample);
 

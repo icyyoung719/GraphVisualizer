@@ -1,0 +1,990 @@
+{
+  "schemaVersion": "1.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "S",
+        "label": "S",
+        "x": 120,
+        "y": 160,
+        "properties": {
+          "distance": 0,
+          "layer": 0,
+          "role": "source"
+        }
+      },
+      {
+        "id": "L1_0",
+        "label": "L1_0",
+        "x": 270,
+        "y": 60,
+        "properties": {
+          "distance": 2,
+          "layer": 1,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L1_1",
+        "label": "L1_1",
+        "x": 270,
+        "y": 170,
+        "properties": {
+          "distance": 2,
+          "layer": 1,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L1_2",
+        "label": "L1_2",
+        "x": 270,
+        "y": 280,
+        "properties": {
+          "distance": 2,
+          "layer": 1,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L2_0",
+        "label": "L2_0",
+        "x": 420,
+        "y": 60,
+        "properties": {
+          "distance": 4,
+          "layer": 2,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L2_1",
+        "label": "L2_1",
+        "x": 420,
+        "y": 170,
+        "properties": {
+          "distance": 4,
+          "layer": 2,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L2_2",
+        "label": "L2_2",
+        "x": 420,
+        "y": 280,
+        "properties": {
+          "distance": 4,
+          "layer": 2,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L3_0",
+        "label": "L3_0",
+        "x": 570,
+        "y": 60,
+        "properties": {
+          "distance": 6,
+          "layer": 3,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L3_1",
+        "label": "L3_1",
+        "x": 570,
+        "y": 170,
+        "properties": {
+          "distance": 6,
+          "layer": 3,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L3_2",
+        "label": "L3_2",
+        "x": 570,
+        "y": 280,
+        "properties": {
+          "distance": 6,
+          "layer": 3,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L4_0",
+        "label": "L4_0",
+        "x": 720,
+        "y": 60,
+        "properties": {
+          "distance": 8,
+          "layer": 4,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L4_1",
+        "label": "L4_1",
+        "x": 720,
+        "y": 170,
+        "properties": {
+          "distance": 8,
+          "layer": 4,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L4_2",
+        "label": "L4_2",
+        "x": 720,
+        "y": 280,
+        "properties": {
+          "distance": 8,
+          "layer": 4,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L5_0",
+        "label": "L5_0",
+        "x": 870,
+        "y": 60,
+        "properties": {
+          "distance": 10,
+          "layer": 5,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L5_1",
+        "label": "L5_1",
+        "x": 870,
+        "y": 170,
+        "properties": {
+          "distance": 10,
+          "layer": 5,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "L5_2",
+        "label": "L5_2",
+        "x": 870,
+        "y": 280,
+        "properties": {
+          "distance": 10,
+          "layer": 5,
+          "role": "waypoint"
+        }
+      },
+      {
+        "id": "T",
+        "label": "T",
+        "x": 1020,
+        "y": 160,
+        "properties": {
+          "distance": 12,
+          "layer": 6,
+          "role": "target"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "S->L1_0",
+        "source": "S",
+        "target": "L1_0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "S->L1_1",
+        "source": "S",
+        "target": "L1_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "S->L1_2",
+        "source": "S",
+        "target": "L1_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L1_0->L2_0",
+        "source": "L1_0",
+        "target": "L2_0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L1_0->L2_1",
+        "source": "L1_0",
+        "target": "L2_1",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L1_0->L2_2",
+        "source": "L1_0",
+        "target": "L2_2",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L1_1->L2_0",
+        "source": "L1_1",
+        "target": "L2_0",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L1_1->L2_1",
+        "source": "L1_1",
+        "target": "L2_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L1_1->L2_2",
+        "source": "L1_1",
+        "target": "L2_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L1_2->L2_0",
+        "source": "L1_2",
+        "target": "L2_0",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L1_2->L2_1",
+        "source": "L1_2",
+        "target": "L2_1",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L1_2->L2_2",
+        "source": "L1_2",
+        "target": "L2_2",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L2_0->L3_0",
+        "source": "L2_0",
+        "target": "L3_0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L2_0->L3_1",
+        "source": "L2_0",
+        "target": "L3_1",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L2_0->L3_2",
+        "source": "L2_0",
+        "target": "L3_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L2_1->L3_0",
+        "source": "L2_1",
+        "target": "L3_0",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L2_1->L3_1",
+        "source": "L2_1",
+        "target": "L3_1",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L2_1->L3_2",
+        "source": "L2_1",
+        "target": "L3_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L2_2->L3_0",
+        "source": "L2_2",
+        "target": "L3_0",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L2_2->L3_1",
+        "source": "L2_2",
+        "target": "L3_1",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L2_2->L3_2",
+        "source": "L2_2",
+        "target": "L3_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L3_0->L4_0",
+        "source": "L3_0",
+        "target": "L4_0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L3_0->L4_1",
+        "source": "L3_0",
+        "target": "L4_1",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L3_0->L4_2",
+        "source": "L3_0",
+        "target": "L4_2",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L3_1->L4_0",
+        "source": "L3_1",
+        "target": "L4_0",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L3_1->L4_1",
+        "source": "L3_1",
+        "target": "L4_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L3_1->L4_2",
+        "source": "L3_1",
+        "target": "L4_2",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L3_2->L4_0",
+        "source": "L3_2",
+        "target": "L4_0",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L3_2->L4_1",
+        "source": "L3_2",
+        "target": "L4_1",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L3_2->L4_2",
+        "source": "L3_2",
+        "target": "L4_2",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L4_0->L5_0",
+        "source": "L4_0",
+        "target": "L5_0",
+        "weight": 1,
+        "label": "1",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L4_0->L5_1",
+        "source": "L4_0",
+        "target": "L5_1",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L4_0->L5_2",
+        "source": "L4_0",
+        "target": "L5_2",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L4_1->L5_0",
+        "source": "L4_1",
+        "target": "L5_0",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L4_1->L5_1",
+        "source": "L4_1",
+        "target": "L5_1",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L4_1->L5_2",
+        "source": "L4_1",
+        "target": "L5_2",
+        "weight": 7,
+        "label": "7",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L4_2->L5_0",
+        "source": "L4_2",
+        "target": "L5_0",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L4_2->L5_1",
+        "source": "L4_2",
+        "target": "L5_1",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L4_2->L5_2",
+        "source": "L4_2",
+        "target": "L5_2",
+        "weight": 6,
+        "label": "6",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L5_0->T",
+        "source": "L5_0",
+        "target": "T",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L5_1->T",
+        "source": "L5_1",
+        "target": "T",
+        "weight": 5,
+        "label": "5",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      },
+      {
+        "id": "L5_2->T",
+        "source": "L5_2",
+        "target": "T",
+        "weight": 4,
+        "label": "4",
+        "properties": {
+          "relaxed": false,
+          "bestPath": false,
+          "step": 0
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventType": "edge_update",
+      "id": "S->L1_0",
+      "timestampMs": 500,
+      "reason": "A* confirmed this edge on the best path.",
+      "newProperties": {
+        "status": "best-path",
+        "relaxed": true,
+        "bestPath": true,
+        "cumulativeCost": 1
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L1_0->L2_0",
+      "timestampMs": 1000,
+      "reason": "A* confirmed this edge on the best path.",
+      "newProperties": {
+        "status": "best-path",
+        "relaxed": true,
+        "bestPath": true,
+        "cumulativeCost": 2
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L2_0->L3_0",
+      "timestampMs": 1500,
+      "reason": "A* confirmed this edge on the best path.",
+      "newProperties": {
+        "status": "best-path",
+        "relaxed": true,
+        "bestPath": true,
+        "cumulativeCost": 3
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L3_0->L4_0",
+      "timestampMs": 2000,
+      "reason": "A* confirmed this edge on the best path.",
+      "newProperties": {
+        "status": "best-path",
+        "relaxed": true,
+        "bestPath": true,
+        "cumulativeCost": 4
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L4_0->L5_0",
+      "timestampMs": 2500,
+      "reason": "A* confirmed this edge on the best path.",
+      "newProperties": {
+        "status": "best-path",
+        "relaxed": true,
+        "bestPath": true,
+        "cumulativeCost": 5
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "L5_0->T",
+      "timestampMs": 3000,
+      "reason": "A* confirmed this edge on the best path.",
+      "newProperties": {
+        "status": "best-path",
+        "relaxed": true,
+        "bestPath": true,
+        "cumulativeCost": 10
+      }
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "S->L1_1",
+      "timestampMs": 3500,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "S->L1_2",
+      "timestampMs": 3850,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L1_0->L2_1",
+      "timestampMs": 4200,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L1_0->L2_2",
+      "timestampMs": 4550,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L1_1->L2_0",
+      "timestampMs": 4900,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L1_1->L2_1",
+      "timestampMs": 5250,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L1_1->L2_2",
+      "timestampMs": 5600,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L1_2->L2_0",
+      "timestampMs": 5950,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L1_2->L2_1",
+      "timestampMs": 6300,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L1_2->L2_2",
+      "timestampMs": 6650,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L2_0->L3_1",
+      "timestampMs": 7000,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L2_0->L3_2",
+      "timestampMs": 7350,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L2_1->L3_0",
+      "timestampMs": 7700,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L2_1->L3_1",
+      "timestampMs": 8050,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L2_1->L3_2",
+      "timestampMs": 8400,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L2_2->L3_0",
+      "timestampMs": 8750,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L2_2->L3_1",
+      "timestampMs": 9100,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L2_2->L3_2",
+      "timestampMs": 9450,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L3_0->L4_1",
+      "timestampMs": 9800,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L3_0->L4_2",
+      "timestampMs": 10150,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L3_1->L4_0",
+      "timestampMs": 10500,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L3_1->L4_1",
+      "timestampMs": 10850,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L3_1->L4_2",
+      "timestampMs": 11200,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L3_2->L4_0",
+      "timestampMs": 11550,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L3_2->L4_1",
+      "timestampMs": 11900,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L3_2->L4_2",
+      "timestampMs": 12250,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L4_0->L5_1",
+      "timestampMs": 12600,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L4_0->L5_2",
+      "timestampMs": 12950,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L4_1->L5_0",
+      "timestampMs": 13300,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L4_1->L5_1",
+      "timestampMs": 13650,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L4_1->L5_2",
+      "timestampMs": 14000,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L4_2->L5_0",
+      "timestampMs": 14350,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L4_2->L5_1",
+      "timestampMs": 14700,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L4_2->L5_2",
+      "timestampMs": 15050,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L5_1->T",
+      "timestampMs": 15400,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    },
+    {
+      "eventType": "edge_delete",
+      "id": "L5_2->T",
+      "timestampMs": 15750,
+      "reason": "A* pruned this branch after finding a cheaper route."
+    }
+  ]
+}

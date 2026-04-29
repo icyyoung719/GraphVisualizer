@@ -1,0 +1,1011 @@
+{
+  "schemaVersion": "1.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "city_0",
+        "label": "City 0",
+        "x": 580,
+        "y": 250,
+        "properties": {
+          "visited": true,
+          "tourIndex": 0
+        }
+      },
+      {
+        "id": "city_1",
+        "label": "City 1",
+        "x": 556,
+        "y": 340,
+        "properties": {
+          "visited": true,
+          "tourIndex": 1
+        }
+      },
+      {
+        "id": "city_2",
+        "label": "City 2",
+        "x": 490,
+        "y": 406,
+        "properties": {
+          "visited": true,
+          "tourIndex": 2
+        }
+      },
+      {
+        "id": "city_3",
+        "label": "City 3",
+        "x": 400,
+        "y": 430,
+        "properties": {
+          "visited": true,
+          "tourIndex": 3
+        }
+      },
+      {
+        "id": "city_4",
+        "label": "City 4",
+        "x": 310,
+        "y": 406,
+        "properties": {
+          "visited": true,
+          "tourIndex": 4
+        }
+      },
+      {
+        "id": "city_5",
+        "label": "City 5",
+        "x": 244,
+        "y": 340,
+        "properties": {
+          "visited": true,
+          "tourIndex": 5
+        }
+      },
+      {
+        "id": "city_6",
+        "label": "City 6",
+        "x": 220,
+        "y": 250,
+        "properties": {
+          "visited": true,
+          "tourIndex": 6
+        }
+      },
+      {
+        "id": "city_7",
+        "label": "City 7",
+        "x": 244,
+        "y": 160,
+        "properties": {
+          "visited": true,
+          "tourIndex": 7
+        }
+      },
+      {
+        "id": "city_8",
+        "label": "City 8",
+        "x": 310,
+        "y": 94,
+        "properties": {
+          "visited": true,
+          "tourIndex": 8
+        }
+      },
+      {
+        "id": "city_9",
+        "label": "City 9",
+        "x": 400,
+        "y": 70,
+        "properties": {
+          "visited": true,
+          "tourIndex": 9
+        }
+      },
+      {
+        "id": "city_10",
+        "label": "City 10",
+        "x": 490,
+        "y": 94,
+        "properties": {
+          "visited": true,
+          "tourIndex": 10
+        }
+      },
+      {
+        "id": "city_11",
+        "label": "City 11",
+        "x": 556,
+        "y": 160,
+        "properties": {
+          "visited": true,
+          "tourIndex": 11
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "city_0->city_1",
+        "source": "city_0",
+        "target": "city_1",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_0->city_2",
+        "source": "city_0",
+        "target": "city_2",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_0->city_3",
+        "source": "city_0",
+        "target": "city_3",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_0->city_4",
+        "source": "city_0",
+        "target": "city_4",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_0->city_5",
+        "source": "city_0",
+        "target": "city_5",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_0->city_6",
+        "source": "city_0",
+        "target": "city_6",
+        "weight": 36,
+        "label": "36",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_0->city_7",
+        "source": "city_0",
+        "target": "city_7",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_0->city_8",
+        "source": "city_0",
+        "target": "city_8",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_0->city_9",
+        "source": "city_0",
+        "target": "city_9",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_0->city_10",
+        "source": "city_0",
+        "target": "city_10",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_0->city_11",
+        "source": "city_0",
+        "target": "city_11",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_1->city_2",
+        "source": "city_1",
+        "target": "city_2",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_1->city_3",
+        "source": "city_1",
+        "target": "city_3",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_1->city_4",
+        "source": "city_1",
+        "target": "city_4",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_1->city_5",
+        "source": "city_1",
+        "target": "city_5",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_1->city_6",
+        "source": "city_1",
+        "target": "city_6",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_1->city_7",
+        "source": "city_1",
+        "target": "city_7",
+        "weight": 36,
+        "label": "36",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_1->city_8",
+        "source": "city_1",
+        "target": "city_8",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_1->city_9",
+        "source": "city_1",
+        "target": "city_9",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_1->city_10",
+        "source": "city_1",
+        "target": "city_10",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_1->city_11",
+        "source": "city_1",
+        "target": "city_11",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_2->city_3",
+        "source": "city_2",
+        "target": "city_3",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_2->city_4",
+        "source": "city_2",
+        "target": "city_4",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_2->city_5",
+        "source": "city_2",
+        "target": "city_5",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_2->city_6",
+        "source": "city_2",
+        "target": "city_6",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_2->city_7",
+        "source": "city_2",
+        "target": "city_7",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_2->city_8",
+        "source": "city_2",
+        "target": "city_8",
+        "weight": 36,
+        "label": "36",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_2->city_9",
+        "source": "city_2",
+        "target": "city_9",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_2->city_10",
+        "source": "city_2",
+        "target": "city_10",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_2->city_11",
+        "source": "city_2",
+        "target": "city_11",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_3->city_4",
+        "source": "city_3",
+        "target": "city_4",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_3->city_5",
+        "source": "city_3",
+        "target": "city_5",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_3->city_6",
+        "source": "city_3",
+        "target": "city_6",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_3->city_7",
+        "source": "city_3",
+        "target": "city_7",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_3->city_8",
+        "source": "city_3",
+        "target": "city_8",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_3->city_9",
+        "source": "city_3",
+        "target": "city_9",
+        "weight": 36,
+        "label": "36",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_3->city_10",
+        "source": "city_3",
+        "target": "city_10",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_3->city_11",
+        "source": "city_3",
+        "target": "city_11",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_4->city_5",
+        "source": "city_4",
+        "target": "city_5",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_4->city_6",
+        "source": "city_4",
+        "target": "city_6",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_4->city_7",
+        "source": "city_4",
+        "target": "city_7",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_4->city_8",
+        "source": "city_4",
+        "target": "city_8",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_4->city_9",
+        "source": "city_4",
+        "target": "city_9",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_4->city_10",
+        "source": "city_4",
+        "target": "city_10",
+        "weight": 36,
+        "label": "36",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_4->city_11",
+        "source": "city_4",
+        "target": "city_11",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_5->city_6",
+        "source": "city_5",
+        "target": "city_6",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_5->city_7",
+        "source": "city_5",
+        "target": "city_7",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_5->city_8",
+        "source": "city_5",
+        "target": "city_8",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_5->city_9",
+        "source": "city_5",
+        "target": "city_9",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_5->city_10",
+        "source": "city_5",
+        "target": "city_10",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_5->city_11",
+        "source": "city_5",
+        "target": "city_11",
+        "weight": 36,
+        "label": "36",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_6->city_7",
+        "source": "city_6",
+        "target": "city_7",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_6->city_8",
+        "source": "city_6",
+        "target": "city_8",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_6->city_9",
+        "source": "city_6",
+        "target": "city_9",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_6->city_10",
+        "source": "city_6",
+        "target": "city_10",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_6->city_11",
+        "source": "city_6",
+        "target": "city_11",
+        "weight": 35,
+        "label": "35",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_7->city_8",
+        "source": "city_7",
+        "target": "city_8",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_7->city_9",
+        "source": "city_7",
+        "target": "city_9",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_7->city_10",
+        "source": "city_7",
+        "target": "city_10",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_7->city_11",
+        "source": "city_7",
+        "target": "city_11",
+        "weight": 31,
+        "label": "31",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_8->city_9",
+        "source": "city_8",
+        "target": "city_9",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_8->city_10",
+        "source": "city_8",
+        "target": "city_10",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_8->city_11",
+        "source": "city_8",
+        "target": "city_11",
+        "weight": 25,
+        "label": "25",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_9->city_10",
+        "source": "city_9",
+        "target": "city_10",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      },
+      {
+        "id": "city_9->city_11",
+        "source": "city_9",
+        "target": "city_11",
+        "weight": 18,
+        "label": "18",
+        "properties": {
+          "tourEdge": false
+        }
+      },
+      {
+        "id": "city_10->city_11",
+        "source": "city_10",
+        "target": "city_11",
+        "weight": 9,
+        "label": "9",
+        "properties": {
+          "tourEdge": true
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventType": "edge_update",
+      "id": "city_0->city_1",
+      "timestampMs": 200,
+      "reason": "TSP tour step 1: selected from city 0.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 1
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_1->city_2",
+      "timestampMs": 500,
+      "reason": "TSP tour step 2: selected from city 1.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 2
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_2->city_3",
+      "timestampMs": 800,
+      "reason": "TSP tour step 3: selected from city 2.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 3
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_3->city_4",
+      "timestampMs": 1100,
+      "reason": "TSP tour step 4: selected from city 3.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 4
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_4->city_5",
+      "timestampMs": 1400,
+      "reason": "TSP tour step 5: selected from city 4.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 5
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_5->city_6",
+      "timestampMs": 1700,
+      "reason": "TSP tour step 6: selected from city 5.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 6
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_6->city_7",
+      "timestampMs": 2000,
+      "reason": "TSP tour step 7: selected from city 6.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 7
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_7->city_8",
+      "timestampMs": 2300,
+      "reason": "TSP tour step 8: selected from city 7.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 8
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_8->city_9",
+      "timestampMs": 2600,
+      "reason": "TSP tour step 9: selected from city 8.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 9
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_9->city_10",
+      "timestampMs": 2900,
+      "reason": "TSP tour step 10: selected from city 9.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 10
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_10->city_11",
+      "timestampMs": 3200,
+      "reason": "TSP tour step 11: selected from city 10.",
+      "newProperties": {
+        "status": "best-path",
+        "tourEdge": true,
+        "step": 11
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_0->city_4",
+      "timestampMs": 3500,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_0->city_7",
+      "timestampMs": 3650,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_0->city_10",
+      "timestampMs": 3800,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_1->city_3",
+      "timestampMs": 3950,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_1->city_6",
+      "timestampMs": 4100,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_1->city_9",
+      "timestampMs": 4250,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_2->city_6",
+      "timestampMs": 4400,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_2->city_9",
+      "timestampMs": 4550,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_3->city_7",
+      "timestampMs": 4700,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_3->city_10",
+      "timestampMs": 4850,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    },
+    {
+      "eventType": "edge_update",
+      "id": "city_4->city_6",
+      "timestampMs": 5000,
+      "reason": "TSP evaluated this edge but did not select it.",
+      "newProperties": {
+        "status": "evaluated"
+      }
+    }
+  ]
+}
